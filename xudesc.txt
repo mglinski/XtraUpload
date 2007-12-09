@@ -1,0 +1,104 @@
+#summary The Best Online File Hosting Platform
+
+== Introduction ==
+
+Do you have a file hosting system on your site? Does it suck? Is it slowing your server to a standstill? Want a way out? Meet XtraUpload
+
+== XtraUpload v1.6 ==
+
+Written in PHP using a mysql backend, XtraUpload has all the features you would expect from a file Hosting Script. Free users as well as premium users have the ability to upload files but premium users get a lot more features such as viewing files, instantly downloading files and getting the URL's of the files they have uploaded. You can also specify the file types, sizes along with many other options. Each user must provide a valid email address when they sign up for premium as the script automatically sends the username and password to them upon reception of payment through PayPal IPN. File Hosting websites brings in large revenues and is a very easy system to setup thanks to XtraUpload. 
+
+=== Features include: ===
+ 
+==== Users - Groups ( configurable settings ) ====
+
+  -> Sign up through online form, account info automatically sent by email after payment reception
+  -> Auto generation of valid accounts thrugh all supported Payment Gateways
+  -> Download Files instantly
+  -> Bypass all site ads
+  -> No download restrictions
+  -> Ability to add password to protect page
+  -> Ability to create File Folders
+  -> Ability to password protect File Folders 
+  -> Ability to send the link to up to 1000 friends at once
+  -> Ability to rate files 
+  -> Ability to upload files (up to a size that you define)
+  -> Ability to download files
+  -> CAPTCHA Image Verification ( if you so choose ) 
+  -> Downloads restricted (Amount of allowed MB per hour defined in config) 
+  -> Ability to add file description 
+  -> Ability to add file password 
+  -> Ability to rate files
+  -> Create new usergroups
+  -> Enable/Disable all features of XtraUpload per usergroup
+  -> Download managers suported
+  -> Download Resume supportd
+  -> Download Threads limit
+==== Administration Panel ====
+
+  -> Ability to view all uploaded files and delete unwanted ones
+  -> Ability to add premium users
+  -> Ability to make premium users admins and vice versa 
+  -> Ability to send email to all users at once
+  -> Ability to restrict certain file types 
+  -> Ability to change all config options in admin section
+  -> Ability to add and manage servers 
+  -> Ability to add/suspend/delete Adverts
+  -> Ability to add/delete news articles to the news page 
+  -> Ability to manage payment gateway settings 
+  -> Ability to install and manage XUMods
+  -> Ability to edit/add/delete orders
+  -> Ability to Block/Allow All features for usergorups
+==== Signup ====
+ 
+  -> User Has Option to Select Payment Processor
+  -> Ability to turn on/off Payment Gateways 
+  -> System emails you when there are problems 
+  -> Paypal Supported
+  -> 2CheckOut Supported
+  -> Authorize.Net Supported
+  -> Stormpay Supported
+  -> Moneybrokers Supported
+  -> EGold Supported 
+==== Download Area ====
+ 
+  -> If password is set, the guest is prompted to enter the password for the file in order to download
+  -> Guests can view the descriptions left by the uploader
+  -> Countdown before file is allowed to be downloaded.
+  -> File cannot be downloaded more then once per wait time.
+  -> Files cannot be directly downloaded using their file links
+  -> Impossible to defeat wait time system. 
+  -> Ability to restrict downloads for free users
+  -> Ability to restrict download speed for free users
+  -> Ability to force CAPTCHA image verification before downloading 
+==== Login Area ====
+  
+  -> Secure login
+  -> Forgot Password form that automatically sends a new password to th eemail account on file.
+  -> If user is admin , a Admin panel link is displayed
+==== Premium Area ====
+
+  -> View / edit personal information
+  -> View uploaded / downloaded files
+  -> Check if URL is still valid
+  -> Cancel Premium account --- This feature shows to the user the cancellation process
+  -> History --- Shows last payment and account expiration date
+  -> Quick View of Account
+  -> Add / view / delete file folders 
+==== Upload System ====
+
+  -> Renames file to make overwriting of files non existent. All original file names are kept.
+  -> Multi server support 
+  -> Real Progress bar to keep users informed of upload progress. 
+  -> Option of PHP or CGI base file upload system 
+  -> Can Upload using a FLASH .swf file ( Does Not Work In Opera ) 
+  -> Flash Upload Automaticly Tells User of an invalid File. 
+  -> Can Upload From URLs 
+  -> Progress Bar for URL Upload
+  -> Uploads are prechecked to comply with extension rules
+  -> All upload methods can be disabled/enabeled
+==== Template System ====
+
+  -> Fully Templated theme system, basd on Smarty 
+  -> Multiple Theme Support 
+  -> Themes are compiled for even better preformance  <br />
