@@ -1,0 +1,422 @@
+/*#############################################################
+Name: Indigo
+Description: A lightweight (7kb images), simple and professional design.
+Date: 2006-07-27
+Author: Viktor Persson
+URL: http://arcsin.se
+
+Feel free to use and modify but please provide credits.
+#############################################################*/
+
+/* standard elements */
+* {
+	margin: 0;
+	padding: 0;
+}
+a {
+	color: #F70;
+}
+a:hover {
+	color: #C60;
+}
+body {
+	background: #0094D6 url(img/bg.gif) repeat-x;
+	color: #466;
+	font: normal 10px "Trebuchet MS",sans-serif;
+	margin: 0;
+}
+
+input {
+	color: #555;
+	font: normal 14px "Trebuchet MS",sans-serif;
+}
+
+input .text 
+{
+	border: 1px solid #AAA;
+	font: normal 14px "Trebuchet MS",sans-serif;
+}
+
+p,cite,code,ul {
+	font-size: 14px;
+	padding-bottom: 1.2em;
+}
+h1 {
+	font-size: 18px;
+	font-weight:bold;
+	font-family:"Trebuchet MS",sans-serif;
+	margin-bottom: 4px;
+}
+code {
+	background: url(img/bgcode.gif);
+	border: 1px solid #F0F0F0;
+	border-left: 6px solid #39F;
+	color: #555;
+	display: block;
+	font: normal 1.1em "Lucida Sans Unicode",serif;
+	margin-bottom: 12px;
+	padding: 8px 10px;
+	white-space: pre;
+}
+cite {
+	background: url(img/quote.gif) no-repeat;
+	color: #666;
+	display: block;
+	font: normal 1.3em "Trebuchet MS",sans-serif;
+	padding-left: 28px;
+}
+
+table {
+	font: normal 1.1em "Trebuchet MS",sans-serif;
+}
+h1,h2,h3 {
+	color: #06C;
+	padding-top: 6px;
+}
+/* misc */
+.clearer {
+	clear: both;
+}
+
+/* structure */
+.container {
+	background: url(img/topleft.gif) no-repeat;
+}
+
+.header {
+	height: 92px;
+}
+
+/* title */
+.title {
+	float: left;
+	padding: 28px 0 0 76px;
+}
+
+#langSel
+{
+	float: left;
+	position:absolute;
+	top: -30px;
+	left:550px;
+	width:200px;
+	-moz-border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomright: 6px;
+	padding:7px 7px 7px 7px;
+	line-height:24px;
+	opacity:.650;
+	background:#2C6DDC;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size:14px;
+	z-index:0;
+}
+
+#langSel:hover
+{
+	background:#1E57B7;
+/*	top: 0px;  */
+	float: left;
+	left:550px;
+	color:#FFFFFF;
+	opacity: .999;
+}
+
+#langSel img
+{
+	border:1px;
+}
+
+.langTable
+{
+	background-color:#E1E0EB;
+	width:100%;
+	height:auto;
+}
+
+.langBtn
+{
+	float:left;
+	margin-left:50%;
+	margin-right:50%;
+}
+
+.title h1 {
+	color: #FFF;
+	font: 500 2em Verdana,sans-serif;
+}
+
+/* navigation */
+.navigation 
+{
+	float: left;
+	height: 92px;
+	margin-left: 24px;
+	padding: 0 16px;
+}
+
+/* main */
+.main {
+	background: #FFF url(img/bgmain.gif) no-repeat;
+	clear: both;
+	padding: 12px 12px 0 52px;
+}
+
+/* content */
+.content {
+	float: left;
+	margin-right: 4%;
+	width: 900px;
+}
+
+/** Fluid Version
+
+.content {
+	float: left;
+	margin-right: 4%;
+	width: 75%;
+}
+*/
+.content .descr {
+	color: #C60;
+	margin-bottom: 6px;
+}
+.content li {
+	list-style: url(img/li.gif);
+	margin-left: 18px;
+}
+
+/* search form */
+.styled {
+	border: 3px double #E5E5E5;
+	padding: 2px 3px;
+}
+.button 
+{
+	border: 1px solid #AAA;
+	font: normal 14px "Trebuchet MS", sans-serif;
+	margin-left: 5px;
+	padding: 2px 3px;
+}
+
+/* footer */
+.footer {
+	background: #0094D6 url(img/bgfooter.gif) repeat-x;
+}
+.footerText {
+	color: #C1DEF0;
+	font-size: 1.1em;
+	line-height: 30px;
+	text-align: center;
+	width: 1000px;
+
+}
+
+.footer a {
+	color: #FFF;
+	text-decoration: none;
+}
+.footer a:hover {
+	color: #FFF;
+	text-decoration: underline;
+}
+
+/* ThemeOfficeMenu Style Sheet */
+
+.ThemeOfficeMenu,.ThemeOfficeSubMenuTable
+{
+	font-family:	verdana, arial, sans-serif;
+	font-size:	13px;
+	color: #FFF;
+	padding-bottom:	2px;
+
+	white-space:	nowrap;
+	cursor:		default;
+	
+}
+
+.ThemeOfficeSubMenu
+{
+	position:	absolute;
+	visibility:	hidden;
+	overflow:	hidden;
+color: #FFF;
+	padding:	0px;
+	border:		0px;
+
+	background-color:	transparent;
+}
+
+.ThemeOfficeSubMenuTable
+{
+	padding:	1px;
+	margin:		0px 2px 2px 0px;
+}
+
+.ThemeOfficeMainItem,.ThemeOfficeMainItemHover,.ThemeOfficeMainItemActive,
+.ThemeOfficeMenuItem,.ThemeOfficeMenuItemHover,.ThemeOfficeMenuItemActive
+{
+	border:		0;
+	cursor:		default;
+	white-space:	nowrap;
+}
+
+/* common background color to both horizontal and vertical menus */
+
+.ThemeOfficeMainItem
+{
+	background-color:	transparent;
+}
+
+.ThemeOfficeMainItemHover,.ThemeOfficeMainItemActive
+{
+	background-color:	#4A91C3;
+}
+
+/* horizontal main menu */
+
+.ThemeOfficeMainItem
+{
+	padding-bottom:	-1px;
+	border:		0;
+}
+
+.ThemeOfficeMainFolderText, .ThemeOfficeMainItemText
+{
+	padding-left:	4px;
+	padding-right:	4px;
+	padding-bottom:	9px;
+	vertical-align:middle;
+}
+
+.ThemeOfficeMainFolderLeft, .ThemeOfficeMainItemLeft
+{
+	padding-top:	3px;
+}
+
+
+.ThemeOfficeMainFolderLeft,.ThemeOfficeMainItemLeft,
+.ThemeOfficeMainFolderText,.ThemeOfficeMainItemText,
+.ThemeOfficeMainFolderRight,.ThemeOfficeMainItemRight
+{
+	background-color:	inherit; 
+	white-space:	nowrap;
+}
+
+/* sub menu sub components */
+
+.ThemeOfficeMenuItem
+{
+	background-color:	#4A91C3;
+}
+
+.ThemeOfficeMenuItemHover,.ThemeOfficeMenuItemActive
+{
+	background-color:	#4A91C3;
+}
+
+.ThemeOfficeMenuFolderLeft,
+.ThemeOfficeMenuItemLeft
+{
+	padding:	3px 3px 3px 2px;
+	border:		0;
+
+	white-space:	nowrap;
+
+	background-color:	#4A91C3;
+}
+
+.ThemeOfficeMenuFolderText,
+.ThemeOfficeMenuItemText
+{
+	padding:	3px 5px 3px 5px;
+	border:		0;
+
+	white-space:	nowrap;
+}
+
+.ThemeOfficeMenuFolderRight,
+.ThemeOfficeMenuItemRight
+{
+	padding:	3px 1px 3px 0px;
+	border:		0;
+
+	white-space:	nowrap;
+}
+
+.ThemeOfficeMenuItemHover .ThemeOfficeMenuFolderLeft,
+.ThemeOfficeMenuItemActive .ThemeOfficeMenuFolderLeft,
+.ThemeOfficeMenuItemHover .ThemeOfficeMenuItemLeft,
+.ThemeOfficeMenuItemActive .ThemeOfficeMenuItemLeft
+{
+	padding:	3px 3px 3px 2px;
+
+	background-color:	#4A91C3;
+	color:#FFFFCC;
+
+}
+
+.ThemeOfficeMenuItemHover .ThemeOfficeMenuFolderText,
+.ThemeOfficeMenuItemActive .ThemeOfficeMenuFolderText,
+.ThemeOfficeMenuItemHover .ThemeOfficeMenuItemText,
+.ThemeOfficeMenuItemActive .ThemeOfficeMenuItemText
+{
+	padding:	3px 5px 3px 5px;
+color: #FFFF33;
+
+}
+
+.ThemeOfficeMenuItemHover .ThemeOfficeMenuFolderRight,
+.ThemeOfficeMenuItemActive .ThemeOfficeMenuFolderRight,
+.ThemeOfficeMenuItemHover .ThemeOfficeMenuItemRight,
+.ThemeOfficeMenuItemActive .ThemeOfficeMenuItemRight
+{
+	padding:	3px 1px 3px 0px;
+color: #FFFF33;
+}
+
+/* menu splits */
+
+td.ThemeOfficeMenuSplit
+{
+	margin:		0px;
+	padding:	0px;
+	border:		0px;
+}
+
+div.ThemeOfficeMenuSplit
+{
+	margin:		3px;
+	height:		1px;
+	overflow:	hidden;
+	background-color:	inherit;
+	border-top:	1px solid #4A91C3;
+}
+
+/* image shadow animation */
+
+/*
+	seq1:	image for normal
+	seq2:	image for hover and active
+
+	To use, in the icon field, input the following:
+	<img class="seq1" src="normal.gif" /><img class="seq2" src="hover.gif" />
+*/
+
+.ThemeOfficeMenuItem img.seq1
+{
+	display:	inline;
+}
+
+.ThemeOfficeMenuItemHover seq2,
+.ThemeOfficeMenuItemActive seq2
+{
+	display:	inline;
+}
+
+.ThemeOfficeMenuItem .seq2,
+.ThemeOfficeMenuItemHover .seq1,
+.ThemeOfficeMenuItemActive .seq1
+{
+	display:	none;
+}
