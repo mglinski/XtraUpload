@@ -29,8 +29,8 @@ RewriteRule ^(.*)/(.*)_(.*)/$ ./$1.php?$2=$3 [L]
 
 
 # Old rewrite rules for Files
-RewriteRule ^download/(.*)/(.*)$ ./index.php?p=get&file=$1 [L]
-RewriteRule ^download/(.*)$ ./index.php?p=get&file=$1 [L]
+RewriteRule ^download/(.*)/(.*)$ ./index.php?p=download&hash=$1 [L]
+RewriteRule ^download/(.*)$ ./index.php?p=download&hash=$1 [L]
 RewriteRule ^file/(.*)/(.*)$ ./index.php?p=download&link=$1&name=$2 [L]
 RewriteRule ^files/(.*)$ ./index.php?p=download&hash=$1 [L]
 

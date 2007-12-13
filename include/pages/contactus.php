@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
 require_once("./captcha.php");
 $tmp_folder = $siteurl.'temp/';
 
@@ -26,7 +27,7 @@ array(
 	'tempfolder'     => './temp/',      // string: absolute path (with trailing slash!) to a writeable tempfolder which is also accessible via HTTP!
 	'tempfolder_1'   => $tmp_folder,      // string: absolute path (with trailing slash!) to a writeable tempfolder which is also accessible via HTTP!
 	'TTF_folder'     => './fonts/', // string: absolute path (with trailing slash!) to folder which contains your TrueType-Fontfiles.
-	'TTF_RANGE'      => array('dirtyheadline.ttf','THEDOGHO.TTF','Megadeth.ttf','gothikka.ttf'),
+	'TTF_RANGE'      => array('gothikka.ttf'),
 	'chars'          => 4,       // integer: number of chars to use for ID
 	'minsize'        => 18,      // integer: minimal size of chars
 	'maxsize'        => 20,      // integer: maximal size of chars

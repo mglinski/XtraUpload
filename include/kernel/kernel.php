@@ -23,21 +23,13 @@ class kernel
 {
 	var $db;
 	var $tpl;
-	var $download;
 	var $users;
 	var $password;
-	var $image_toolbox;
-	var $image_thumbnailer;
-	var $mail;
 	var $skin;
 	var $points;
 	var $transfer;
-	var $manage;
-	var $upgrade;
 	var $crypt;
 	var $server;
-	var $language;
-	var $licensing;
 	var $version;
 	var $clean;
 	var $crontab;
@@ -75,13 +67,8 @@ class kernel
 		$this->crypt = new encrypt('@#$34T78hinbuvyfG89JIBVYCUTF7G*Y(bvYF7G89huyf7UYIVF78hiuvYF789iuvyfi78Y9HIUGfi78GUYTUD67Tdtyrs4E7R6T7t8yUYI');
 		
 		// pHp Scrubing Bubles
-		include_once('./include/kernel/phpFilter.php');
+		include_once('./include/kernel/filter.php');
 		$this->clean = new InputFilter();
-		
-		
-		// eMailer System, Now with logging functionality!
-		include_once('./include/kernel/mail.php');
-		$this->mail = new xu_mail();
 		
 		// Points Class System, 1.5.0
 		include_once('./include/kernel/points.php');
@@ -123,6 +110,19 @@ class kernel
 				$this->ext->$extName = new $extName;
 				return true;
 			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function loadPearExt($extName)
+	{
+		if(file_exists('./include/kernel/pear/'.$extName.'.php'))
+		{
+			include('./include/kernel/pear/'.$extName.'.php');
+			return new $extName;
 		}
 		else
 		{

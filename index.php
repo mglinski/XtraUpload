@@ -39,11 +39,10 @@ include("./include/init.php");
 // Auto Redirect system to prevent errors
 //----------------------------
 $host = explode('/',$siteurl);
-$host = $host[2];
-$script = explode('/',$_SERVER['SCRIPT_NAME']);
-$script = $script[(count($script) - 1)];
-if($_SERVER['HTTP_HOST'] != $host)
+if($_SERVER['HTTP_HOST'] != $host[2])
 {
+	$script = explode('/',$_SERVER['SCRIPT_NAME']);
+	$script = $script[(count($script) - 1)];
 	header("Location: ".$siteurl.$script."?".$_SERVER['QUERY_STRING']);
 	die();
 }
@@ -74,7 +73,6 @@ include('./page.php');
 //----------------------------
 if(($_GET['p'] != 'download') and ($_GET['p'] != 'upload'))
 {
-	echo '<br />'.copyright();
 	$kernel->tpl->display('site_footer.tpl');	
 }
 

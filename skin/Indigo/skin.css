@@ -283,15 +283,14 @@ color: #FFF;
 
 .ThemeOfficeMainFolderText, .ThemeOfficeMainItemText
 {
-	padding-left:	4px;
-	padding-right:	4px;
+	padding-left:	6px;
+	padding-right:	6px;
 	padding-bottom:	9px;
-	vertical-align:middle;
 }
 
 .ThemeOfficeMainFolderLeft, .ThemeOfficeMainItemLeft
 {
-	padding-top:	3px;
+	margin-top:	3px;
 }
 
 
@@ -302,6 +301,7 @@ color: #FFF;
 	background-color:	inherit; 
 	white-space:	nowrap;
 }
+
 
 /* sub menu sub components */
 

@@ -19,7 +19,7 @@ along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-include_once("include/functions.inc.php");
+include_once("include/init.php");
 
 function prune_folder_files($dir)
 {
@@ -109,12 +109,9 @@ $temp = @opendir('./temp/');
 while ($file = @readdir($temp))
 {
 	//echo $file.'<br />\n';
-	if (($file != '..' && $file != '.' && $file != 'index.php' && $file != 'index.html' && !strstr($file,'.jpg') && $file != '.htaccess' && !is_dir('./temp/' . $file)))
+	if (($file != '..' && $file != '.' && $file != 'index.php' && $file != 'index.html' && $file != '.htaccess' && !is_dir('./temp/' . $file)))
 	{
 		@unlink('./temp/'.$file);
-		
-		//echo '-> File '.$file.' is a temporary file and has been deleted
-//';
 	}
 }
 @closedir ($temp);

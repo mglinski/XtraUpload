@@ -89,7 +89,7 @@ else
 			'tempfolder'     => './temp/',      // string: absolute path (with trailing slash!) to a writeable tempfolder which is also accessible via HTTP!
 			'tempfolder_1'   => $tmp_folder,      // string: absolute path (with trailing slash!) to a writeable tempfolder which is also accessible via HTTP!
 			'TTF_folder'     => './fonts/', // string: absolute path (with trailing slash!) to folder which contains your TrueType-Fontfiles.
-			'TTF_RANGE'      => array('dirtyheadline.ttf','trebucbd.tff','trebuc.tff','THEDOGHO.TTF','Megadeth.ttf','gothikka.ttf'),
+			'TTF_RANGE'      => array('gothikka.ttf'),
 			'chars'          => 3,       // integer: number of chars to use for ID
 			'minsize'        => 20,      // integer: minimal size of chars
 			'maxsize'        => 28,      // integer: maximal size of chars
