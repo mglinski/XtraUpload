@@ -1192,7 +1192,7 @@ function parseVersion($v)
 	return $version;
 }
 
-function get_accounts()
+function get_accounts($html=false)
 {
 	global $kernel, $db, $lang;
 	
@@ -1393,9 +1393,7 @@ function get_accounts()
 	$kernel->tpl->assign('accArr', $accArr);
 	$kernel->tpl->assign('retArr', $retArr);
 	$kernel->tpl->assign('endArr', $endArr);
-	ob_start();
-	$kernel->tpl->display('premium.tpl');
-	return ob_get_clean();
+	return $kernel->tpl->fetch('premium.tpl', null, false);
 }
 
 function getFiles()

@@ -1,6 +1,5 @@
 <{if $can_manage}>
 <h2 style="font-size:24px" align="center"><{$lang.editimg.4}></h2>
-<br />
 
 <{if isset($templatelite.get.admin_password)}>
 	<form action="<?=makeXuLink('index.php', array('p' => 'folders', 'act' => 'manage'))?>" method="post" onsubmit="process_files(this);if(this.fid.value == ''){alert('<{$lang.files.1}>'); return false;}">

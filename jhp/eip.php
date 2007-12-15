@@ -19,7 +19,7 @@ along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 chdir('..');
-include("./include/functions.inc.php");
+include("./include/init.php");
 
 
 $value = txt_clean($_POST['ntg']);

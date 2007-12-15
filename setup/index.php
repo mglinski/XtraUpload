@@ -44,7 +44,7 @@ if($upgrade)
 {
 	$upgradeRunning = true;
 	// Yes, lets upgrade to the new version
-	include("./include/functions.inc.php");
+	include("./include/init.php");
 
 	// run that upgrade
 	include('./setup/upgrade.php');

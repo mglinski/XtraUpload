@@ -19,8 +19,6 @@ along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 global $lang;
-$reason = check_file_descriptive(txt_clean($_GET['hash']));
+$kernel->tpl->assign('reason',check_file_descriptive(txt_clean($_GET['hash'])));
+$kernel->tpl->display('error.tpl');
 ?>
-<script>alert('File Not Found.\nReason: <?=$reason?>');</script>
-<p align="center" style="color: #FF0000;font-weight: bold;font-size:24px;"><span id="download_text" class="style41"><?=$lang['error']['1']?></span></p><br />
-<p align="center" style="font-family: Verdana, Arial, Helvetica, sans-serif;font-weight: bold;font-size: 12px;">Reason: <?=$reason?></p><br />

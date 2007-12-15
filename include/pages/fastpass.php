@@ -18,7 +18,11 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-?><h3 style="font-size:18px"><?=$lang['fastpass']['1']?></h3><br />
+$kernel->tpl->assign('accounts', get_accounts());
+$kernel->tpl->display('fastpass.tpl');
+?>
+
+<h3 style="font-size:18px"><?=$lang['fastpass']['1']?></h3><br />
 <?=get_accounts();?><br /><br />
 <span style="font-size:14px"><?=$lang['fastpass']['2']?><br />
 <?=$lang['fastpass']['3']?></span>

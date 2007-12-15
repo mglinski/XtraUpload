@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-$versionSql = "INSERT INTO `config` VALUES (25, 'version', '1.5.6,1.0.0.0', '', '', '', '', 0);";
+$versionSql = "INSERT INTO `config` VALUES (25, 'version', '1.6.0,0.0.1.0', '', '', '', '', 0);";
 if(!isset($_GET['step']))
 {
 	

@@ -34,15 +34,12 @@ function toggle1(loc)
 .style8 {font-size: 14px; font-weight: bold; }
 -->
 </style>
-<table width="967" border="0" align="center" cellpadding="0" cellspacing="0" id="upload">
-  <tr>
-    <td width="967"><div align="center"><font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#009900"><span class="style512"><strong><br>
+
+    <div align="center"><font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#009900"><span class="style512"><strong><br>
         <{$lang.upload.7}> </strong></span></font><br />
         <strong> <{$filename}> 
-        <{$lang.url.19}></strong></div></td>
-  </tr>
-  <tr>
-    <td><div align="center" class="style1">
+        <{$lang.url.19}></strong></div>
+        <div align="center" class="style1">
       <p align="center"><br />
       <{if $reUpload}>
         <b><{$reMsg}></b>
@@ -137,9 +134,4 @@ function toggle1(loc)
         </p>
         <{/if}>
         <p align="center"> <font face="Verdana, Arial, Helvetica, sans-serif"> <{$lang.upload.13}><{$templatelite.SERVER.REMOTE_ADDR.}><{$lang.upload.14}> </font></p>
-      </div></td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-</table>
+      </div>

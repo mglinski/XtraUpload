@@ -18,6 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+$kernel->tpl->assign('accounts', get_accounts());
+$kernel->tpl->display('errordl.tpl');
 ?>
-<p align="center"><strong><font color="#FF0000" size="5"><?=$lang['errordl']['1']?></font></strong></p><br />
-<?=$lang['errordl']['2']?><a href="<?=makeXuLink('index.php', array('p' => 'rules'))?>"><?=$lang['errordl']['3']?></a>.</p><hr /><? get_accounts();?></td>
