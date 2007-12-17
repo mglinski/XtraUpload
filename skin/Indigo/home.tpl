@@ -14,6 +14,7 @@ var swfu;
 var flashUploadStartTime;
 var flashUploadFileId;
 var pbUpd = 0;
+var flashUploadCancel = false;
 
 
 function loadFileForDownload(link)
@@ -182,6 +183,7 @@ function flashUploadProgress(file, sofar, total)
 	var bRead = sofar;
 	var lapsed =  flashCurrentTime - flashUploadStartTime;
 	var bSpeed = 0; 
+	var speed = 0; 
 	var remaining = 0;
 	
 	if(lapsed > 0)
@@ -227,23 +229,20 @@ function flashUploadProgress(file, sofar, total)
 	}
 	speed = Math.round(speed / 1024);	
 	
-	if(pbUpd % 5 == 0)
+	if(pbUpd % 2 == 0)
 	{
 		flashUpdate(Math.round(sofar/1024),Math.round(total/1024),remainingf,lapsedf,speed,percent);
 	}
 	pbUpd++;
 }
 
-function flashUploadComplete()
-{
-	location = '<{$siteurl}>index.php?p=fileUpload&secid=<{$sid}>';
-}
-
 function flashBrowseButton()
 {
+	flashUploadCancel = true;
 	$('#flashFileName').attr('value', '');
 	$('#flashFileUploadButton').attr('disabled',true);
 	swfu.cancelUpload();
+	flashUploadCancel = false;
 	swfu.selectFile();
 }
 
@@ -255,52 +254,37 @@ function flashBrowseComplete(file)
 
 function flashUploadError(file, errorCode, message)
 {
-	if(errorCode != -280)
+	if(!flashUploadCancel)
 	{
 		alert("Upload Failed: "+ message);
-	}
-	else
-	{
-		
 	}
 }
 
 function flashUploadQueueError(file,errorCode, message)
 {
-	alert(message+', EC: '+errorCode);
+	alert(message);
 }
 
 function flashUploadComplete(file)
 {
 	flashUpdate(Math.round(file.size/1024),Math.round(file.size/1024),'00:00:00','','',100);
+	location = '<{$siteurl}>index.php?p=fileUpload&secid=<{$sid}>';
 }
-
 
 function sendFlashUpload()
 {
+	var flashFeatured;
 	var post_params;
 	if($('#flashFeatured').attr('checked') && $('#flashFeatured').attr('value'))
 	{
-		flashFeatured = 1;
+		flashFeatured = "1";
 	}
 	else
 	{
-		flashFeatured = 0;
+		flashFeatured = "0";
 	}
-	
-	post_params = { 
-			"sid" : "<{$sid}>",
-			"server" : "<{$server_id|escape:'urlpathinfo'}>",
-			"user" : "<{$myuid}>",
-			"flash" : "true",
-			"p" : "upload",
-			"secid" : "<{$sid}>",
-			"description" : $('#flashDescription').attr('value'),
-			'password' : $('#flashPassword').attr('value'),
-			'email' : $('#flashEmail').attr('value'),
-			'featured' : flashFeatured
-		};
-	swfu.setPostParams(post_params);
+
+	swfu.setUploadURL("<{$server_id}>/index.php?p=upload&flash=true&sid=<{$sid}>&server=<{$server_id|escape:'urlpathinfo'}>&secid=<{$sid}>&user=<{$myuid}>&description="+$('#flashDescription').attr('value')+"&email="+$('#flashPassword').attr('value')+"&password="+$('#flashEmail').attr('value')+"&featured="+flashFeatured);
 	
 	popUP();
 	$("#up_flash").css('display', 'none');
@@ -327,18 +311,9 @@ function load_flash()
 	}
 
 	var settings_object = { 
-		upload_url : "<{$server_id}>/index.php?p=upload&flash=true&sid=<{$sid}>&server=<{$server_id|escape:'urlpathinfo'}>&secid=<{$sid}>&user=<{$myuid}>", 
-		post_params : { 
-			"sid" : "<{$sid}>",
-			"server" : "<{$server_id|escape:'urlpathinfo'}>",
-			"user" : "<{$myuid}>",
-			"flash" : "true",
-			"p" : "upload",
-			"secid" : "<{$sid}>"
-		}, 
 		file_types : types, 
 		file_types_description: "Allowed Files", 
-		file_size_limit : <{$limit_size_int}>*1024*1024, 
+		file_size_limit : (<{$limit_size_int}>*1024*1024), 
 		file_upload_limit : 1, 
 		file_queue_limit : 1, 
 		flash_url : "<{$siteurl}>/flash/swfupload_f8.swf", 
@@ -351,7 +326,7 @@ function load_flash()
 		upload_error_handler : flashUploadError, 
 		file_queue_error_handler : flashUploadQueueError,
 		file_queued_handler : flashBrowseComplete,
-		upload_complete_handler : flashUploadComplete, 
+		upload_complete_handler : flashUploadComplete
 	};
 	
 	swfu = new SWFUpload(settings_object);
@@ -399,7 +374,7 @@ $(document).ready(function()
 	height: 18px;
 }
 .progress_img {
-	background:url(<{$siteurl}>images/p_bar_n.gif) repeat-x;
+	background:url(<{$siteurl}>images/p_bar_n.gif) left top repeat-x;
 	height: 18px;
 	width: 0px;
 }
