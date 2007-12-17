@@ -167,3 +167,9 @@ function showUploadBrowserOptions()
 	$('#uploadBrowserOptions').slideDown('normal');
 	$('#uploadBrowserOptionsLink').slideUp('normal');
 }
+
+function showUploadFlashOptions()
+{
+	$('#uploadFlashOptions').slideDown('normal');
+	$('#uploadFlashOptionsLink').slideUp('normal');
+}

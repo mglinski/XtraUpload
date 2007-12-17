@@ -135,3 +135,4 @@ function toggle1(loc)
         <{/if}>
         <p align="center"> <font face="Verdana, Arial, Helvetica, sans-serif"> <{$lang.upload.13}><{$templatelite.SERVER.REMOTE_ADDR.}><{$lang.upload.14}> </font></p>
       </div>
+   </div>

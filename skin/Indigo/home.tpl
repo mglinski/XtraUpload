@@ -10,13 +10,17 @@ var lang3 = '<{$lang.script.3}>';
 var lang4 = '<{$lang.script.4}>';
 var files_restricted = "<{$files_restrict_allowed}>";
 var fileExt = "<{$fileExt}>";
+var swfu;
+var flashUploadStartTime;
+var flashUploadFileId;
+var pbUpd = 0;
+
 
 function loadFileForDownload(link)
 {
-	location = '<{$siteurl}>index.php?p=get&file='+link;
+	location = '<{$siteurl}>index.php?p=download&hash='+link;
 	return false;
 }
-
 
 function check_types(id) 
 {
@@ -146,35 +150,211 @@ function update(u,p,d,a,t,e,s)
 	$("#progress_img").animate({width: e*6}, 'normal');
 	$("#p_link").attr('value', s);
 }
+
+function flashUpdate(u,p,d,a,t,e)
+{
+	if(u != '')
+		$('#trans').html(u);
+	
+	if(p != '')
+		$('#total').html(p);
+	
+	if(d != '')
+		$('#remaining').html(d);
+	
+	if(a != '')
+		$('#elapsed').html(a);
+	
+	if(t != '')
+		$('#speed').html(t);
+	
+	if(e != '')
+	{
+		$('#percent').html(e);
+		$("#progress_img").animate({width: e*6}, 'fast');
+	}
+}
+
+function flashUploadProgress(file, sofar, total)
+{
+	var flashCurrentTime = Math.round(new Date().getTime()/1000.0);
+	
+	var bRead = sofar;
+	var lapsed =  flashCurrentTime - flashUploadStartTime;
+	var bSpeed = 0; 
+	var remaining = 0;
+	
+	if(lapsed > 0)
+	{ 
+		bSpeed = (bRead / lapsed); 
+	}
+	
+	if(bSpeed > 0)
+	{ 
+		remaining = Math.round((total - sofar) / bSpeed); 
+	}
+	
+	var remaining_sec = (remaining % 60); 
+	var remaining_min = (((remaining - remaining_sec) % 3600) / 60); 
+	var remaining_hours = ((((remaining - remaining_sec) - (remaining_min * 60)) % 86400) / 3600); 
+	
+	if(remaining_sec < 10){ remaining_sec = "0"+remaining_sec; }
+	if(remaining_min < 10){ remaining_min = "0"+remaining_min; }
+	if(remaining_hours < 10){ remaining_hours = "0"+remaining_hours; }
+	
+	var remainingf = remaining_hours+":"+remaining_min+":"+remaining_sec; 
+	
+	
+	var lapsed_sec = (lapsed % 60); 
+	var lapsed_min = (((lapsed - lapsed_sec) % 3600) / 60); 
+	var lapsed_hours = ((((lapsed - lapsed_sec) - (lapsed_min * 60)) % 86400) / 3600); 
+	
+	if(lapsed_sec < 10){ lapsed_sec = "0"+lapsed_sec; }
+	if(lapsed_min < 10){ lapsed_min = "0"+lapsed_min; }
+	if(lapsed_hours < 10){ lapsed_hours = "0"+lapsed_hours; }
+	
+	var lapsedf = lapsed_hours+":"+lapsed_min+":"+lapsed_sec; 
+	
+	
+	var percent = Math.round(100 * bRead / total);
+	if(lapsed>1)
+	{
+		speed = Math.round(bRead / lapsed);
+	}
+	else
+	{
+		speed = 0;
+	}
+	speed = Math.round(speed / 1024);	
+	
+	if(pbUpd % 5 == 0)
+	{
+		flashUpdate(Math.round(sofar/1024),Math.round(total/1024),remainingf,lapsedf,speed,percent);
+	}
+	pbUpd++;
+}
+
+function flashUploadComplete()
+{
+	location = '<{$siteurl}>index.php?p=fileUpload&secid=<{$sid}>';
+}
+
+function flashBrowseButton()
+{
+	$('#flashFileName').attr('value', '');
+	$('#flashFileUploadButton').attr('disabled',true);
+	swfu.cancelUpload();
+	swfu.selectFile();
+}
+
+function flashBrowseComplete(file)
+{
+	$('#flashFileName').attr('value', file.name);
+	$('#flashFileUploadButton').attr('disabled',false);
+}
+
+function flashUploadError(file, errorCode, message)
+{
+	if(errorCode != -280)
+	{
+		alert("Upload Failed: "+ message);
+	}
+	else
+	{
+		
+	}
+}
+
+function flashUploadQueueError(file,errorCode, message)
+{
+	alert(message+', EC: '+errorCode);
+}
+
+function flashUploadComplete(file)
+{
+	flashUpdate(Math.round(file.size/1024),Math.round(file.size/1024),'00:00:00','','',100);
+}
+
+
+function sendFlashUpload()
+{
+	var post_params;
+	if($('#flashFeatured').attr('checked') && $('#flashFeatured').attr('value'))
+	{
+		flashFeatured = 1;
+	}
+	else
+	{
+		flashFeatured = 0;
+	}
+	
+	post_params = { 
+			"sid" : "<{$sid}>",
+			"server" : "<{$server_id|escape:'urlpathinfo'}>",
+			"user" : "<{$myuid}>",
+			"flash" : "true",
+			"p" : "upload",
+			"secid" : "<{$sid}>",
+			"description" : $('#flashDescription').attr('value'),
+			'password' : $('#flashPassword').attr('value'),
+			'email' : $('#flashEmail').attr('value'),
+			'featured' : flashFeatured
+		};
+	swfu.setPostParams(post_params);
+	
+	popUP();
+	$("#up_flash").css('display', 'none');
+	$("#p_bar_load").css('display', 'block');
+	flashUploadStartTime = Math.round(new Date().getTime()/1000.0);
+	swfu.startUpload();
+}
+
 function load_flash()
 {
-	$('#flash_upload_swf').flash(
-	{ 
-		pluginspage: 'http://www.adobe.com/go/getflashplayer',
-		type: 'application/x-shockwave-flash', 
-		width: "500", 
-		height: "200", 
-		src: '<{$siteurl}>upload.swf', 
-		quality: "high", 
-		wmode: "transparent", 
-		flashvars: {
-						server: "<{$server_id}>", 
-						server1: "<{$server_id|escape:'urlpathinfo'}>", 
-						sessionid: "<{$sid}>", 
-						secid: "<{$sid}>", 
-						limit: "<{$limit_size_int}>", 
-						allowed: "<{$filetypes}>", 
-						allow_featured: "<{$allow_featured_int}>", 
-						loggeduser: "<{$myuid}>", 
-						files_restricted: "<{$files_restrict_allowed}>", 
-						rewrite_links: "<{$rewrite_links}>", 
-						can_email: "<{$can_email}>"
-					}
-	}, 
-	{ 
-		expressInstall: true, 
-		version: 8 
-	});
+	var fileTypes = '<{$filetypes}>';
+	var types = '';
+	if(fileTypes != '*')
+	{
+		fileTypes = fileTypes.split('|');
+		for(var x=0; x<fileTypes.length; x++)
+		{
+			types += "*."+fileTypes[x]+",";
+		}
+	}
+	else
+	{
+		types = '*.*';
+	}
+
+	var settings_object = { 
+		upload_url : "<{$server_id}>/index.php?p=upload&flash=true&sid=<{$sid}>&server=<{$server_id|escape:'urlpathinfo'}>&secid=<{$sid}>&user=<{$myuid}>", 
+		post_params : { 
+			"sid" : "<{$sid}>",
+			"server" : "<{$server_id|escape:'urlpathinfo'}>",
+			"user" : "<{$myuid}>",
+			"flash" : "true",
+			"p" : "upload",
+			"secid" : "<{$sid}>"
+		}, 
+		file_types : types, 
+		file_types_description: "Allowed Files", 
+		file_size_limit : <{$limit_size_int}>*1024*1024, 
+		file_upload_limit : 1, 
+		file_queue_limit : 1, 
+		flash_url : "<{$siteurl}>/flash/swfupload_f8.swf", 
+		flash_width : "1px", 
+		flash_height : "1px", 
+		flash_color : "#FFFFFF", 
+		debug : false, 
+		
+		upload_progress_handler : flashUploadProgress, 
+		upload_error_handler : flashUploadError, 
+		file_queue_error_handler : flashUploadQueueError,
+		file_queued_handler : flashBrowseComplete,
+		upload_complete_handler : flashUploadComplete, 
+	};
+	
+	swfu = new SWFUpload(settings_object);
 }
 
 $(document).ready(function()
@@ -238,9 +418,6 @@ $(document).ready(function()
           <span class="style1">
           <{$lang.home.1}>
           </span><br />
-          <{if !$upload_cgi}> 
-          	<{$lang.home.2}> 
-          <{/if}>
         </center>
       </div>
       <div id="p_bar_load" style="display:none"><br />
@@ -287,6 +464,7 @@ $(document).ready(function()
           <{$lang.home.11}>
           </strong></span> </p>
         <br />
+        </div>
         <div class="style118" id="upload_sect" style="display:" align="center">
           <{if $can_flash}>
           	<a href="javascript:;" class="style119" onclick="show_upload_flash()" ><{$lang.home.13}></a> |
@@ -481,11 +659,69 @@ $(document).ready(function()
             <{$lang.home.17}><{$limit_size}><{$lang.home.18}>
           </center>
           </span><br />
-          <div id="flash_upload_swf" align="center"></div>
+       	  <div id="flash_upload_swf" align="center">
+          		<input type="text" id="flashFileName" size="40"  /> <input type="button" value="  Browse...  " onclick="flashBrowseButton()" />
+                <br />
+                <{$getFiles}> <br />
+                <input type="button" id="uploadFlashOptionsButton" onclick="showUploadFlashOptions()" value="<{$lang.home.34}>" />
+              <input type="button" onclick="sendFlashUpload()" id="flashFileUploadButton" disabled="disabled" value="<{$lang.home.22}>" />
+              <div id="uploadFlashOptions" style="display:none; border:#FFCC33 dashed medium"><br />
+                <div align="center" style="font-size: 18px; font-weight: bold;">Upload Options </div>
+                <br />
+                <table width="753" height="209" border="0" cellpadding="3" cellspacing="3">
+                  <tr>
+                    <td valign="top" width="373"><p align="left" >
+                        <{$lang.home.21}>
+                        <br />
+                        <input name="password" type="text" id="flashPassword" size="71" />
+                        <br />
+                      </p></td>
+                    <td width="359"  valign="top" height="61"><div align="left">
+                          <{if $allow_featured}>
+                              <p align="left" >
+                                  <{$lang.home.26}>
+                                  <br />
+                                  
+                                  <input name="featured" type="checkbox" id="flashFeatured" value="1" />
+                                  <label for="featured3">
+                                  	<{$lang.home.27}>
+                                  </label>
+                                  <br />
+
+                              </p>
+                          <{else}>
+                         	 <input name="featured" type="hidden" id="flashFeatured" value="0" />
+                          <{/if}>
+                          </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top">
+                      <div align="left">
+                        <{$lang.home.20}>
+                        <br />
+                        <textarea name="description" cols="35" rows="7" id="flashDescription"></textarea>
+                        <br />
+                      </div></td>
+                    <td  valign="top"><div align="left">
+                        <{ if $can_email}>
+                            <strong>
+                            <{$lang.home.30}>
+                            </strong><br />
+                            <textarea name="email" cols="30" rows="4" id="flashEmail"></textarea><br />
+                            <{$lang.home.31}>
+                            <br />
+                            <{$lang.home.32}>
+                        <{/if}>
+                      </div></td>
+                  </tr>
+                </table>
+              </div>
+              </br>
+              
+</div>
           <br />
-          <div align="center">
-            <{$getFiles}>
-          </div>
+          <div align="center"></div>
           <{/if}>
         </div>
       </div>
