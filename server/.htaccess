@@ -1,0 +1,39 @@
+###############################
+# XtraUpload mod_rewrite rules
+#     Code (c) - Xtrafile
+#        Xtrafile.com
+###############################
+RewriteEngine On
+#CheckSpelling off
+
+# Uncomment if you know where you are doing...
+#RewriteBase /xu
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+
+# New Rewrite Rules for total site SEO
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/index\.htm$ ./$1.php?$2=$3&$4=$5&$6=$7&$8=$9&$10=$11 [L]
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/index\.htm$ ./$1.php?$2=$3&$4=$5&$6=$7&$8=$9 [L]
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/index\.htm$ ./$1.php?$2=$3&$4=$5&$6=$7& [L]
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/index\.htm$ ./$1.php?$2=$3&$4=$5 [L]
+RewriteRule ^(.*)/(.*)_(.*)/index\.htm$ ./$1.php?$2=$3 [L]
+
+# More New Rewrite Rules for total site SEO, without index.htm pagess at the end
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/$ ./$1.php?$2=$3&$4=$5&$6=$7&$8=$9&$10=$11 [L]
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/$ ./$1.php?$2=$3&$4=$5&$6=$7&$8=$9 [L]
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/(.*)_(.*)/$ ./$1.php?$2=$3&$4=$5&$6=$7& [L]
+RewriteRule ^(.*)/(.*)_(.*)/(.*)_(.*)/$ ./$1.php?$2=$3&$4=$5 [L]
+RewriteRule ^(.*)/(.*)_(.*)/$ ./$1.php?$2=$3 [L]
+
+
+# Old rewrite rules for Files
+RewriteRule ^download/(.*)/(.*)$ ./index.php?p=download&hash=$1 [L]
+RewriteRule ^download/(.*)$ ./index.php?p=download&hash=$1 [L]
+RewriteRule ^file/(.*)/(.*)$ ./index.php?p=download&link=$1&name=$2 [L]
+RewriteRule ^files/(.*)$ ./index.php?p=download&hash=$1 [L]
+
+# Old Rewrite rules for direct imaging
+RewriteRule ^imagedirect/(.*)$ ./imagedirect.php?file=$1 [L]
+RewriteRule ^thumb/(.*)$ ./imagedirect.php?file=$1&thumb=true [L]
