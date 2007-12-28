@@ -18,23 +18,22 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-$qr = $db->query("SELECT * FROM `files` WHERE `pkey` = '".txt_clean($_GET['del'])."' AND `hash` = '".txt_clean($_GET['file'])."' LIMIT 1");
-$num = $db->num($qr);
-$file = $db->fetch($qr);
 
-$kernel->tpl->assign('file', $file);
-
-if((!(file_exists("./files/".substr($file->md5,0,2).'/'.$file->filename))) or $num != '1')
+if(!check_file_bool(txt_clean($_GET['file'])))
 {
 	$kernel->tpl->assign('fileExists', false);
 }
 else if(isset($_POST['del']) && $_POST['del'] == 'yes')
 {
+	$kernel->tpl->assign('fileExists', true);
 	$kernel->tpl->assign('msg', delfile_user(txt_clean($_GET['del'])));
 }
 else
 {
-
+	$kernel->tpl->assign('fileExists', true);
+	$qr = $db->query("SELECT * FROM `files` WHERE `pkey` = '".txt_clean($_GET['del'])."' AND `hash` = '".txt_clean($_GET['file'])."' LIMIT 1");
+	$file = $db->fetch($qr, 'alpha');
+	$kernel->tpl->assign('file', $file);
 }
 
 $kernel->tpl->display('delfile.tpl');

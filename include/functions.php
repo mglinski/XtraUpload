@@ -541,19 +541,46 @@ function delfile_user($pkey)
 	}
 	else
 	{
-		$row = $kernel->db->fetch($qr1,'obj');
-		if( file_exists("./files/".substr($row->md5,0,2).'/'.$row->filename)	)
+		if(!strstr($siteurl,$qr1->server))
 		{
-			unlink("./files/".substr($row->md5,0,2).'/'.$row->filename);
+			$fp = fopen($qr1->server."/index.php?p=delfile&file=".$qr1->pkey,"r");
+			if($fp)
+			{
+				$exit = '';
+				while(!feof($fp))
+				{
+					$exit .=  @fread($fp, 1024);
+				}
+				if($exit)
+				{
+					return "<font color='#009900'>".$lang['functions']['3']."</font>";
+				}
+				else
+				{
+					return "<font color='#FF0000'>".$lang['functions']['7']."</font>";
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
-		
-		if( file_exists("./thumbs/thumbs_".$row->filename)	)
+		else
 		{
-			unlink("./thumbs/thumbs_".$row->filename);
+			$row = $kernel->db->fetch($qr1,'obj');
+			if( file_exists("./files/".substr($row->md5,0,2).'/'.$row->filename)	)
+			{
+				unlink("./files/".substr($row->md5,0,2).'/'.$row->filename);
+			}
+			
+			if( file_exists("./thumbs/thumbs_".$row->filename)	)
+			{
+				unlink("./thumbs/thumbs_".$row->filename);
+			}
+			$kernel->db->query("UPDATE files SET `status` = '2' WHERE `pkey` = '".$pkey."'");
+			log_action('File Deleted By user', 'file:delete', 'The File('.$row->o_filename.') was deleted by '.$_SESSION['username'], 'ok', 'delfile.php');
+			return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
 		}
-		$kernel->db->query("UPDATE files SET `status` = '2' WHERE `pkey` = '".$pkey."'");
-		log_action('File Deleted By user', 'file:delete', 'The File('.$row->o_filename.') was deleted by '.$_SESSION['username'], 'ok', 'delfile.php');
-		return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
 	}
 }
 

@@ -284,7 +284,28 @@ function sendFlashUpload()
 		flashFeatured = "0";
 	}
 
-	swfu.setUploadURL("<{$server_id}>/index.php?p=upload&flash=true&sid=<{$sid}>&server=<{$server_id|escape:'urlpathinfo'}>&secid=<{$sid}>&user=<{$myuid}>&description="+$('#flashDescription').attr('value')+"&email="+$('#flashPassword').attr('value')+"&password="+$('#flashEmail').attr('value')+"&featured="+flashFeatured);
+	var url;
+	
+	var fDesc = $('#flashDescription').val();
+	if(!fDesc == 'undefined')
+	{
+		fDesc = '';
+	}
+	
+	var fEmail = $('#flashEmail').val();
+	if(!fEmail == 'undefined')
+	{
+		fEmail = '';
+	}
+	
+	var fPass = $('#flashPassword').val();
+	if(!fPass)
+	{
+		fPass = '';
+	}
+
+	url = "<{$server_id}>/index.php?p=upload&flash=true&sid=<{$sid}>&server=<{$server_id|escape:'urlpathinfo'}>&secid=<{$sid}>&user=<{$myuid}>&description="+fDesc+"&email="+fEmail+"&password="+fPass+"&featured="+flashFeatured;
+	swfu.setUploadURL(url);
 	
 	popUP();
 	$("#up_flash").css('display', 'none');
@@ -316,7 +337,7 @@ function load_flash()
 		file_size_limit : (<{$limit_size_int}>*1024*1024), 
 		file_upload_limit : 1, 
 		file_queue_limit : 1, 
-		flash_url : "<{$siteurl}>/flash/swfupload_f8.swf", 
+		flash_url : "<{$siteurl}>flash/swfupload_f8.swf", 
 		flash_width : "1px", 
 		flash_height : "1px", 
 		flash_color : "#FFFFFF", 

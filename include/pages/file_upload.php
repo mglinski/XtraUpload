@@ -42,7 +42,7 @@ if($a->hash != '')
 	$filename = $a->o_filename;
 	$kernel->tpl->assign('filename', $filename);
 	
-	$durl = makeXuLink('index.php', array('p' => 'delfile', 'file' => $a->hash, 'del' => $a->pkey));
+	$durl = makeXuLink('index.php', array('p' => 'delfile', 'file' => $a->hash, 'del' => $a->pkey), $a->server);
 	$kernel->tpl->assign('durl', $durl);
 	
 	$description = $a->description;

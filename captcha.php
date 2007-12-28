@@ -550,7 +550,7 @@ $s= "
 			}
 			else
 			{
-				$func1 = 'imageCreate';
+				$func1 = 'imagecreate';
 				$func2 = 'imagecolorclosest';
 			}
 			$image = $func1($this->lx,$this->ly);
@@ -560,8 +560,8 @@ $s= "
 
 			// Set Backgroundcolor
 			$this->random_color(224, 255);
-			$back =  @imagecolorallocate($image, $this->r, $this->g, $this->b);
-			@ImageFilledRectangle($image,0,0,$this->lx,$this->ly,$back);
+			$back =  Imagecolorallocate($image, $this->r, $this->g, $this->b);
+			ImageFilledRectangle($image,0,0,$this->lx,$this->ly,$back);
 			if($this->debug) echo "\n<br>-Captcha-Debug: We allocate one color for Background: (".$this->r."-".$this->g."-".$this->b.")";
 
 			// allocates the 216 websafe color palette to the image
@@ -587,7 +587,7 @@ $s= "
 					$color	= $func2($image, $this->r, $this->g, $this->b);
 					srand((double)microtime()*1000000);
 					$text	= chr(intval(rand(45,250)));
-					@ImageTTFText($image, $size, $angle, $x, $y, $color, $this->change_TTF(), $text);
+					ImageTTFText($image, $size, $angle, $x, $y, $color, $this->change_TTF(), $text);
 				}
 			}
 			else
@@ -598,14 +598,14 @@ $s= "
 				{
 					$this->random_color(160, 224);
 					$color	= $func2($image, $this->r, $this->g, $this->b);
-					@imageline($image, $i, 0, $i, $this->ly, $color);
+					Imageline($image, $i, 0, $i, $this->ly, $color);
 				}
 				if($this->debug) echo "\n<br>-Captcha-Debug: Fill background with y-gridlines: (".(int)($this->ly / (int)(($this->minsize / 1.8))).")";
 				for($i=0 ; $i < $this->ly; $i += (int)($this->minsize / 1.8))
 				{
 					$this->random_color(160, 224);
 					$color	= $func2($image, $this->r, $this->g, $this->b);
-					@imageline($image, 0, $i, $this->lx, $i, $color);
+					Imageline($image, 0, $i, $this->lx, $i, $color);
 				}
 			}
 
@@ -624,14 +624,14 @@ $s= "
 				$color	=  $func2($image, $this->r, $this->g, $this->b);
 				$this->random_color(0, 127);
 				$shadow = $func2($image, $this->r + 127, $this->g + 127, $this->b + 127);
-				@ImageTTFText($image, $size, $angle, $x + (int)($size / 15), $y, $shadow, $this->change_TTF(), $text);
-				@ImageTTFText($image, $size, $angle, $x, $y - (int)($size / 15), $color, $this->TTF_file, $text);
+				ImageTTFText($image, $size, $angle, $x + (int)($size / 15), $y, $shadow, $this->change_TTF(), $text);
+				ImageTTFText($image, $size, $angle, $x, $y - (int)($size / 15), $color, $this->TTF_file, $text);
 				$x += (int)($size + ($this->minsize / 5));
 			}
-			@ImageJPEG($image, $this->get_filename(), $this->jpegquality);
+			ImageJPEG($image, $this->get_filename(), $this->jpegquality);
 			$res = file_exists($this->get_filename());
 			if($this->debug) echo "\n<br>-Captcha-Debug: Safe Image with quality [".$this->jpegquality."] as (".$this->get_filename().") returns: (".($res ? 'TRUE' : 'FALSE').")";
-			@ImageDestroy($image);
+			ImageDestroy($image);
 			if($this->debug) echo "\n<br>-Captcha-Debug: Destroy Imagestream.";
 			if(!$res) die('Unable to save captcha-image.');
 		}
