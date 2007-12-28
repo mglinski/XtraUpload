@@ -368,6 +368,13 @@ Permissions Found: <?=$perms?></strong>
 	    <div class='description'>(Localhost is default but in some cases it can be your ip (server ip)</div></td>
 	  <td class='pformright'><input name="sql_server" type="text" id="sql_server" value="localhost" size="55" /></td>
 	</tr>
+    
+    <tr>
+	  <td class='pformleftw'><b>Use MySQLi?</b>
+	    <div class='description'>Use the improved version of MySQL(improvements only noticable on large sites)</div></td>
+	  <td class='pformright'><input name="mysqli" type="radio" id="mysqli_t" value="true" /> Yes<br />
+      <input name="mysqli" type="radio" id="mysqli_f" value="false" />no</td>
+	</tr>
 	
 
 	</table>
@@ -462,6 +469,7 @@ $dbName = "'.$_POST['sql_name'].'"; //mysql database
 $trans = "'.$_POST['trans'].'"; // Currently: EN = English, DE = Deutsch/German, SP = Spanish, KR = Korean, CH = Chinese, More to come soon!
 $language = "english.php"; // The File That Contains all the Text for XtraUpload. Located in the include/languages folder.
 $serverurl = "'.$server.'"; // URL to compare to for Progress bar
+$use_mysqli = '.$_POST['mysqli'].'; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
 ?>';
 
 $fp = fopen('./config.php', 'w');

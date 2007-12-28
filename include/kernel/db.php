@@ -32,24 +32,49 @@ class db_conn
 	var $memcacheStore;
 	var $use_memcache;
 	var $hooks;
-
+	var $preStr = 'mysql_';
+	
 	function connect($server, $conn_username, $conn_password, $database_name)
 	{
-		global $pdBconn;
+		global $pdBconn, $use_mysqli;
 		
-		$this->hooks = new stdClass;
+		//$this->hooks = new stdClass;
 		
-		if(!$pdBconn)
+		
+		if($use_mysqli)
 		{
-			$this->connection = mysql_connect($server,$conn_username,$conn_password,true) or $this->error_out('Could not connect to the database: '.mysql_error().'<br />');
+			$this->preStr = 'mysqli_';
+		}
+		
+		if(!$this->mysqli)
+		{
+			if(!$pdBconn)
+			{
+				$this->connection = mysql_connect($server,$conn_username,$conn_password,true) or $this->error_out('Could not connect to the database: '.mysql_error().'<br />');
+			}
+			else
+			{
+				$this->preStr = 'mysql_';
+				$this->connection = mysql_pconnect($server,$conn_username,$conn_password) or $this->error_out('Could not connect to the database: '.mysql_error().'<br />');
+			}
+			
+			mysql_select_db($database_name) or $this->error_out('Could not select the database: '.mysql_error().'<br />');
 		}
 		else
 		{
-			$this->connection = mysql_pconnect($server,$conn_username,$conn_password) or $this->error_out('Could not connect to the database: '.mysql_error().'<br />');
+			if(!$pdBconn)
+			{
+				$this->connection = mysqli_connect($server,$conn_username,$conn_password,true) or $this->error_out('Could not connect to the database: '.mysqli_error().'<br />');
+				mysqli_select_db($database_name) or $this->error_out('Could not select the database: '.mysqli_error().'<br />');
+			}
+			else
+			{
+				$this->preStr = 'mysql_';
+				$this->connection = mysql_pconnect($server,$conn_username,$conn_password) or $this->error_out('Could not connect to the database: '.mysql_error().'<br />');
+				mysql_select_db($database_name) or $this->error_out('Could not select the database: '.mysql_error().'<br />');
+			}
 		}
-		mysql_select_db($database_name) or $this->error_out('Could not select the database: '.mysql_error().'<br />');
 	}
-
 
 	function error_out($msg)
 	{
@@ -122,7 +147,14 @@ class db_conn
 			else
 			{
 				$ser = array();
-				$result = mysql_query($query);
+				if(!$this->mysqli)
+				{
+					$result = mysql_query($query);
+				}
+				else
+				{
+					$result = mysqli_query($query);
+				}
 				
 				$ser['query'] = $query;
 				$ser['fetch'] = serialize($this->fetch($result));
@@ -135,14 +167,32 @@ class db_conn
 		else
 		{
 			$this->memcacheStore = '';
-			$result = mysql_query($query);
+			if(!$this->mysqli)
+			{
+				$result = mysql_query($query);
+			}
+			else
+			{
+				$result = mysqli_query($query);
+			}
 		}
 		
 		
-        if (!$result) 
+		if(!$this->mysqli)
 		{
-            $error = 'Could not run query: ' . mysql_error().'<br />'.$place;
-            $this->error_out($error.$query);
+			 if (!$result) 
+			{
+				$error = 'Could not run query: ' . mysql_error().'<br />'.$place;
+				$this->error_out($error.$query);
+			}
+		}
+		else
+		{
+			 if (!$result) 
+			{
+				$error = 'Could not run query: ' . mysqli_error().'<br />'.$place;
+				$this->error_out($error.$query);
+			}
 		}
 		return $result;
     }
@@ -159,12 +209,23 @@ class db_conn
 			return $this->memcacheStore['insert_id'];
 		}
 		
-		$result = mysql_insert_id($query);
-
-        if (!$result and $this->memcacheStore == '') 
+		if(!$this->mysqli)
 		{
-            $error = 'Could not get insert id: ' . mysql_error().'<br />'.$place;
-            $this->error_out($error.$query);
+			$result = mysql_insert_id($query);
+			if (!$result and $this->memcacheStore == '') 
+			{
+				$error = 'Could not get insert id: ' . mysql_error().'<br />'.$place;
+				$this->error_out($error.$query);
+			}
+		}
+		else
+		{
+			$result = mysqli_insert_id($query);
+			if (!$result and $this->memcacheStore == '') 
+			{
+				$error = 'Could not get insert id: ' . mysqli_error().'<br />'.$place;
+				$this->error_out($error.$query);
+			}
 		}
 		return $result;
     }
@@ -197,17 +258,35 @@ class db_conn
 		}
 		*/
 		
-		if (strtolower($type) == "num")
+		if(!$this->mysqli)
 		{
-			$fetch = mysql_fetch_row($result);
+			if (strtolower($type) == "num")
+			{
+				$fetch = mysql_fetch_row($result);
+			}
+			else if(strtolower($type) == "alpha")
+			{
+				$fetch = mysql_fetch_assoc($result);
+			}
+			else if(strtolower($type) == "obj")
+			{
+				$fetch = mysql_fetch_object($result);
+			}
 		}
-		else if(strtolower($type) == "alpha")
+		else
 		{
-			$fetch = mysql_fetch_assoc($result);
-		}
-		else if(strtolower($type) == "obj")
-		{
-			$fetch = mysql_fetch_object($result);
+			if (strtolower($type) == "num")
+			{
+				$fetch = mysqli_fetch_row($result);
+			}
+			else if(strtolower($type) == "alpha")
+			{
+				$fetch = mysqli_fetch_assoc($result);
+			}
+			else if(strtolower($type) == "obj")
+			{
+				$fetch = mysqli_fetch_object($result);
+			}
 		}
 
 		return $fetch;
@@ -220,14 +299,29 @@ class db_conn
 		{
 			return $this->memcacheStore['num'];
 		}
-		$fetch = mysql_num_rows($result);		
+		
+		if(!$this->mysqli)
+		{
+			$fetch = mysql_num_rows($result);
+		}
+		else
+		{
+			$fetch = mysqli_num_rows($result);
+		}	
 		return $fetch;
     }
 
     function terminate()
     {
         //mysql_free_result($this->connection);
-		mysql_close($this->connection);
+		if(!$this->mysqli)
+		{
+			mysql_close($this->connection);
+		}
+		else
+		{
+			mysqli_close($this->connection);
+		}	
     }
 	
 	/*
