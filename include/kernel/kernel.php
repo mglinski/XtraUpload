@@ -32,7 +32,6 @@ class kernel
 	var $server;
 	var $version;
 	var $clean;
-	var $crontab;
 	var $memcache;
 	var $ext;
 	
@@ -85,10 +84,6 @@ class kernel
 		// Password generation class
 		include_once('./include/kernel/password.php');
 		$this->password = new pass();
-		
-		// PHP Crontab clone Class
-		include_once('./include/kernel/crontab.php');
-		$this->crontab = new crontab();
 		
 		// Template Parsing Class
 		include_once('./include/kernel/template.php');

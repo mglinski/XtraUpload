@@ -26,6 +26,7 @@ if(!(floatval($res->price) > 0.000))
 else
 {
 ?>
+<h2>New User Registration</h2>
 <form method="post">
 <input type="hidden" name="step" value="2" />
   <div align="center"><?='<span style="color: red">'.$msg.'</span>'?><br />

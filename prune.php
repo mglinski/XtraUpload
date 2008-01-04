@@ -36,67 +36,25 @@ function prune_folder_files($dir)
 			}
 			else
 			{
-				$s = $db->query("SELECT * FROM `files` WHERE `filename` = '".$file."' AND `status` = '1' LIMIT 1",'main_1');
+				$s = $db->query("SELECT * FROM `files` WHERE `filename` = '".$file."' AND `status` = '1' LIMIT 1");
 				$num = $db->num($s);
 				if($num == '0')
 				{
 					$un = @unlink($dir.'/'.$file);
 					if($un)
 					{
-						$content = '-> File '.$file.' Was not found in the database and has been deleted
-';
-						//echo $content;
-						log_action('File Deleted', 'file:delete', $content, 'ok', 'prune.php');
+						log_action('File Deleted', 'file:delete', 'File '.$file.' Was not found in the database and has been deleted', 'ok', 'prune.php');
 					}
 					else
 					{
-						$content = '-> File '.$file.' Was not found in the database but could not be deleted
-';
-						//echo $content;
-						log_action('File !Not! Deleted', 'file:delete', $content, 'warn', 'prune.php');
+						log_action('File !Not! Deleted', 'file:delete', 'File '.$file.' Was not found in the database but could not be deleted', 'warn', 'prune.php');
 					}
 				}
-				
 			}
 		}
 	}
 	closedir ($fh);
-	prune_folder_expire($dir);
-}
-
-function prune_folder_expire($dir)
-{
-	global $db;
-	$fh = @opendir($dir);
-	$group = array();
-	while ($file = @readdir($fh))
-	{
-		//echo $file.'<br />\n';
-		if (($file != '..' && $file != '.' && $file != 'index.php' && $file != 'index.html' && $file != '.htaccess'))
-		{
-			if(is_dir($dir . '/' . $file))
-			{
-				prune_folder_expire($dir.'/'.$file);
-			}
-			else
-			{
-				$s = $db->query("SELECT * FROM `files` WHERE `filename` = '".$file."' AND `status` = '1' LIMIT 1", 'main_1');
-				$files = $db->fetch($s);
-				if(!array_key_exists($file->group,$group))
-				{
-					$d = $db->query("SELECT * FROM `groups` WHERE `id` = '".$file->group."' LIMIT 1", 'main_1');
-					$groups = $db->fetch($d);
-					$group[$files->group] = $groups->file_expire;
-				}
-				if(($files->last_download + (3600*24*$group[$files->group])) < time() && $group[$files->group] != 0)
-				{
-					$db->query("UPDATE `files` SET `status` = '2' WHERE `filename` = '".$file."'");
-					log_action('File Deleted', 'file:delete', 'File('.$file.') Download time limit Expired', 'ok', 'prune.php');
-				}
-			}
-		}
-	}
-	closedir ($fh);
+	//prune_folder_expire($dir);
 }
 
 //*************************

@@ -27,6 +27,18 @@ function startDownloadProcess($action,$captcha_is=false,$captchaHTML='',$captcha
 	$f_query = $db->fetch($m_query,"obj");
 	
 	$num = $db->num($m_query);
+	
+	$d = $db->query("SELECT * FROM `groups` WHERE `id` = '".$f_query->group."' LIMIT 1", 'main_1');
+	$group = $db->fetch($d);
+
+	if(($f_query->last_download + (3600*24*$group->file_expire)) < time() && $group->file_expire != 0)
+	{
+		delfile_expire($hash);
+		$db->query("UPDATE `files` SET `status` = '2' WHERE `filename` = '".$file."'");
+		log_action('File Deleted', 'file:delete', 'File('.$file.') Download time limit Expired', 'ok', 'prune.php');
+		header("Location: ".$siteurl."index.php?p=file_error");
+		exit;
+	}
 
 	if($action == '3')
 	{
@@ -76,9 +88,10 @@ function detect_browser($var)
 
 function downloadFail($file,$name,$totaldownload,$fileSize,$limit_speed,$dlid)
 {
-	global $kernel, $db;
+	global $kernel, $db, $dlComplete;
 	if(!$dlComplete)
 	{
+		$kernel->ext->download->kill();
 		log_action('File Downloaded:('.$name.') ', 'file:download', 'File('.$file.') was downloaded by '.$_SERVER['REMOTE_ADDR'].'', 'ok', 'download.php');
 		$bw = $kernel->ext->download->sentBytes;
 		if (!($limit != '0' && ($totaldownload + $fileSize >= ($_SESSION['d_limit'] * 1024 * 1024))))  
@@ -88,7 +101,7 @@ function downloadFail($file,$name,$totaldownload,$fileSize,$limit_speed,$dlid)
 		update_bandwith($name,$bw);
 		$db->query("DELETE FROM `dlsessions` WHERE `id` = '".$dlid."'");
 	}
-	
+	die();
 }
 
 function doDirectDownload($link)
@@ -179,7 +192,7 @@ function doDirectDownload($link)
 		
 		if($limit_speed > 0)
 		{
-			$kernel->ext->download->setBufferSize(1024 * 1024 * $limit_speed);
+			$kernel->ext->download->setBufferSize(1024 * $limit_speed);
 			$kernel->ext->download->setThrottleDelay(1);
 		}
 		else

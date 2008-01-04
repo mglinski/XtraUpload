@@ -15,7 +15,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program(LICENSE.txt); if not, write to the Free Software
+along with thFis program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
@@ -600,18 +600,45 @@ function delfile_expire($hash)
 	else
 	{
 		$row = $kernel->db->fetch($qr1,'obj');
-		if( file_exists("./files/".substr($row->md5,0,2).'/'.$row->filename)	)
+		if(!strstr($siteurl,$row->server))
 		{
-			unlink("./files/".substr($row->md5,0,2).'/'.$row->filename);
+			$fp = fopen($row->server."/index.php?p=delfile&file=".$row->pkey,"r");
+			if($fp)
+			{
+				$exit = '';
+				while(!feof($fp))
+				{
+					$exit .=  @fread($fp, 1024);
+				}
+				if($exit)
+				{
+					return "<font color='#009900'>".$lang['functions']['3']."</font>";
+				}
+				else
+				{
+					return "<font color='#FF0000'>".$lang['functions']['7']."</font>";
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
-		
-		if( file_exists("./thumbs/thumbs_".$row->filename)	)
+		else
 		{
-			unlink("./thumbs/thumbs_".$row->filename);
+			if( file_exists("./files/".substr($row->md5,0,2).'/'.$row->filename)	)
+			{
+				unlink("./files/".substr($row->md5,0,2).'/'.$row->filename);
+			}
+			
+			if( file_exists("./thumbs/thumbs_".$row->filename)	)
+			{
+				unlink("./thumbs/thumbs_".$row->filename);
+			}
+			$kernel->db->query("UPDATE files SET `status` = '2' WHERE `hash` = '".$hash."'");
+			log_action('File Expired and Deleted', 'file:delete', 'The File('.$row->o_filename.') was deleted by XtraUpload because it expired.', 'ok', '{core}');
+			return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
 		}
-		$kernel->db->query("UPDATE files SET `status` = '2' WHERE `hash` = '".$hash."'");
-		log_action('File Expired and Deleted', 'file:delete', 'The File('.$row->o_filename.') was deleted by XtraUpload because it expired.', 'ok', '{core}');
-		return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
 	}
 }
 

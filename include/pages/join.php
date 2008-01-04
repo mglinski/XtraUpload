@@ -103,7 +103,7 @@ else
 					<font size=2 face="Verdana, Arial, Helvetica, sans-serif"><b><?=$lang['join']['5']?></b></font>
 				  <p align="center">
 				  <form method=post onsubmit="return check();">
-					  <div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? include($tos_page); ?></font></div>
+					  <div align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><? include('./include/pages/rules.php'); ?></font></div>
 					  <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">
 <table width="80" border="0" align="center">
   <tr>

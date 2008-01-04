@@ -146,6 +146,7 @@ while( $a = $db->fetch($qr2,'obj') )
 	$fileArr[$x]['id'] = $a->id;
 	$fileArr[$x]['hash'] = $a->hash;
 	$fileArr[$x]['link'] = makeXuLink('index.php', array('p' => 'download', 'hash' => $a->hash));
+	$fileArr[$x]['del'] = makeXuLink('index.php', array('p' => 'files', 'del' => $a->id));
 	$x++;
 }
 

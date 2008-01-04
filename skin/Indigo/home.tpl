@@ -1,6 +1,6 @@
 <script type="text/javascript" >
 <{if $forceLogin eq "1"}>
-location = '<{$loginLink}>';
+	location = '<{$loginLink}>';
 <{/if}>
 var progress_window;
 

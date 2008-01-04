@@ -108,6 +108,14 @@ class download
      * @var     bool
      */
     var $gzip = false;
+	
+	/**
+     * Whether to kill the download on next chunk download
+     *
+     * @access  protected
+     * @var     bool
+     */
+	var $killDownload ;
     
     /**
      * Whether to allow caching of the download on the clients side
@@ -823,6 +831,10 @@ class download
      */
     function sendChunk($chunk, $cType = null, $bound = null)
     {
+		if(!$this->killDownload)
+		{
+			die();
+		}
         list($offset, $lastbyte) = $chunk;
         $length = ($lastbyte - $offset) + 1;
         
@@ -1030,6 +1042,18 @@ class download
         }
         ob_flush();
         flush();
+    }
+	
+	    /**
+     * Kill
+     * 
+     * @access  protected
+     * @return  void
+     * @param   string  $data
+     */
+    function kill()
+    {
+		$this->killDownload = true;
     }
     
     /**

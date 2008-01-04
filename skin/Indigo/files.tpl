@@ -38,7 +38,7 @@
             <input type="checkbox" name="to_add_<{$fileArr[x].id}>" value="<{$siteurl}>index.php?p=download&hash=<{$fileArr[x].hash}>" id="files_<{$fileArr[x].id}>" />
             <label for="files_<{$fileArr[x].id}>"><{$lang.files.3}></label>
           </div>
-          <div class="td" style="width:90px;"><a href='<{$fileArr[x].link}>'>
+          <div class="td" style="width:90px;"><a href='<{$fileArr[x].del}>'>
             <?=get_icon("Cancel","small")?>
             </a></div>
         </div>

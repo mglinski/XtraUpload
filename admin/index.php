@@ -48,7 +48,15 @@ list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='
 <h1><span>Home</span>XtraFile :: Admin Panel</h1>      
 <? 
 	$kernel->loadUserExt('version');
-	$r_version = parseVersion($kernel->ext->version->version);
+	if(!XU_VERSION_CHECK)
+	{
+		$r_version = $version;
+	}
+	else
+	{
+		$r_version = parseVersion($kernel->ext->version->version);
+	}
+	
 	if($version < $r_version)
 	{ 
 	?>

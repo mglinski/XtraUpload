@@ -19,6 +19,29 @@ along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+//----------------------------
+// Define These Values As Constant
+//----------------------------
+	$defArr = array(
+		
+		//Allow the output of Sql Debug information
+		'XU_DEBUG' => false,
+		
+		// Allow anyone into the admin panel, ONLY USE IN NON PRODUCTION SERVERS!
+		'XU_NO_ADMIN_AUTH' => false,
+		
+		// Do we check for the version of latest version of xtraupload or not.
+		'XU_VERSION_CHECK' => true
+	);
+
+	// Now Define() them into existance
+	foreach($defArr as $def => $val)
+	{
+		if(!defined($def)) define($def,$val);
+	}
+	$defArr = NULL;
+
+
 //---------------------------
 // Begin Setting Up XU Enviroment
 //---------------------------
@@ -34,25 +57,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	
 	// Define PEAR folder For PEAR Includes
 	define("PEAR_DIR", "include/kernel/pear/");
-
-//----------------------------
-// Define These Values As Constant
-//----------------------------
-	$defArr = array(
-		
-		//Allow the output of Sql Debug information
-		'XU_DEBUG' => false,
-		
-		// Allow anyone into the admin panel, ONLY USE IN NON PRODUCTION SERVERS!
-		'XU_NO_ADMIN_AUTH' => false
-	);
-
-	// Now Define() them into existance
-	foreach($defArr as $def => $val)
-	{
-		if(!defined($def)) define($def,$val);
-	}
-	$defArr = NULL;
 
 //----------------------------
 // Include new XtraFile.com kernel for advanced functionality
