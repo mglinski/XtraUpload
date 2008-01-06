@@ -22,7 +22,7 @@ $msg = '';
 if( (isset($_POST['username'])) && (isset($_POST['password'])) )
 {
 	$username = txt_clean($_POST['username']);
-	$password = txt_clean($_POST['password']);
+	$password = md5($_POST['password']);
 
 	if(!user_login($username,$password))
 	{
@@ -57,7 +57,12 @@ if( (isset($_POST['username'])) && (isset($_POST['password'])) )
 
 if(isset($_GET['return']))
 {
-	$kernel->tpl->assign('msg', $lang['login']['7']);
+	$msg = $lang['login']['7'];
+}
+
+if($msg != '')
+{
+	$kernel->tpl->assign('msg', $msg);
 }
 $kernel->tpl->assign('forgot', makeXuLink('index.php', 'p=forgotpass'));
 $kernel->tpl->assign('fastpass', makeXuLink('index.php', 'p=fastpass'));

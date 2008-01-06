@@ -12,13 +12,13 @@ function toggle1(loc)
 	if (eedw == 0)
 	{
 		$('#'+loc).slideUp("normal");
-		$('#show').html('<{$lang.file_upload.2}>');
+		$('#show').html('<{$lang.file_upload.3}>');
 		eedw = 1;
 	}
 	else
 	{
 		$('#'+loc).slideDown("normal");
-		$('#show').html('<{$lang.file_upload.3}>');
+		$('#show').html('<{$lang.file_upload.2}>');
 		eedw = 0;
 	}
 
@@ -105,11 +105,11 @@ function toggle1(loc)
             </tr>
             <tr>
               <td><div align="right"><span class="\&quot;formtext\&quot;"><{$lang.url.26}></span></div></td>
-              <td><input name="textfield24" type="text" value="[URL=<{$imgSite}>][IMG]<{$imgThumb}>[/IMG][/URL]" size="70" readonly="readonly" onclick="this.focus();this.select()" ondblclick="this.focus();this.select()" /></td>
+              <td><input name="textfield24" type="text" value="[URL=<{$imgSite}>][IMG]<{$thumb}>[/IMG][/URL]" size="70" readonly="readonly" onclick="this.focus();this.select()" ondblclick="this.focus();this.select()" /></td>
             </tr>
             <tr>
               <td><div align="right"><span class="\&quot;formtext\&quot;"><{$lang.url.27}></span></div></td>
-              <td><input name="textfield25" type="text" value="[URL=<{$imgSite}>][IMG=<<{$imgThumb}>][/URL]" size="70" readonly="readonly" onclick="this.focus();this.select()" ondblclick="this.focus();this.select()" /></td>
+              <td><input name="textfield25" type="text" value="[URL=<{$imgSite}>][IMG=<<{$thumb}>][/URL]" size="70" readonly="readonly" onclick="this.focus();this.select()" ondblclick="this.focus();this.select()" /></td>
             </tr>
             <tr>
               <td><div align="right"><span class="formtext"><{$lang.url.28}></span></div></td>

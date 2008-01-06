@@ -1382,12 +1382,15 @@ function elipsis($str,$count = 13)
 //----------------------------
 // makes a download link from a file hash
 //----------------------------
-function makeDownLinkFromHash($hash)
+function makeDownLinkFromHash($hash,$name='')
 {
 	global $kernel, $db, $siteurl, $rewrite_links;
 	if($rewrite_links)
 	{
-		$furl = $siteurl . 'download/' . $hash ;
+		if($name!='')
+			$furl = $siteurl . 'download/' . $hash . '/' . $name;
+		else
+			$furl = $siteurl . 'download/' . $hash;
 	}
 	else
 	{
@@ -1422,6 +1425,7 @@ function makeXuLink($page, $args, $otherMain='', $href=true)
 			$str = $main . 'imagedirect/'.str_replace('/','',$args[1]);
 			return $str;
 		}
+		
 		if($page == 'thumb.php')
 		{
 			$args = explode('=', $args);

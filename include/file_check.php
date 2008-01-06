@@ -18,30 +18,14 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+chdir('..');
+include('include/init.php');
 
-// file_check.php
-function checkExistenceOfFile($fileToDownload,$m)
-{
-	/* See whether the specified file is available, and can be read. If not, return false. */
-	if(!is_file("./files/".substr($m,0,2).'/'.$fileToDownload))
-	{
-		//header(sprintf("Location:%s?error=404&file=%s",FILE_NOT_EXIST,$fileToDownload));
-		return false;
-	}
-	/* Otherwise, return true */
-	else
-	{
-		return true;
-	}
-}
-
-$qr = $db->query("SELECT * FROM files WHERE hash = '".txt_clean($_GET['hash'])."' LIMIT 1");
+$qr = $db->query("SELECT `filename`,`md5` FROM files WHERE hash = '".txt_clean($_GET['hash'])."' LIMIT 1");
 $file = $db->fetch($qr, 'obj');
-$fileToDownload = $file->filename;
-$md5 = $file->md5;
 
 /* Check to make sure the file exists and can be read */
-if(!checkExistenceOfFile($fileToDownload,$md5))
+if(!file_exists("./files/".substr($file->md5,0,2).'/'.$file->filename))
 {
 	echo "false";
 }

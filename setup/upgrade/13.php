@@ -25,10 +25,63 @@ VALUES
 (NULL , 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).', 'Memcache', 'text', '1'),
 (NULL , '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
 
+
+ALTER TABLE dlinks
+    ALTER `limit` SET DEFAULT 0,
+    ADD INDEX `time` (`time`(14));
+
+
+ALTER TABLE dlsessions
+    ADD INDEX ip (ip(16));
+
+
+ALTER TABLE downloads
+    DROP INDEX id;
+
+
+ALTER TABLE faq
+    ALTER pos SET DEFAULT 0;
+
+
+ALTER TABLE faq_items
+    ALTER pos SET DEFAULT 0,
+    ALTER faq SET DEFAULT 0,
+    ALTER status SET DEFAULT 0;
+
+
+ALTER TABLE files
+    ALTER size SET DEFAULT 0,
+    ALTER ban SET DEFAULT 0,
+    ALTER report SET DEFAULT 0,
+    DROP INDEX filename,
+    ADD INDEX filename1 (filename(40)),
+    ADD INDEX featured (featured, password(40), approved, status),
+    ADD INDEX user (ipaddress(16), description(255), `group`(1));
+
+ALTER TABLE groups
+    ALTER show_direct_link SET DEFAULT 0,
+    ALTER files_restrict_allowed SET DEFAULT 0,
+    ALTER no_ads SET DEFAULT 0,
+    ALTER file_expire SET DEFAULT 0;
+
+
+ALTER TABLE lang
+    ALTER `default` SET DEFAULT 0,
+    ALTER status SET DEFAULT 0;
+
+
+
+ALTER TABLE transactions
+    ALTER approved SET DEFAULT 0;
+
+
+ALTER TABLE users
+    ALTER lang SET DEFAULT 0;
+
 UPDATE `config` SET `value` = '1.6.0,0.0.1.0' WHERE `name` = 'version'
 ";
 
-echo '-> Upgrading From XtraUpload 1.5.6 STABLE to XtraUpload 1.6 BETA-1.';
+echo '-> Upgrading From XtraUpload 1.5.6 STABLE to XtraUpload 1.6 BETA 1.';
 $sqls = explode(';', $sql1);
 $i = 0;
 foreach($sqls as $sql)

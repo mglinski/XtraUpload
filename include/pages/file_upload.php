@@ -51,7 +51,7 @@ if($a->hash != '')
 	$password = $a->password;
 	$kernel->tpl->assign('pass', $password);
 	
-	$furl = makeDownLinkFromHash($hash);
+	$furl = makeDownLinkFromHash($hash, $a->o_filename);
 	$kernel->tpl->assign('furl', $furl);
 	
 	$r_url = makeXuLink('index.php', array('p' => 'rate', 'id' => $a->hash));
@@ -94,7 +94,7 @@ if($a->hash != '')
 	$kernel->tpl->assign('icon', $icon);
 	
 	$kernel->tpl->assign('imgSite', makeXuLink('image.php','file=/'.$hash.'.'.$type));
-	$kernel->tpl->assign('thumb', $a->server.'/imagedirect.php?'.'thumb=1&file='.$hash.'.'.$type);		
+	$kernel->tpl->assign('thumb', makeXuLink('thumb.php','file=/'.$hash.'.'.$type, $server));		
     $kernel->tpl->assign('imgFull', makeXuLink('imagedirect.php','file=/'.$hash.'.'.$type, $server));
 }
 else

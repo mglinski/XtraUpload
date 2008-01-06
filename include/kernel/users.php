@@ -75,7 +75,7 @@ class users
 	function login_auth()
 	{
 		global $db,$sitename,$siteurl;
-		$sql = "SELECT * FROM users WHERE username = '".$this->name."' AND password = '".md5($this->pass)."' AND status='1'";
+		$sql = "SELECT * FROM users WHERE username = '".$this->name."' AND password = '".$this->pass."' AND status='1'";
 		$res = $db->query($sql);
 		$res1 = $db->fetch($res,'obj');
 		$num = $db->num($res);

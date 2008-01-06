@@ -229,43 +229,7 @@ function doDirectDownload($link)
 			die();
 	}
 }
-/*************************/
-/* Check to see whether a file exists
-/*************************/
 
-function checkExistenceOfFile($fileToDownload,$m,$server,$hash)
-{
-	global $siteurl;
-	if(strstr($siteurl,$server))
-	{
-		/* See whether the specified file is available, and can be read. If not, return false. */
-		if(!is_file("./files/".substr($m,0,2).'/'.$fileToDownload))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	else
-	{
-		$fp = fopen($server."/include/file_check.php?file=".$hash,"r");
-		if($fp)
-		{
-			$exit = '';
-			while(!feof($fp))
-			{
-				$exit .=  @fread($fp, 1024);
-			}
-			return $exit;
-		}
-		else
-		{
-			return false;
-		}
-	}
-}
 /*************************/
 /* Show initial download options
 /*************************/
@@ -287,12 +251,6 @@ function displayFileForDownloadSummary($fileToDownload, $orig_filename, $descrip
 	$server = $file->server;
 	$hash = $file->hash;
 	$qa = '';
-	/* Check to make sure the file exists and can be read */
-    if(!checkExistenceOfFile($fileToDownload,$md5,$server,$hash))
-    {
-		header("Location: ".$siteurl."index.php?p=file_error");
-		exit;
-	}
 	
    	$wait_time = $limit_wait;	
 	
