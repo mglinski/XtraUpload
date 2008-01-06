@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Thumbnail Viewer
 include("./include/init.php");
-echo skin_head();
+echo $kernel->tpl->display('site_header.tpl');
 $file = str_replace('/','',$_GET['file']);
 $file = explode('.',$file);
 $file = $file[0];
@@ -131,5 +131,5 @@ function doResize(div)
   <br />
 </div>
 <?
-echo skin_foot();
+echo $kernel->tpl->display('site_footer.tpl');
 ?>

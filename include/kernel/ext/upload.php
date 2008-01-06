@@ -571,7 +571,7 @@ function url()
 			$img = str_replace('.','',strtolower (strrchr ($img, '.')));
 			if(($img == 'png' or $img == 'jpg' or $img == 'jpeg') && $allow_imaging)
 			{
-				img_text('./files/'.substr($file_md5,0,2).'/'.$file_name,$imageCopyText,$imageTextColor);
+				img_text('./files/'.substr($file_md5,0,2).'/'.$file_name);
 			}
 			
 			log_action('File('.$file_real_name.',hash='.$hash.') was uploaded', 'file:upload', 'IP('.$_SERVER['REMOTE_ADDR'].') uploaded the file('.$file_name.',hash='.$hash.')', 'ok', 'upload.php');

@@ -831,9 +831,9 @@ class download
      */
     function sendChunk($chunk, $cType = null, $bound = null)
     {
-		if(!$this->killDownload)
+		if($this->killDownload)
 		{
-			die();
+			return;
 		}
         list($offset, $lastbyte) = $chunk;
         $length = ($lastbyte - $offset) + 1;

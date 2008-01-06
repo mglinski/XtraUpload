@@ -28,30 +28,21 @@ class server
 	function get_server()
 	{
 		global $db;
-		$sql1 = "SELECT * FROM `servers`  WHERE `active` = '1'";
-	
-		$qr3 = $db->query($sql1, "server_1");	
-		$serv_array = array();
+		$qr3 = $db->query("SELECT * FROM `servers`  WHERE `active` = '1'");	
 		$i = 0;
-	
+		
+		$serverArr = array();
 		while($c = $db->fetch($qr3,"obj"))
 		{
-			$serv_array[$i] = $c->id;	
+			$serverArr[$i] = new stdClass();
+			$serverArr[$i] = $c;
 			$i++;	
 		}
 	
 		$i--;
 		$serv_count = $i;
 		$serv_id = rand(0,$i);
-		
-		$sql2 = "SELECT * FROM `servers` WHERE `id` = '$serv_array[$serv_id]' ";
-		if($serv_count != '0')
-		{
-			$sql2 .=  "AND used_bandwith < total_bandwith AND space_limit > space_used";
-		}
-		$qr2 = $db->query($sql2, "server_2");	
-		$d = $db->fetch($qr2,"obj");
-		$server = $d->link;
+		$server = $serverArr[$serv_id]->link;
 		return $server;
 	}
 	

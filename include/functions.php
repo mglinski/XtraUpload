@@ -5,7 +5,7 @@ Copyright (C) 2006-2007  Matthew Glinski and XtraFile.com
 Link: http://www.xtrafile.com
 -----------------------------------------------------------------
 This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
+modify it under the tmg_erms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
 
@@ -255,8 +255,42 @@ function isValidEmail($e)
 //----------------------------
 function txt_clean($fix)
 {
-	global $kernel, $db;
-	return $kernel->clean->safeSQL($fix,$db->connection);
+	$bad = array(
+		"../",
+		"./",
+		"<!--",
+		"-->",
+		"<",
+		">",
+		"'",
+		'"',
+		'&',
+		'$',
+		'#',
+		'{',
+		'}',
+		'[',
+		']',
+		'=',
+		';',
+		'?',
+		' ',
+		"%20",
+		"%22",
+		"%3c",		// <
+		"%253c", 	// <
+		"%3e", 		// >
+		"%0e", 		// >
+		"%28", 		// (  
+		"%29", 		// ) 
+		"%2528", 	// (
+		"%26", 		// &
+		"%24", 		// $
+		"%3f", 		// ?
+		"%3b", 		// ;
+		"%3d"		// =
+	);		
+	return stripslashes(str_replace($bad, '', $fix)); 
 }
 
 //----------------------------
@@ -264,8 +298,269 @@ function txt_clean($fix)
 //----------------------------
 function html_clean($fix)
 {
-	global $kernel, $db;
-	return $kernel->clean->process($fix);
+	/*
+	* Remove Null Characters
+	*
+	* This prevents sandwiching null characters
+	* between ascii characters, like Java\0script.
+	*
+	*/
+	$str = preg_replace('/\0+/', '', $str);
+	$str = preg_replace('/(\\\\0)+/', '', $str);
+	
+	/*
+	* Validate standard character entities
+	*
+	* Add a semicolon if missing.  We do this to enable
+	* the conversion of entities to ASCII later.
+	*
+	*/
+	$str = preg_replace('#(&\#?[0-9a-z]+)[\x00-\x20]*;?#i', "\\1;", $str);
+	
+	/*
+	* Validate UTF16 two byte encoding (x00) 
+	*
+	* Just as above, adds a semicolon if missing.
+	*
+	*/
+	$str = preg_replace('#(&\#x?)([0-9A-F]+);?#i',"\\1\\2;",$str);
+	
+	/*
+	* URL Decode
+	*
+	* Just in case stuff like this is submitted:
+	*
+	* <a href="http://%77%77%77%2E%67%6F%6F%67%6C%65%2E%63%6F%6D">Google</a>
+	*
+	* Note: Normally urldecode() would be easier but it removes plus signs
+	*
+	*/	
+	$str = preg_replace("/(%20)+/", '9u3iovBnRThju941s89rKozm', $str);
+	$str = preg_replace("/%u0([a-z0-9]{3})/i", "&#x\\1;", $str);
+	$str = preg_replace("/%([a-z0-9]{2})/i", "&#x\\1;", $str); 
+	$str = str_replace('9u3iovBnRThju941s89rKozm', "%20", $str);	
+		
+	/*
+	* Convert character entities to ASCII 
+	*
+	* This permits our tests below to work reliably.
+	* We only convert entities that are within tags since
+	* these are the ones that will pose security problems.
+	*
+	*/
+	
+	$str = preg_replace_callback("/[a-z]+=([\'\"]).*?\\1/si", array($this, '_attribute_conversion'), $str);
+	
+	$str = preg_replace_callback("/<([\w]+)[^>]*>/si", array($this, '_html_entity_decode_callback'), $str);
+	
+	/*
+	
+	Old Code that when modified to use preg_replace()'s above became more efficient memory-wise
+	
+	if (preg_match_all("/[a-z]+=([\'\"]).*?\\1/si", $str, $matches))
+	{        
+	for ($i = 0; $i < count($matches[0]); $i++)
+	{
+		if (stristr($matches[0][$i], '>'))
+		{
+			$str = str_replace(	$matches['0'][$i], 
+								str_replace('>', '&lt;', $matches[0][$i]),  
+								$str);
+		}
+	}
+	}
+	
+	if (preg_match_all("/<([\w]+)[^>]*>/si", $str, $matches))
+	{        
+	for ($i = 0; $i < count($matches[0]); $i++)
+	{
+		$str = str_replace($matches[0][$i], 
+							$this->_html_entity_decode($matches[0][$i], $charset), 
+							$str);
+	}
+	}
+	*/
+	
+	/*
+	* Convert all tabs to spaces
+	*
+	* This prevents strings like this: ja	vascript
+	* NOTE: we deal with spaces between characters later.
+	* NOTE: preg_replace was found to be amazingly slow here on large blocks of data,
+	* so we use str_replace.
+	*
+	*/
+	
+	$str = str_replace("\t", " ", $str);
+	
+	/*
+	* Not Allowed Under Any Conditions
+	*/	
+	$bad = array(
+				'document.cookie'	=> '[removed]',
+				'document.write'	=> '[removed]',
+				'.parentNode'		=> '[removed]',
+				'.innerHTML'		=> '[removed]',
+				'window.location'	=> '[removed]',
+				'-moz-binding'		=> '[removed]',
+				'<!--'				=> '&lt;!--',
+				'-->'				=> '--&gt;',
+				'<!CDATA['			=> '&lt;![CDATA['
+			);
+	
+	foreach ($bad as $key => $val)
+	{
+		$str = str_replace($key, $val, $str);   
+	}
+	
+	$bad = array(
+				"javascript\s*:"	=> '[removed]',
+				"expression\s*\("	=> '[removed]', // CSS and IE
+				"Redirect\s+302"	=> '[removed]'
+			);
+			
+	foreach ($bad as $key => $val)
+	{
+		$str = preg_replace("#".$key."#i", $val, $str);   
+	}
+	
+	/*
+	* Makes PHP tags safe
+	*
+	*  Note: XML tags are inadvertently replaced too:
+	*
+	*	<?xml
+	*
+	* But it doesn't seem to pose a problem.
+	*
+	*/		
+	$str = str_replace(array('<?php', '<?PHP', '<?', '?'.'>'),  array('&lt;?php', '&lt;?PHP', '&lt;?', '?&gt;'), $str);
+	
+	/*
+	* Compact any exploded words
+	*
+	* This corrects words like:  j a v a s c r i p t
+	* These words are compacted back to their correct state.
+	*
+	*/		
+	$words = array('javascript', 'expression', 'vbscript', 'script', 'applet', 'alert', 'document', 'write', 'cookie', 'window');
+	foreach ($words as $word)
+	{
+		$temp = '';
+		for ($i = 0; $i < strlen($word); $i++)
+		{
+			$temp .= substr($word, $i, 1)."\s*";
+		}
+	
+		// We only want to do this when it is followed by a non-word character
+		// That way valid stuff like "dealer to" does not become "dealerto"
+		$str = preg_replace('#('.substr($temp, 0, -3).')(\W)#ise', "preg_replace('/\s+/s', '', '\\1').'\\2'", $str);
+	}
+	
+	/*
+	* Remove disallowed Javascript in links or img tags
+	*/
+	do
+	{
+		$original = $str;
+		
+		if ((version_compare(PHP_VERSION, '5.0', '>=') === TRUE && stripos($str, '</a>') !== FALSE) OR 
+			 preg_match("/<\/a>/i", $str))
+		{
+			$str = preg_replace_callback("#<a.*?</a>#si", array($this, '_js_link_removal'), $str);
+		}
+		
+		if ((version_compare(PHP_VERSION, '5.0', '>=') === TRUE && stripos($str, '<img') !== FALSE) OR 
+			 preg_match("/img/i", $str))
+		{
+			$str = preg_replace_callback("#<img.*?".">#si", array($this, '_js_img_removal'), $str);
+		}
+		
+		if ((version_compare(PHP_VERSION, '5.0', '>=') === TRUE && (stripos($str, 'script') !== FALSE OR stripos($str, 'xss') !== FALSE)) OR
+			 preg_match("/(script|xss)/i", $str))
+		{
+			$str = preg_replace("#</*(script|xss).*?\>#si", "", $str);
+		}
+	}
+	while($original != $str);
+	
+	unset($original);
+	
+	/*
+	* Remove JavaScript Event Handlers
+	*
+	* Note: This code is a little blunt.  It removes
+	* the event handler and anything up to the closing >,
+	* but it's unlikely to be a problem.
+	*
+	*/		
+	$event_handlers = array('onblur','onchange','onclick','onfocus','onload','onmouseover','onmouseup','onmousedown','onselect','onsubmit','onunload','onkeypress','onkeydown','onkeyup','onresize', 'xmlns');
+	$str = preg_replace("#<([^>]+)(".implode('|', $event_handlers).")([^>]*)>#iU", "&lt;\\1\\2\\3&gt;", $str);
+	
+	/*
+	* Sanitize naughty HTML elements
+	*
+	* If a tag containing any of the words in the list
+	* below is found, the tag gets converted to entities.
+	*
+	* So this: <blink>
+	* Becomes: &lt;blink&gt;
+	*
+	*/		
+	$str = preg_replace('#<(/*\s*)(alert|applet|basefont|base|behavior|bgsound|blink|body|embed|expression|form|frameset|frame|head|html|ilayer|iframe|input|layer|link|meta|object|plaintext|style|script|textarea|title|xml|xss)([^>]*)>#is', "&lt;\\1\\2\\3&gt;", $str);
+	
+	/*
+	* Sanitize naughty scripting elements
+	*
+	* Similar to above, only instead of looking for
+	* tags it looks for PHP and JavaScript commands
+	* that are disallowed.  Rather than removing the
+	* code, it simply converts the parenthesis to entities
+	* rendering the code un-executable.
+	*
+	* For example:	eval('some code')
+	* Becomes:		eval&#40;'some code'&#41;
+	*
+	*/
+	$str = preg_replace('#(alert|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si', "\\1\\2&#40;\\3&#41;", $str);
+				
+	/*
+	* Final clean up
+	*
+	* This adds a bit of extra precaution in case
+	* something got through the above filters
+	*
+	*/	
+	$bad = array(
+				'document.cookie'	=> '[removed]',
+				'document.write'	=> '[removed]',
+				'.parentNode'		=> '[removed]',
+				'.innerHTML'		=> '[removed]',
+				'window.location'	=> '[removed]',
+				'-moz-binding'		=> '[removed]',
+				'<!--'				=> '&lt;!--',
+				'-->'				=> '--&gt;',
+				'<!CDATA['			=> '&lt;![CDATA['
+			);
+	
+	foreach ($bad as $key => $val)
+	{
+		$str = str_replace($key, $val, $str);   
+	}
+	
+	$bad = array(
+				"javascript\s*:"	=> '[removed]',
+				"expression\s*\("	=> '[removed]', // CSS and IE
+				"Redirect\s+302"	=> '[removed]'
+			);
+			
+	foreach ($bad as $key => $val)
+	{
+		$str = preg_replace("#".$key."#i", $val, $str);   
+	}
+	
+				
+	return $str;
 }
 
 //----------------------------
@@ -389,12 +684,13 @@ function imgSize($file)
 	$size = getimagesize($file);
 	return array("width"=>$size[0],"height"=>$size[1]);
 }
+
 //----------------------------
 // Create a thumbnail image from an original
 //----------------------------
 function img_thumb($file)
 {
-	global $kernal;
+	global $kernel;
 	
 	$image = $file;
 	$image = explode('/',$image);
@@ -404,30 +700,26 @@ function img_thumb($file)
 		mkdir('./thumbs/'.$image[(count($image) - 2)]);
 	}
 	
-	$path = 'thumbs/'.$image[(count($image) - 2)].'/'.'thumb_'.$image[(count($image) - 1)];
-	
+	$path = './thumbs/'.$image[(count($image) - 2)].'/'.'thumb_'.$image[(count($image) - 1)];
+		
 	if(!file_exists($path))
-	{	
-		// Load Kernel Extension To Process This crap :P
-		$kernel->loadUserExt('imageThumb');
-
-		// Image Quality - Default to 100 ( original quality)
-		$kernel->ext->imageThumb->quality = 100;
+	{
+		include_once('./include/kernel/ext/Image_lib.php');
+		$config['image_library'] = 'GD2';
+		$config['source_image'] = $file;
+		$config['new_image'] = $path;
+		$config['thumb_marker'] = '';
+		$config['create_thumb'] = TRUE;
+		$config['maintain_ratio'] = TRUE;
+		$config['width'] = 150;
+		$config['height'] = 150;
 		
-		// Image File path
-		$kernel->ext->imageThumb->fileName = $file;
-
-		//IMPORTANT - must run init() function before any manipulation is performed
-		$kernel->ext->imageThumb->init();
-		
-		//shrink image
-		$kernel->ext->imageThumb->percent = 0;
-		$kernel->ext->imageThumb->maxWidth = 150;
-		$kernel->ext->imageThumb->maxHeight = 150;
-		$kernel->ext->imageThumb->resize();
-		
-		// Save
-		$kernel->ext->imageThumb->save($path);
+		$img = new Image_lib($config);
+		$res = $img->resize();
+		if(!$res)
+		{
+			$img->display_errors();
+		}
 	}
 	return $path;
 }
@@ -435,13 +727,37 @@ function img_thumb($file)
 //----------------------------
 // Place text on an image
 //----------------------------
-function img_text($image,$text,$color)
+function img_text($image)
 {
-	global $kernel, $imageFontSize;	
-	$kernel->loadUserExt('imageTool');
-	$kernel->ext->imageTool->newImage($image);
-	$kernel->ext->imageTool->addText ( $text, './fonts/trebucbd.ttf', $imageFontSize, $color,  'right',  'bottom' , '0');
-	$kernel->ext->imageTool->save($image,false,100);
+	global $kernel, $imageFontSize, $imageCopyText, $imageTextColor;	
+
+	if($imageFontSize == 'dynamic')
+	{
+		$imageFontSize = 16;
+	}
+	
+	if(!file_exists($path))
+	{
+		include_once('./include/kernel/ext/Image_lib.php');
+
+		$config['image_library'] = 'GD2';
+		$config['source_image'] = $image;
+		$config['wm_type'] = 'text';
+		$config['quality'] = '100';
+		$config['padding'] = 5;
+		$config['wm_text'] = $imageCopyText;
+		$config['wm_hor_alignment'] = 'right';
+		$config['wm_font_size'] = $imageFontSize;
+		$config['wm_font_color'] = $imageTextColor;
+		$config['wm_font_path'] = './fonts/trebucbd.ttf';
+		
+		$img = new Image_lib($config);
+		$res = $img->watermark();
+		if(!$res)
+		{
+			$img->display_errors();
+		}
+	}
 	return $image;
 }
 

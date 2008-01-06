@@ -33,7 +33,7 @@ if(isset($_GET['thumb']))
 	$ret = $db->fetch($qr1);
 	
 	$file = 'thumb_'.$ret->filename;
-	header("Content-type: image/png");
+	//header("Content-type: image/png");
 	
 	echo file_get_contents('./thumbs/'.substr($ret->md5,0,2).'/'.$file);
 	die;

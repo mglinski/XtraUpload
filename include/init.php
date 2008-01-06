@@ -25,10 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	$defArr = array(
 		
 		//Allow the output of Sql Debug information
-		'XU_DEBUG' => false,
+		'XU_DEBUG' => TRUE,
 		
 		// Allow anyone into the admin panel, ONLY USE IN NON PRODUCTION SERVERS!
-		'XU_NO_ADMIN_AUTH' => false,
+		'XU_NO_ADMIN_AUTH' => FALSE,
 		
 		// Do we check for the version of latest version of xtraupload or not.
 		'XU_VERSION_CHECK' => true

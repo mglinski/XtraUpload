@@ -32,30 +32,10 @@ class ads
 		if($no_ads)
 		{
 			$this->sitelink = $siteurl;
-			$this->cleanup();
 			$this->choose_ad();
 		}
 		$this->no_ads = $no_ads;
 	}
-
-	function cleanup()
-	{
-		global $db;	
-		$sql1 = "SELECT * FROM `ads`  WHERE `status` = '1' ";
-		$qr3 = $db->query($sql1, "ads_1");	
-			
-		while($c = $db->fetch($qr3,"obj"))
-		{
-		
-			if($c->impressions >= $c->allow_imp && $c->nolimit == '0')
-			{
-				$qr = $db->query("UPDATE `ads` SET `status` = '0'  WHERE `id` = '".$c->id."'", "ads_update_1");
-			}
-			
-		}
-		$qr3 = NULL;
-		
-	}// END cleanup()
 	
 	function make_link()
 	{
@@ -80,6 +60,16 @@ class ads
 	{
 		global $db;	
 		$qr3 = $db->query("SELECT * FROM `ads` WHERE `status` = '1' ", "ads_1");	
+
+		while($c = $db->fetch($qr3,"obj"))
+		{
+		
+			if($c->impressions >= $c->allow_imp && $c->nolimit == '0')
+			{
+				$qr = $db->query("UPDATE `ads` SET `status` = '0'  WHERE `id` = '".$c->id."'", "ads_update_1");
+			}
+			
+		}
 		
 		$ads_array = array();
 		$i = 0;

@@ -31,7 +31,6 @@ class kernel
 	var $crypt;
 	var $server;
 	var $version;
-	var $clean;
 	var $memcache;
 	var $ext;
 	
@@ -63,11 +62,7 @@ class kernel
 		
 		// String crypting class
 		include_once('./include/kernel/crypt.php');
-		$this->crypt = new encrypt('@#$34T78hinbuvyfG89JIBVYCUTF7G*Y(bvYF7G89huyf7UYIVF78hiuvYF789iuvyfi78Y9HIUGfi78GUYTUD67Tdtyrs4E7R6T7t8yUYI');
-		
-		// pHp Scrubing Bubles
-		include_once('./include/kernel/filter.php');
-		$this->clean = new InputFilter();
+		$this->crypt = new encrypt();
 		
 		// Points Class System, 1.5.0
 		include_once('./include/kernel/points.php');
@@ -88,7 +83,6 @@ class kernel
 		// Template Parsing Class
 		include_once('./include/kernel/template.php');
 		$this->tpl = new template();
-		
 	}
 	
 	function loadUserExt($extName,$ret=false)

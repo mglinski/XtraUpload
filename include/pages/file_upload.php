@@ -94,7 +94,7 @@ if($a->hash != '')
 	$kernel->tpl->assign('icon', $icon);
 	
 	$kernel->tpl->assign('imgSite', makeXuLink('image.php','file=/'.$hash.'.'.$type));
-	$kernel->tpl->assign('imgThumb', makeXuLink('thumb.php','file=/'.$hash.'.'.$type, $server));		
+	$kernel->tpl->assign('thumb', $a->server.'/imagedirect.php?'.'thumb=1&file='.$hash.'.'.$type);		
     $kernel->tpl->assign('imgFull', makeXuLink('imagedirect.php','file=/'.$hash.'.'.$type, $server));
 }
 else

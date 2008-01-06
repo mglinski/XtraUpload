@@ -85,7 +85,8 @@ if(XU_DEBUG)
 	{
 		$allow_debug_out = true/*false/**/;
 	}
-	if($allow_debug_out)
+	
+	if(true)
 	{
 		if($_GET['debug'])
 		{
