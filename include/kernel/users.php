@@ -41,7 +41,6 @@ class users
 		$this->name = $name;
 		$this->sess_time = $time;
 		$this->pass = $pass;
-		$this->clean_input();
 		$this->clean_acc();
 	}
 	
@@ -115,15 +114,6 @@ class users
 				$db->query($sql);
 			}
 		}
-	}
-
-	function clean_input()
-	{
-		global $db,$sitename,$siteurl;
-		$this->name = str_replace('\'','\\'.'\'',$this->name);
-		$this->name = str_replace('"','\\'.'"',$this->name);
-		$this->pass = str_replace('\'','\\'.'\'',$this->pass);
-		$this->pass = str_replace('"','\\"',$this->pass);
 	}
 }
 ?>

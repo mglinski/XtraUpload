@@ -42,7 +42,7 @@ if($_REQUEST['process'])
 			}
 		}
 		$valid = true;
-		$msg = '<img src="../images/actions/Certificate_32x32.png" /><br />Config Successfully Updated!';
+		$msg = 'Config Successfully Updated!';
 		unset($s);
 	}
 	else
@@ -110,7 +110,9 @@ else
 <? if($msg != ''){?>
 <div id="msgBox" class="msgBox"> <img class="okImg" src="../images/actions/OK_24x24.png" alt="Ok!"  /> <span>
   <?=$msg?>
-  </span> <a href="javascript:;" onclick="hideMsgBox()"> <img class="closeImg" src="../images/small/Close.png" alt="Close"  /> </a> </div>
+  </span> <a href="javascript:;" onclick="hideMsgBox()"> <img class="closeImg" src="../images/small/Close.png" alt="Close"  /> </a> 
+</div>
+<div class="clear"></div>
 <? }?><br />
 <div id="mainContent">
 	<table id="manage" width="846" border="0" cellpadding="0" cellspacing="0" align="center">

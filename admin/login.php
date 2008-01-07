@@ -30,7 +30,7 @@ if( (isset($_POST['username'])) && (isset($_POST['password'])) )
 {
 
 	$username = txt_clean($_POST['username']);
-	$password = txt_clean($_POST['password']);
+	$password = md5($_POST['password']);
 	
 	if(!$site_offline)
 	{

@@ -122,8 +122,8 @@ if(isset($_GET['act']))
     <td><input name="password" type="text" id="password" value="<?=$order->password?>"  /></td>
   </tr>
   <tr>
-    <td><div align="right">Ammount</div></td>
-    <td><input name="ammount" type="text" id="ammount" value="<?=$order->ammount?>"  /></td>
+    <td><div align="right">Amount</div></td>
+    <td><input name="amount" type="text" id="ammount" value="<?=$order->ammount?>"  /></td>
   </tr>
   <tr>
     <td><div align="right">Processor</div></td>
@@ -206,8 +206,8 @@ if(isset($_GET['act']))
     <td><input name="password" type="text" id="password" /></td>
   </tr>
   <tr>
-    <td><div align="right">Ammount</div></td>
-    <td><input name="ammount" type="text" id="ammount" /></td>
+    <td><div align="right">amount</div></td>
+    <td><input name="amount" type="text" id="amount" /></td>
   </tr>
   <tr>
     <td><div align="right">Processor</div></td>
@@ -303,7 +303,7 @@ if(!$noMain)
     <th style="border-right:1px #000000 solid;" width="27"><input type="checkbox" name="mass" value="" onchange="if(this.checked){$('input[@type=checkbox]','#mainTable').attr('checked','checked');}else{$('input[@type=checkbox]','#mainTable').attr('checked','');}" /></th>
     <th width="27">#</th>
     <th width="256">Email</th>
-    <th width="103">Ammount</th>
+    <th width="103">amount</th>
     <th width="95">Processor</th>
     <th width="162">Status</th>
     <th width="138">Actions</th>
@@ -316,7 +316,7 @@ if(!$noMain)
     <td style="border-right:1px #000000 solid;"><div align="center"><input name="massCheck[]" type="checkbox" value="<?=$order->id?>" /></div></td>
     <td><div align="center"><?=$order->id?></div></td>
 	<td><div align="center"><?=$order->email?></div></td>
-	<td><div align="center">$<?=$order->ammount?> USD</div></td>
+	<td><div align="center">$<?=$order->amount?> USD</div></td>
     <td><div align="center"><? $sql = "SELECT * FROM `payment` WHERE `id` = '".$order->processor."'";$d2 = $db->fetch($db->query($sql)); echo $d2->f_name?></div></td>
     <td><div align="center"><? 
 	

@@ -83,6 +83,7 @@ function user_login($name,$pass)
 			$adminId = $kernel->users->userid;
 			$_SESSION['isadmin'] = '1';
 			session_register("isadmin");
+			
 			$_SESSION['a_id'] = $adminId;
 			session_register("isadmin");
 		}
@@ -140,17 +141,25 @@ function user_login($name,$pass)
 //----------------------------
 // Boss-man wants in...
 //----------------------------
-function admin_login($name,$pass)
+function admin_login($name, $pass)
 {
 	global $kernel;
-	if($_SESSION['isadmin'] == '1' && intval($_SESSION['a_id']) > 0)
-	{	
-		$_SESSION['adminSecret'] = md5(getAdminSessionString());		
-		session_register("adminSecret");
-		
-		$_SESSION['adminTime'] = (time() + 1800);		
-		session_register("adminTime");
-		return true;
+	$kernel->users->pre($name, $pass);
+	if($kernel->users->login())
+	{
+		if($_SESSION['isadmin'] == '1' && intval($_SESSION['a_id']) > 0 )
+		{	
+			$_SESSION['adminSecret'] = md5(getAdminSessionString());		
+			session_register("adminSecret");
+			
+			$_SESSION['adminTime'] = (time() + 1800);		
+			session_register("adminTime");
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	else
 	{
