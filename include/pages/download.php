@@ -384,20 +384,14 @@ function displayFileDownloadLink($id, $orig)
 function makeFileDownloadLink($id, $orig)   
 {
 	global $db, $siteurl, $rewrite_links, $lang,$can_resume, $max_file_streams;
-	$rand_id = rand(111111,9999999999999);
+	$rand_id = rand(111,2147483647);
 	$sql = "SELECT * FROM files WHERE id = '".$id."' LIMIT 1";
 	$query = $db->query($sql);
-	$a = $db->fetch($query,'obj');
+	$a = $db->fetch($query);
 	
-	if(!($_SESSION['loggedin']))
-	{
-		$time = time()+3600;
-	}
-	else
-	{
-		$time = time()+259200;
-	}
-	$db->query("INSERT INTO dlinks (down_id,store_name,real_name,time,resume,can_r,`limit`)VALUES('".$rand_id."','".$a->filename."','".$orig."','".$time."','".$_SERVER['REMOTE_ADDR']."','".$can_resume."','".$max_file_streams."')",'down_link_1');
+	$time = time()+3600;
+
+	$db->query("INSERT INTO dlinks (`down_id`, `store_name`, `real_name`, `time`, `resume`, `can_r`, `limit`)VALUES('".$rand_id."','".$a->filename."','".$orig."','".$time."','".$_SERVER['REMOTE_ADDR']."','".$can_resume."','".$max_file_streams."')",'down_link_1');
 	$db->query("UPDATE `files` SET `last_download` = '".time()."' WHERE id = '".$id."' LIMIT 1");
 	return $rand_id;
 }
@@ -478,7 +472,7 @@ else
 			'refreshlink'    => FALSE,    // boolean
 			'inline'  		 => TRUE,    // boolean
 			'lang'           => 'en',    // string:  ['en'|'de']
-			'maxtry'         => 40,       // integer: [1-9]
+			'maxtry'         => 9,       // integer: [1-9]
 			'badguys_url'    => '/',     // string: URL
 			'secretstring'   => "sdfsdfdf3sdfsdfsjkfesbkjfk33hhgghbfjkshfbaejnwrgse7rvsdgb adggb", // totally random string
 			'secretposition' => 17,      // integer: [1-32]

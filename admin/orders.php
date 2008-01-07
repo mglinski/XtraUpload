@@ -338,7 +338,7 @@ if(!$noMain)
     <td><table align="center">
 	  <tr>
 						<td height="26">
-							<a href='/orders.php?act=edit&amp;id=<?=$order->id?>'>
+							<a href='./orders.php?act=edit&amp;id=<?=$order->id?>'>
 								<img border='0' id='edit_".$i1."' alt='Edit Order' src='../images/actions/Edit_24x24.png' />							</a>						</td>
 <? if($order->approved != '1'){?>
                             <td>

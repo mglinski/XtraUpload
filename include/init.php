@@ -20,6 +20,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 //----------------------------
+// EVIL!!! Kill it with fire!!
+//----------------------------
+if(get_magic_quotes_runtime())
+	set_magic_quotes_runtime(false);
+	
+if (get_magic_quotes_gpc()) 
+{
+	foreach($_POST as $k => $v)
+	{
+		$_POST[$k] = stripslashes($v);
+	}
+	
+	foreach($_GET as $k => $v)
+	{
+		$_GET[$k] = stripslashes($v);
+	}
+	
+	foreach($_COOKIE as $k => $v)
+	{
+		$_COOKIE[$k] = stripslashes($v);
+	}
+}
+
+//----------------------------
 // Define These Values As Constant
 //----------------------------
 	$defArr = array(

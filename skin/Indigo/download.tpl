@@ -92,7 +92,7 @@
                     <div id="dl4"></div>
                     <div id="dl2">
                     	<{if $limit_wait > 1}>
-                        	<p align="center" class="style47"><strong class="style49"><span class="style59">&gt;&gt;</span></strong> <span class="style59"><a href="'.$siteurl.'index.php?p=fastpass"><{$lang.download.4}></a> <strong class="style49">&lt;&lt;</strong></span></p>
+                        	<p align="center" class="style47"><strong class="style49"><span class="style59">&gt;&gt;</span></strong> <span class="style59"><a href="<?=makeXuLink('index.php', 'p=fastpass')?>"><{$lang.download.4}></a> <strong class="style49">&lt;&lt;</strong></span></p>
                         <{/if}>
                     </div>
                         <br />

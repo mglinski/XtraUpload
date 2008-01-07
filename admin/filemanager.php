@@ -390,14 +390,31 @@ if(!$noMain)
   </a>
   <? }?>
   <div class="spacer"></div>
-  <? if(!$_GET['byban']){?>
+   <? if(!$_GET['byappr']){?>
+  <a href="filemanager.php?report=1&amp;byappr=1">
+  <div class="item">
+    <div class="img" style="background-image:url(../images/small/go.png);"></div>
+    <div class="txt">Featured</div>
+  </div>
+  </a>
+  <? }?>
+  <? if(!$_GET['byrepo']){?>
+  <a href="filemanager.php?report=1&amp;byrepo=1">
+  <div class="item">
+    <div class="img" style="background-image:url(../images/small/public.png);"></div>
+    <div class="txt">Reported</div>
+  </div>
+  </a>
+  <? }?>
+  <? if(!$_GET['byban'] ){?>
   <a href="filemanager.php?report=1&amp;byban=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/stop.png);"></div>
-    <div class="txt">Banned Files</div>
+    <div class="txt">Banned</div>
   </div>
   </a>
-  <? }else{?>
+  <? }
+  if(!$_GET['byall'] ){?>
   <a href="filemanager.php?report=1&amp;byall=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/hard_disk.png);"></div>
@@ -489,10 +506,8 @@ if(!$noMain)
       </form>
       
       <form method="post" id="massForm">
-        <?
-		$_REQUEST['report'] = 1;
-		if(isset($_REQUEST['report']))
-		{
+        <?php
+		
 			$stime = mktime(0,0,0,$start_m,$start_d,$start_y);
 			$etime = mktime(23,59,59,$end_m,$end_d,$end_y);
 			
@@ -508,6 +523,14 @@ if(!$noMain)
 			else if(isset($_REQUEST['byall']))
 			{
 				$sql = "SELECT * FROM files WHERE status='1' AND `ban` != '1'  ORDER BY `id` DESC";
+			}
+			else if(isset($_REQUEST['byrepo']))
+			{
+				$sql = "SELECT * FROM files WHERE status='1' AND `report` = '1'  ORDER BY `id` DESC";
+			}
+			else if(isset($_REQUEST['byappr']))
+			{
+				$sql = "SELECT * FROM files WHERE status='1' AND `approved` = '1'  ORDER BY `id` DESC";
 			}
 			else if(isset($_REQUEST['byban']))
 			{
@@ -539,7 +562,7 @@ if(!$noMain)
 				$sql = "SELECT * FROM files WHERE status='1' AND `ban` != '1' ORDER BY `id` DESC";
 			}
 			
-			$qr1 = $db->query($sql." LIMIT ".$pageno.",".$limit."");
+			$qr1 = $db->query($sql." LIMIT ".($pageno * $limit).",".$limit."");
 			$realRet = $db->query($sql);
 			$realRetNum = $db->num($realRet);
 			$rowcount = $db->num($qr1);
@@ -615,7 +638,7 @@ if(!$noMain)
 					$bgcolor = 'transparent';
 				}
 				$i++;
-				if(!($a->approved) && ($a->featured))
+				if(!$a->approved && $a->featured)
 				{
 					$bgcolor = "#FDEDC8";	
 				}
@@ -811,8 +834,6 @@ if(!$noMain)
       </form>
       </div>
       <br />
-      <?
-		}?>
     </td>
   </tr>
 </table>
