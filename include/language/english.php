@@ -1,4 +1,4 @@
-
+<?php
 /*
 XtraUpload - File Hosting Software
 Copyright (C) 2006-2007  Matthew Glinski and XtraFile.com
