@@ -62,7 +62,7 @@ if($_POST['submit'])
 		break;
 			
 		case "5":// update ad with new impression count
-			$sql2 = "UPDATE `ads` SET `status` = '$_REQUEST[a]',`impressions` = '0' WHERE `id` = '$id'";
+			$sql2 = "UPDATE `ads` SET `status` = '$_REQUEST[a]' WHERE `id` = '$id'";
 			$db->query($sql2);
 		break;
 			

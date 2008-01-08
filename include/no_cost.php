@@ -29,34 +29,33 @@ if($_POST['valid'])
 	$good = true;
 	
 	// Begin XU-safe text template system
-	$kernel->tpl->setupText('<h4>{MSG}</h4><br />');
 	
 	if($res1 != '0')
 	{	
 		$good = false;	
 		$err = true;
-		$kernel->tpl->addVar('msg', $lang['no_cost']['1']);
+		$msg = '<h4>'.$lang['no_cost']['1'].'</h4><br />';
 	}
 	
 	if(isValidEmail($_POST['email']))
 	{	
 		$good = false;	
 		$err = true;
-		$kernel->tpl->addVar('msg', $lang['no_cost']['16']);
+		$msg = '<h4>'.$lang['no_cost']['16'].'</h4><br />';
 	}
 	
 	if($res2 != '0')
 	{
 		$good = false;
 		$err = true;
-		$kernel->tpl->addVar('msg', $lang['no_cost']['2']);
+		$msg = '<h4>'.$lang['no_cost']['2'].'</h4><br />';
 	}
 	
 	if($_POST['password1'] != $_POST['password2'])
 	{
 		$good = false;
 		$err = true;
-		$$kernel->tpl->addVar('msg', $lang['no_cost']['3']);
+		$msg = '<h4>'.$lang['no_cost']['3'].'</h4><br />';
 	}
 	
 	$ret = $db->fetch($db->query("SELECT * FROM groups WHERE id='".intval($_POST['group'])."'"),'obj');
@@ -64,7 +63,7 @@ if($_POST['valid'])
 	{
 		$good = false;
 		$err = true;
-		$kernel->tpl->addVar('msg', $lang['no_cost']['4']);
+		$msg = '<h4>'.$lang['no_cost']['4'].'</h4><br />';
 	}
 }
 
@@ -77,9 +76,9 @@ if($good)
 	
 	$db->query("UPDATE groups SET users = users+1 WHERE id='".intval($_POST['group'])."'");
 	
-	mail(txt_clean($_POST['username']).' <'.txt_clean($_POST['email']).'>', $sitename.' Account Activated', $lang['paypal']['1'].$sitename.$lang['paypal']['2'].''."\n".'################### '."\n".''.$lang['paypal']['3'].$trans->username.$lang['paypal']['4'].$trans->password.' '."\n".'###################'."\n".''."\n".''.$lang['paypal']['5'].$sitename.$lang['paypal']['6']);
+	mail(txt_clean($_POST['username']).' <'.txt_clean($_POST['email']).'>', $sitename.' Account Activated', $lang['paypal']['1'].$sitename.$lang['paypal']['2'].''."\n".'################### '."\n".''.$lang['paypal']['3'].txt_clean($_POST['username']).$lang['paypal']['4'].$_POST['password1'].' '."\n".'###################'."\n".''."\n".''.$lang['paypal']['5'].$sitename.$lang['paypal']['6']);
 
-	mail($adminemail, $sitename.' Account Activated (Admin Copy)', $lang['paypal']['1'].$sitename.$lang['paypal']['2'].''."\n".'################### '.$lang['paypal']['3'].txt_clean($_POST['username']).$lang['paypal']['4'].txt_clean($_POST['password']).''."\n".'###################'."\n".''."\n".''.$lang['paypal']['5'].$sitename.$lang['paypal']['6']);
+	mail($adminemail, $sitename.' Account Activated (Admin Copy)', $lang['paypal']['1'].$sitename.$lang['paypal']['2'].''."\n".'################### '.$lang['paypal']['3'].txt_clean($_POST['username']).$lang['paypal']['4'].$_POST['password'].''."\n".'###################'."\n".''."\n".''.$lang['paypal']['5'].$sitename.$lang['paypal']['6']);
 	
 	$u = $group->users + 1;
 	$ul = $group->userlimit;
@@ -102,10 +101,6 @@ setTimeout('r()',2000);
 }
 else
 {
-	if($err)
-	{
-		$msg = $kernel->tpl->processTemplate();
-	}
 ?>
   <script>
 function check()

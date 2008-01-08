@@ -201,13 +201,11 @@ list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='
               </span></span></td>
               <td width="180" class="style1"><div align="right">Total Disk Space Used: </div></td>
               <td width="80"><span class="style1">
-                <? 
-			  $ser = $db->query("SELECT * FROM `files` WHERE `status` = '1'");
+                 <? 
+			  $ser = $db->query("SELECT SUM(`size`) AS `size` FROM `files` WHERE `status` = '1'");
 			  $bw=0;
-			  while($serv = $db->fetch($ser))
-			  {
-			  	$bw += $serv->size;
-			  }
+			  $serv = $db->fetch($ser);
+			  $bw += $serv->size;
 			  echo get_filesize_prefix($bw);
 			  ?>
               </span></td>
@@ -220,12 +218,10 @@ list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='
               <td class="style1"><div align="right">Total Bandwth Used: </div></td>
               <td><span class="style1">
                 <? 
-			  $ser = $db->query("SELECT * FROM `servers`");
+			  $ser = $db->query("SELECT SUM(used_bandwith) AS used_bandwith FROM `servers`");
 			  $bw=0;
-			  while($serv = $db->fetch($ser))
-			  {
-			  	$bw += $serv->used_bandwith;
-			  }
+			  $serv = $db->fetch($ser);
+			  $bw += $serv->used_bandwith;
 			  echo get_filesize_prefix($bw);
 			  ?>
               </span></td>

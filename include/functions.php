@@ -677,6 +677,30 @@ function get_filesize_prefix($size, $mode = 0)
 		$mega = ' TB';
 		break;
 	  }
+	  
+	  case 5:
+	  {
+		$mega = ' PB';
+		break;
+	  }
+	  
+	  case 6:
+	  {
+		$mega = ' EB';
+		break;
+	  }
+	  
+	  case 7:
+	  {
+		$mega = ' ZB';
+		break;
+	  }
+	  
+	  case 8:
+	  {
+		$mega = ' YB';
+		break;
+	  }
 	}
 
 	if (($mode == 1 AND $pos = strrpos ($addsize, '.') !== false))
