@@ -842,35 +842,62 @@ function redirect($error,$url)
 //----------------------------
 function delfile($id,$silent = false)
 {
-	global $kernel, $lang;
-	$sql = "SELECT * FROM files WHERE id='".$id."'";
-	$qr1 = $kernel->db->query($sql);
-	$num = $kernel->db->num($qr1);
+	global $kernel, $lang, $siteurl;
+	$sql = $kernel->db->query("SELECT * FROM files WHERE id='".$id."'");
+	$qr1 = $kernel->db->fetch($sql);
+	$num = $kernel->db->num($sql);
 	if($num == '0')
 	{
 		return '<center><h3>'.$lang['functions']['1'].'</h3></center>';
 	}
 	else
 	{
-		$row = $kernel->db->fetch($qr1,'obj');
-		if( file_exists("./files/".substr($row->md5,0,2).'/'.$row->filename)	)
-		{
-			unlink("./files/".substr($row->md5,0,2).'/'.$row->filename);
-		}
 		
-		if( file_exists("./thumbs/thumbs_".$row->filename)	)
+		if(!strstr($siteurl,$qr1->server))
 		{
-			unlink("./thumbs/thumbs_".$row->filename);
-		}
-		$kernel->db->query("UPDATE files SET `status` = '2' WHERE `id` = '".$id."'");
-		log_action('File Deleted By Admin', 'file:delete', 'The File('.$row->o_filename.') was deleted by '.$_SESSION['username'], 'ok', 'admin/filemanager.php');
-		if(!$silent)
-		{
-			return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
+			$fp = fopen($qr1->server."/index.php?p=delfile&file=".$qr1->pkey,"r");
+			if($fp)
+			{
+				$exit = '';
+				while(!feof($fp))
+				{
+					$exit .=  @fread($fp, 1024);
+				}
+				if($exit)
+				{
+					return "<font color='#009900'>".$lang['functions']['3']."</font>";
+				}
+				else
+				{
+					return "<font color='#FF0000'>".$lang['functions']['7']."</font>";
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
-			return true;
+			if( file_exists("./files/".substr($qr1->md5,0,2).'/'.$qr1->filename)	)
+			{
+				unlink("./files/".substr($qr1->md5,0,2).'/'.$qr1->filename);
+			}
+			
+			if( file_exists("./thumbs/".substr($qr1->md5,0,2)."/thumbs_".$qr1->filename)	)
+			{
+				unlink("./thumbs/".substr($qr1->md5,0,2).'/thumbs_'.$qr1->filename);
+			}
+			$kernel->db->query("UPDATE files SET `status` = '2' WHERE `id` = '".$id."'");
+			log_action('File Deleted By Admin', 'file:delete', 'The File('.$qr1->o_filename.') was deleted by '.$_SESSION['username'], 'ok', 'admin/filemanager.php');
+			if(!$silent)
+			{
+				return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
+			}
+			else
+			{
+				return true;
+			}
 		}
 	}
 }
@@ -880,10 +907,11 @@ function delfile($id,$silent = false)
 //----------------------------
 function delfile_user($pkey)
 {
-	global $kernel, $lang;
-	$sql = "SELECT * FROM files WHERE pkey='".$pkey."'";
-	$qr1 = $kernel->db->query($sql);
-	$num = $kernel->db->num($qr1);
+	global $kernel, $lang, $siteurl;
+	$sql = $kernel->db->query("SELECT * FROM files WHERE pkey='".$pkey."'");
+	$qr1 = $kernel->db->fetch($sql);
+	$num = $kernel->db->num($sql);
+	
 	if($num == '0')
 	{
 		return '<center><h3>'.$lang['functions']['1'].'</h3></center>';
@@ -916,18 +944,17 @@ function delfile_user($pkey)
 		}
 		else
 		{
-			$row = $kernel->db->fetch($qr1,'obj');
-			if( file_exists("./files/".substr($row->md5,0,2).'/'.$row->filename)	)
+			if( file_exists("./files/".substr($qr1->md5,0,2).'/'.$qr1->filename)	)
 			{
-				unlink("./files/".substr($row->md5,0,2).'/'.$row->filename);
+				unlink("./files/".substr($qr1->md5,0,2).'/'.$qr1->filename);
 			}
 			
-			if( file_exists("./thumbs/thumbs_".$row->filename)	)
+			if( file_exists("./thumbs/".substr($qr1->md5,0,2)."/thumbs_".$qr1->filename)	)
 			{
-				unlink("./thumbs/thumbs_".$row->filename);
+				unlink("./thumbs/".substr($qr1->md5,0,2).'/thumbs_'.$qr1->filename);
 			}
 			$kernel->db->query("UPDATE files SET `status` = '2' WHERE `pkey` = '".$pkey."'");
-			log_action('File Deleted By user', 'file:delete', 'The File('.$row->o_filename.') was deleted by '.$_SESSION['username'], 'ok', 'delfile.php');
+			log_action('File Deleted By user', 'file:delete', 'The File('.$qr1->o_filename.') was deleted by '.$_SESSION['username'], 'ok', 'delfile.php');
 			return '<center><h3>'.$lang['functions']['2'].'</h3></center>';
 		}
 	}

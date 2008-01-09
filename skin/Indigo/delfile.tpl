@@ -19,7 +19,7 @@
         <{$lang.delfile.4}><br />
         <{$lang.delfile.2}>
         </h3>
-        <script>function r(){location = '<?=makeXuLink('index.php','p=home')?>'}setTimeout('r()',1500);</script>
+        <script>function r(){location = "<?=makeXuLink('index.php','p=home')?>"}setTimeout('r()',1500);</script>
     </div>
 <{else}>
 	<script>
@@ -42,7 +42,7 @@
         }
     </script>
     <div align="center">
-        <h1><{$lang.delfile.5}> <{$file.o_filename}></h1><br />
+        <h1><{$lang.delfile.5}> <{$file->o_filename}></h1><br />
 
         <form method="post" onsubmit="return check();">
             <input id="del" name="del" type="hidden" value=""  />
