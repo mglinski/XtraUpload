@@ -302,10 +302,43 @@ function txt_clean($fix)
 	return stripslashes(str_replace($bad, '', $fix)); 
 }
 
+/**
+ * Attribute Conversion
+ *
+ * Used as a callback for XSS Clean
+ *
+ * @access	public
+ * @param	array
+ * @return	string
+ */
+function _attribute_conversion($match)
+{
+	return str_replace('>', '&lt;', $match[0]);
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * HTML Entity Decode Callback
+ *
+ * Used as a callback for XSS Clean
+ *
+ * @access	public
+ * @param	array
+ * @return	string
+ */
+function _html_entity_decode_callback($match)
+{
+	$CI =& get_instance();
+	$charset = $CI->config->item('charset');
+
+	return $this->_html_entity_decode($match[0], strtoupper($charset));
+}
+
 //----------------------------
 // sanatize text
 //----------------------------
-function html_clean($fix)
+function html_clean($str)
 {
 	/*
 	* Remove Null Characters
@@ -358,9 +391,9 @@ function html_clean($fix)
 	*
 	*/
 	
-	$str = preg_replace_callback("/[a-z]+=([\'\"]).*?\\1/si", array($this, '_attribute_conversion'), $str);
+	$str = preg_replace_callback("/[a-z]+=([\'\"]).*?\\1/si", '_attribute_conversion', $str);
 	
-	$str = preg_replace_callback("/<([\w]+)[^>]*>/si", array($this, '_html_entity_decode_callback'), $str);
+	$str = preg_replace_callback("/<([\w]+)[^>]*>/si",'_html_entity_decode_callback', $str);
 	
 	/*
 	
@@ -928,7 +961,7 @@ function delfile_user($pkey)
 				{
 					$exit .=  @fread($fp, 1024);
 				}
-				if($exit)
+				if($exit == 'true')
 				{
 					return "<font color='#009900'>".$lang['functions']['3']."</font>";
 				}
@@ -1833,6 +1866,7 @@ function get_accounts($html=false)
 function getFiles()
 {
 	global $filetypes, $lang, $files_restrict_allowed;
+	$not = false;
 	$txt = $lang['open']['32'];
 	if($files_restrict_allowed)
 	{

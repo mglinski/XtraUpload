@@ -32,7 +32,7 @@ class db_conn
 	var $memcacheStore;
 	var $use_memcache;
 	var $hooks;
-	var $preStr = 'mysql_';
+	var $mysqli = false;
 	
 	function connect($server, $conn_username, $conn_password, $database_name)
 	{
@@ -43,7 +43,7 @@ class db_conn
 		
 		if($use_mysqli)
 		{
-			$this->preStr = 'mysqli_';
+			$this->mysqli = true;
 		}
 		
 		if(!$this->mysqli)
@@ -69,7 +69,7 @@ class db_conn
 			}
 			else
 			{
-				$this->preStr = 'mysql_';
+				$this->mysqli = false;
 				$this->connection = mysql_pconnect($server,$conn_username,$conn_password) or $this->error_out('Could not connect to the database: '.mysql_error().'<br />');
 				mysql_select_db($database_name) or $this->error_out('Could not select the database: '.mysql_error().'<br />');
 			}

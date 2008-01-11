@@ -394,7 +394,7 @@ if(class_exists('Memcache'))
 //----------------------------
 // COOKIE, COOKIE, COOKIE!!!
 //----------------------------
-	if($_GET['cookieKill'] or $_GET['p'] == 'logout')
+	if(isset($_GET['cookieKill']) or (isset($_GET['p']) && $_GET['p'] == 'logout'))
 	{
 		// kill user cookie
 		if($_COOKIE[substr(md5($sitename),0,5).'xuUser'] != '')
@@ -422,7 +422,7 @@ if(class_exists('Memcache'))
 		//----------------------------
 		// Cookie is set! read it and try to log in
 		//----------------------------
-		if($_COOKIE[substr(md5($sitename),0,5).'xuUser'] != '')
+		if(isset($_COOKIE[substr(md5($sitename),0,5).'xuUser']))
 		{
 			$split = explode('|-|',processUserCookie($_COOKIE[substr(md5($sitename),0,5).'xuUser'], 'dec'));
 			
@@ -488,7 +488,9 @@ if(class_exists('Memcache'))
 			//echo 'Cookie Set!<br />';
 		}
 	}
-
+if(!isset($_SESSION['myuid']))
+	$_SESSION['myuid'] = 0;
+	
 $kernel->tpl->assign('myuid', $_SESSION['myuid']);
 	
 ?>

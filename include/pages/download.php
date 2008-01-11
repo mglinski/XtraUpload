@@ -91,9 +91,8 @@ function downloadFail($file,$name,$totaldownload,$fileSize,$limit_speed,$dlid)
 	global $kernel, $db, $dlComplete;
 	if(!$dlComplete)
 	{
-		$kernel->ext->download->kill();
 		log_action('File Downloaded:('.$name.') ', 'file:download', 'File('.$file.') was downloaded by '.$_SERVER['REMOTE_ADDR'].'', 'ok', 'download.php');
-		$bw = $kernel->ext->download->sentBytes;
+		$bw = $kernel->ext->download->bandwith;
 		if (!($limit != '0' && ($totaldownload + $fileSize >= ($_SESSION['d_limit'] * 1024 * 1024))))  
 		{
 			$db->query('INSERT INTO downloads (ip,filesize,filename,time) VALUES ("' . $_SERVER['REMOTE_ADDR'] . '", "' . $bw . '", "' . $fileToDownload . '", UNIX_TIMESTAMP())');
@@ -186,27 +185,21 @@ function doDirectDownload($link)
 		// Function to call if user aborts connection
 		register_shutdown_function('downloadFail','./files/'.substr($md5,0,2).'/'.$fileToDownload,$orig_filename,$totaldownload,$fileSize,$limit_speed,$dlid);
 
-		// Build download system
-		$kernel->ext->download->setResume((bool)$res->can_r);
-		$kernel->ext->download->setFile('./files/'.substr($md5,0,2).'/'.$fileToDownload);
+		$kernel->ext->download->set_byfile('./files/'.substr($md5,0,2).'/'.$fileToDownload); //Download from php data
+		$kernel->ext->download->use_resume = ((bool)$res->can_r); //Enable Resume Mode
+		$kernel->ext->download->filename = $orig_filename;
 		
 		if($limit_speed > 0)
 		{
-			$kernel->ext->download->setBufferSize(1024 * $limit_speed);
-			$kernel->ext->download->setThrottleDelay(1);
+			$kernel->ext->download->speed = $limit_speed;
 		}
 		else
 		{
-			$kernel->ext->download->setBufferSize();
-			$kernel->ext->download->setThrottleDelay();
+			$kernel->ext->download->speed = 0;
 		}
-		
-		$kernel->ext->download->setContentDisposition(HTTP_DOWNLOAD_ATTACHMENT, $orig_filename);
-		$kernel->ext->download->send(); //Download File
+		$bw = $kernel->ext->download->sendDownload(); //Download File
 		
 		log_action('File Downloaded:('.$orig_filename.') ', 'file:download', 'File('.'./files/'.substr($md5,0,2).'/'.$fileToDownload.') was downloaded by '.$_SERVER['REMOTE_ADDR'].'', 'ok', 'download.php');
-		
-		$bw = $kernel->ext->download->sentBytes;
 			
 		$_SESSION['file_size'] = round($bw/1024,2);
 		$db->query('INSERT INTO `downloads` (`ip`,`filesize`,`filename`,`time`) VALUES ("' . $_SERVER['REMOTE_ADDR'] . '", "' . $bw . '", "' . $fileToDownload . '", UNIX_TIMESTAMP())');
@@ -236,7 +229,7 @@ function doDirectDownload($link)
 
 function displayFileForDownloadSummary($fileToDownload, $orig_filename, $description, $captchaHTML='')   
 {
-	global $siteurl, $rewrite_links, $captcha_is, $sitename, $db, $lang, $limit_wait, $kernel, $downloadLimit;
+	global $siteurl, $rewrite_links, $captcha_is, $sitename, $db, $lang, $limit_wait, $kernel, $downloadLimit, $report_links;
 	$limit = $_SESSION['d_limit'];
 	
 	$kernel->tpl->assign('description', $description);
@@ -322,7 +315,14 @@ function displayFileForDownloadSummary($fileToDownload, $orig_filename, $descrip
 	$kernel->tpl->assign('MD5', $md5);
 	$kernel->tpl->assign('ICON', $icon);
 	//$kernel->tpl->assign('COMMENTS', get_comments(txt_clean($_REQUEST['hash'])));
-	$kernel->tpl->assign('REPORT_FILE_LINK', '<a href="'.$siteurl.'index.php?p=report&link='.urlencode($siteurl.'index.php?p=download&hash='.$hash).'" target="_blank">Report this file for breaking our TOS</a>');
+	if($report_links)
+	{
+		$kernel->tpl->assign('REPORT_FILE_LINK', '<a href="'.$siteurl.'index.php?p=report&link='.urlencode($siteurl.'index.php?p=download&hash='.$hash).'" target="_blank">Report this file for breaking our TOS</a>');
+	}
+	else
+	{
+		$kernel->tpl->assign('REPORT_FILE_LINK', '');
+	}
 	$kernel->tpl->assign('CAPTCHA', $captchaHTML);
 	if(strlen($captchaHTML) > 0)
 	{

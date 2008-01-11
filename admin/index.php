@@ -22,12 +22,52 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 chdir("..");
 include("./include/init.php");
 require_once("admin/accesscontrol.php");
+
+if(isset($_GET['ajaxStats']))
+{
+	list($users) = $db->fetch( $db->query("SELECT COUNT(*) FROM users"),'NUM');
+	list($files) = $db->fetch( $db->query("SELECT COUNT(*) FROM `files` WHERE `status` = '1' "),'NUM');
+
+	?>
+  <table width="100%" border="0" align="left" cellpadding="2" cellspacing="2">
+            <tr>
+              <td width="239" height="22"><div align="right"><span class="style1">Number of Uploads:</span></div></td>
+              <td width="105"><span class="style1"><span class="a1">
+                <?=$files?>
+              </span></span></td>
+              <td width="180" class="style1"><div align="right">Total Disk Space Used: </div></td>
+              <td width="80"><span class="style1">
+                 <? 
+			  $ser = $db->query("SELECT SUM(`size`) AS `size` FROM `files` WHERE `status` = '1'");
+			  $bw=0;
+			  $serv = $db->fetch($ser);
+			  $bw += $serv->size;
+			  echo get_filesize_prefix($bw);
+			  ?>
+              </span></td>
+    </tr>
+            <tr>
+              <td height="22"><div align="right"><span class="style1">Number of Registered Users:</span></div></td>
+              <td><span class="style1"><span class="a1">
+                <?=$users?>
+              </span></span></td>
+              <td class="style1"><div align="right">Total Bandwth Used: </div></td>
+              <td><span class="style1">
+                <? 
+			  $ser = $db->query("SELECT SUM(used_bandwith) AS used_bandwith FROM `servers`");
+			  $bw=0;
+			  $serv = $db->fetch($ser);
+			  $bw += $serv->used_bandwith;
+			  echo get_filesize_prefix($bw);
+			  ?>
+              </span></td>
+            </tr>
+      </table>
+<?
+die();
+}
 require_once("admin/header.php");
 
-list($users) = $db->fetch( $db->query("SELECT COUNT(*) FROM users"),'NUM');
-list($files) = $db->fetch( $db->query("SELECT COUNT(*) FROM `files` WHERE `status` = '1' "),'NUM');
-list($afiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user='0'"),'NUM');
-list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='0'"),'NUM');
 ?>
 <style type="text/css">
 <!--
@@ -46,36 +86,6 @@ list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='
 -->
 </style>
 <h1><span>Home</span>XtraFile :: Admin Panel</h1>      
-<? 
-	$kernel->loadUserExt('version');
-	if(!XU_VERSION_CHECK)
-	{
-		$r_version = $version;
-	}
-	else
-	{
-		$r_version = parseVersion($kernel->ext->version->version);
-	}
-	
-	if($version < $r_version)
-	{ 
-	?>
-      <center>
-      <div align="center" style="width:400px;">
-      <fieldset>
-      <legend class="warning"> XtraUpload Version Notice </legend>
-      <span class="style2"><span class="style5"><span class="style7"><img src="large/caution_64x64.png" width="64" height="64" border="0" /><br />
-            WARNING!!! </span><br />
-            </span></span><span class="style8"><span class="style5"><strong>Your version of XtraUpload is out of date! </strong> <br />
-            <span class="style6"><a href="http://www.xtrafile.com/downloads/XtraUpload_1.5.X/index.php">Please click here to update to the new version </a></span></span></span>
-        </fieldset>
-<br />
-            </div>
-            </center>
-	  		<? } ?>
-      <br />
-      
-     
 <fieldset>
          <legend> Recent File Uploads </legend>
 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="0">
@@ -87,7 +97,7 @@ list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='
                 <th>Actions</th>
               </tr>
               <? 
-			$sql = "SELECT * FROM files WHERE `status` = '1' ORDER BY `id` DESC LIMIT 5";
+			$sql = "SELECT * FROM files WHERE `status` = '1' ORDER BY `id` DESC LIMIT 0,5";
 			$qr1 = $db->query($sql);
 			$i1=0;
 			while( $a = $db->fetch($qr1,'obj') )
@@ -181,54 +191,33 @@ list($ufiles) = $db->fetch( $db->query("SELECT COUNT(*) FROM files WHERE user!='
 <table width="311" border="0" align="left" cellpadding="2" cellspacing="2">
 <tr>
               <td width="98" height="22"><div align="right"><span class="style1">Latest Version:</span></div></td>
-    <td width="199"><?=$r_version?></td>
+    <td width="199"><? 
+	/*
+	$kernel->loadUserExt('version');
+	if(!XU_VERSION_CHECK)
+	{
+		$r_version = $version;
+	}
+	else
+	{
+		$r_version = parseVersion($kernel->ext->version->version);
+	}
+	*/
+	echo 'Disabeled';//$r_version?></td>
   </tr>
             <tr>
               <td height="22"><div align="right"><span class="style1">Your Version:</span></div></td>
               <td><?=$version?></td>
             </tr>
           </table>
-</fieldset>
-</td>
-<td width="55%">
-<fieldset>
-         <legend> Files/User Stats </legend>
-  <table width="100%" border="0" align="left" cellpadding="2" cellspacing="2">
-            <tr>
-              <td width="239" height="22"><div align="right"><span class="style1">Number of Uploads:</span></div></td>
-              <td width="105"><span class="style1"><span class="a1">
-                <?=$files?>
-              </span></span></td>
-              <td width="180" class="style1"><div align="right">Total Disk Space Used: </div></td>
-              <td width="80"><span class="style1">
-                 <? 
-			  $ser = $db->query("SELECT SUM(`size`) AS `size` FROM `files` WHERE `status` = '1'");
-			  $bw=0;
-			  $serv = $db->fetch($ser);
-			  $bw += $serv->size;
-			  echo get_filesize_prefix($bw);
-			  ?>
-              </span></td>
-    </tr>
-            <tr>
-              <td height="22"><div align="right"><span class="style1">Number of Registered Users:</span></div></td>
-              <td><span class="style1"><span class="a1">
-                <?=$users?>
-              </span></span></td>
-              <td class="style1"><div align="right">Total Bandwth Used: </div></td>
-              <td><span class="style1">
-                <? 
-			  $ser = $db->query("SELECT SUM(used_bandwith) AS used_bandwith FROM `servers`");
-			  $bw=0;
-			  $serv = $db->fetch($ser);
-			  $bw += $serv->used_bandwith;
-			  echo get_filesize_prefix($bw);
-			  ?>
-              </span></td>
-            </tr>
-      </table>
-     </fieldset>
-</td>
+        </fieldset>
+        </td>
+        <td width="55%">
+        	 <fieldset>
+                 <legend> Files/User Stats </legend>
+                 <div id="loadUserStats"><input type="button" value="Load File Stats" onclick="$('#loadUserStats').load('<?=$siteurl?>admin/index.php?ajaxStats=1');" /></div>
+             </fieldset>
+        </td>
   </tr>
 </table>
 <br />

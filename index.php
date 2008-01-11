@@ -28,6 +28,8 @@ if(is_dir('./setup/') and $_SERVER['HTTP_HOST'] != 'localhost')
 	header("Location: ./setup/");
 	die();
 }
+if(!isset($_GET['p']))
+	$_GET['p'] = 'home';
 
 //----------------------------
 // Include the master file...
@@ -48,7 +50,7 @@ if($_SERVER['HTTP_HOST'] != $host[2])
 }
 
 // If we are in forced dev mode and the user has requested a forced prune, prune away!
-if($_GET['forcePrune'] && XU_DEBUG)
+if(isset($_GET['forcePrune']) && XU_DEBUG)
 {
 	include('./prune.php');
 	@touch('./prune.php');
@@ -88,7 +90,7 @@ if(XU_DEBUG)
 	
 	if(true)
 	{
-		if($_GET['debug'])
+		if(isset($_GET['debug']))
 		{
 			echo '
 	

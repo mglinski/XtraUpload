@@ -29,15 +29,15 @@ if(isset($_GET['group']) && $_GET['group'] != '')
 		`days` = '".intval($_POST['days'])."',
 		`limit_wait` = '".intval($_POST['limit_wait'])."', 
 		 limit_size = '".intval($_POST['limit_size'])."',
-		`name` = '".txt_clean($_POST['name'])."', 
-		`description` = '".txt_clean($_POST['description'])."',
-		`price` = '".txt_clean($_POST['price'])."',
+		`name` = '".html_clean($_POST['name'])."', 
+		`description` = '".html_clean($_POST['description'])."',
+		`price` = '".html_clean($_POST['price'])."',
 		`userlimit` = '".intval($_POST['userlimit'])."',
 		`captcha` = '".intval($_POST['captcha'])."',	
 		`home_captcha` = '".intval($_POST['home_captcha'])."', 
 		`limit` = '".intval($_POST['limit'])."',
 		`resume` = '".intval($_POST['resume'])."',
-		`allow_types` = '".txt_clean($_POST['allow_types'])."',
+		`allow_types` = '".html_clean($_POST['allow_types'])."',
 		`extend_points` = '".intval($_POST['extend_points'])."',
 		`files_restrict_allowed` = '".intval($_POST['files_restrict_allowed'])."',
 		`no_ads` = '".intval($_POST['no_ads'])."',
@@ -63,7 +63,7 @@ if(isset($_GET['group']) && $_GET['group'] != '')
 		WHERE `id` = '".$group."'
 		";
 		$db->query($sql);
-		log_action('Usergroup Edited', 'group:edit', 'The usergroup('.txt_clean($_POST['name']).') was edited', 'ok', 'admin/group.php');
+		log_action('Usergroup Edited', 'group:edit', 'The usergroup('.html_clean($_POST['name']).') was edited', 'ok', 'admin/group.php');
 		
 	}
 	$ret = $db->query("SELECT * FROM groups WHERE id='".$group."'");

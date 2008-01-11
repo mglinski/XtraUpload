@@ -21,6 +21,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 include("./init.php");
 
 $limit = 50;
+if(isset($_POST['limit']))
+{
+	$limit = intval($_POST['limit']);
+}
+
+$pageno = 0;
+if(isset($_REQUEST['pageno']))
+{
+	$pageno = intval($_REQUEST['pageno']);
+}
 
 if($_GET['edit'])
 {
@@ -121,8 +131,9 @@ else
 		break;
 	}
 	
-	$sql = "SELECT * FROM users";
-	$result = $db->query($sql);
+	$result = $db->query("SELECT * FROM users LIMIT ".($pageno * $limit).",".$limit."");
+	$rowcount = $db->num($result);
+	$pagecount = ceil($rowcount / $limit);
 ?>
 <style type="text/css">
 <!--
@@ -134,21 +145,6 @@ else
 -->
 </style>
     <h1><span>User Manager</span> XtraFile :: Admin Panel</h1><br />
-<?
-$rowcount = $db->num($result);
-$pagecount = ceil($rowcount / $limit);
-print "<table width=100%><td>Page No: " . ($pageno+1) ."</td><td align=right>
-			<select onChange=\"gotocluster(this)\">\n
-			<optgroup label='Select A Page'>";
-for($x=0; $x<$pagecount; $x++){
-	$p = $x + 1;
-	$l = $x * $limit + 1;
-	$u = $l + $limit - 1;
-	if($u>$rowcount) $u=$rowcount;
-	print "<option value='".$purl."&pageno=".$x."'>Page $p ($l - $u)</option>\n";
-}
-print "</optgroup></select></td></table>";
-?>
 <br />
 <table style="border:#000 thin solid" width='803' border='0' align="center" cellPadding='2' cellSpacing='0' id="a1">
 <tr>
@@ -160,11 +156,7 @@ print "</optgroup></select></td></table>";
 <?
 
 	while( $row = $db->fetch($result))
-	{
-		$count++;
-		if($limit != 0 &&  $count > $u) continue;
-		if($limit != 0 && $count < $l ) continue;
-		
+	{		
 		if($row->isadmin == "1")
 		{
 			$a1 = "0";
@@ -209,21 +201,122 @@ print "</optgroup></select></td></table>";
         </tr>
 		<?
 	}
+	$pageInfo = array();
+			for ($i=0; $i<$pagecount; $i++) 
+			{
+				if($i == ($pageno - 6))
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['type'] = 'elip';
+				}
+				else if($i == ($pageno + 6))
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['type'] = 'elip';
+				}
+				else if ($pageno == $i) 
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['page'] = $i;
+					$pageInfo[$i]['type'] = 'none';
+				}
+				else if(($pageno - 5) <= $i and $i <= ($pageno + 5))
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['page'] = $i;
+					$pageInfo[$i]['type'] = 'link';
+				}
+				else if($i == 0)
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['page'] = 0;
+					$pageInfo[$i]['type'] = 'link';
+				}
+				else if($i == ($pagecount - 1))
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['page'] = $i;
+					$pageInfo[$i]['type'] = 'link';
+				}
+				else if(($pageno - 5) <= $i and $i <= ($pageno + 5))
+				{
+					$pageInfo[$i] = array();
+					$pageInfo[$i]['page'] = $i;
+					$pageInfo[$i]['type'] = 'link';
+				}
+				else
+				{
+					continue;
+				}
+			}
 ?>
 </table>
 <br />
-<?
-print "<table width=100%><td>Page No: " . ($pageno+1) ."</td><td align=right>
-			<select onChange=\"gotocluster(this)\">\n
-			<optgroup label='Select A Page'>";
-for($x=0; $x<$pagecount; $x++){
-	$p = $x + 1;
-	$l = $x * $limit + 1;
-	$u = $l + $limit - 1;
-	if($u>$rowcount) $u=$rowcount;
-	print "<option value='".$purl."&pageno=".$x."'>Page $p ($l - $u)</option>\n";
-}
-print "</optgroup></select></td></table>";
+<div class="pagination" align="center">
+        <hr  />
+        <? 
+		if($pageno >= 1)
+		{
+			?>
+        <a href="javascript: newPage(<?=($pageno-1)?>);" class="nextprev" title="Go to Previous Page">&laquo; Previous</a>
+        <? 
+		}
+		else
+		{
+			?>
+        <span class="nextprev">&laquo; Previous</span>
+        <? 
+		}
+  
+  for($i=0;count($pageInfo) > $i; $i++)
+  	{
+		if ($pageInfo[$i]['type'] == 'link')
+		{
+			?>
+        <a href="javascript: newPage(<?=$pageInfo[$i]['page']?>);">
+        <?=($pageInfo[$i]['page']+1)?>
+        </a>
+        <? 
+		}
+		elseif($pageInfo[$i]['type'] == 'elip')
+		{
+			?>
+        <span>….</span>
+        <? 
+		}
+		elseif($pageInfo[$i]['type'] == 'none')
+		{
+			?>
+        <span class="current">
+        <?=($pageInfo[$i]['page']+1)?>
+        </span>
+        <? 
+		} 
+	}
+	?>
+        <? 
+    if( ($pageno + 1) != $pagecount)
+    {
+    	?>
+        <a href="javascript:newPage(<?=$pageno+1?>);" class="nextprev" title="Go to Next Page">Next &raquo;</a>
+        <? 
+    }
+    else
+    {
+    	?>
+        <span class="nextprev">Next &raquo</span>
+        <? 
+    }
+    ?><form id="pagination1" method="post">
+        <input type="hidden" id="pageno" name="pageno" value="<?=$pageno?>"/>
+        <div style="float:right"># Per Page:
+          <input size="2" type="text" name="limit" value="<?=$limit?>" />
+          <br />
+          <input type="submit" value="Get Results"  />
+        </div>
+      </form>
+      </div>
+      <?php
 
 }
 require_once("./admin/footer.php");

@@ -36,7 +36,7 @@ class template extends Template_Lite
 		
 		$this->left_delimiter = '<{';
 		$this->right_delimiter = '}>';
-		$this->php_handling = SMARTY_PHP_ALLOW;
+		$this->php_handling = true;
     }
 }
 ?>

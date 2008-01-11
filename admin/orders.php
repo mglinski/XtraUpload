@@ -72,12 +72,15 @@ if(isset($_GET['act']))
 		case "delete":
 			if(isset($_POST['massCheck']))
 			{
-				foreach($_POST['massCheck'] as $id)
+				print_r($_POST['massCheck']);
+				foreach($_POST['massCheck'] as $ids)
 				{
 					$id = intval($id);
-					$db->query("DELETE FROM `transactions` WHERE `id` = '".$id."'");
+					$db->query("DELETE FROM `transactions` WHERE `id` = '".$ids."'");
+					$i++;
+					echo $ids."<br />";
 				}
-				$msg = 'Order(s) Deleted!';
+				$msg = $i.' Order(s) Deleted!';
 			}
 			else
 			{
