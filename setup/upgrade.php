@@ -72,6 +72,11 @@ function runUpgradeProcess($curver,$newver)
 		// Update to 1.6.0 BETA1 DB
 		include('./setup/upgrade/13.php');
 	}
+	else if($curver == "1.6.0,0.0.1.0")
+	{
+		// Update to 1.6.0 BETA2 DB
+		include('./setup/upgrade/14.php');
+	}
 	return false;
 }
 

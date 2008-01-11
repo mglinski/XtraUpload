@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-$versionSql = "INSERT INTO `config` VALUES (25, 'version', '1.6.0,0.0.1.0', '', '', '', '', 0);";
+$versionSql = "INSERT INTO `config` VALUES (25, 'version', '1.6.0,0.0.2.0', '', '', '', '', 0);";
 if(!isset($_GET['step']))
 {
 	
@@ -545,6 +545,9 @@ INSERT INTO `config` VALUES (21, 'report_links', '1', 'Show Report File Link?', 
 INSERT INTO `config` VALUES (22, 'imageCopyText', 'XtraUpload - Free File Hosting!', 'Uploaded Image Text', 'The Text to be displayed on all images uploaded that can be processed.', 'Image Processing Settings', 'text', 1);
 INSERT INTO `config` VALUES (23, 'imageTextColor', '#ff0000', 'Uploaded Image Color', 'The color of the above text.', 'Image Processing Settings', 'color', 1);
 INSERT INTO `config` VALUES (24, 'imageFontSize', 'dynamic', 'Uploaded Image Font Size', 'The font size in pixels to be written to a uploaded image.', 'Image Processing Settings', 'text', 1);
+INSERT INTO `config` VALUES (25, 'use_memcache', '0', 'Use Memcache', 'Yes|-|No', 'Memcache', 'yesno', '1');
+INSERT INTO `config` VALUES (26, 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).','Memcache', 'text', '1');
+INSERT INTO `config` VALUES (27, '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
 ".$versionSql."
 
 CREATE TABLE `dlinks` (
@@ -880,13 +883,47 @@ ALTER TABLE `servers` ADD INDEX `serv` ( `link` ( 150 ) , `name` ( 150 ) );
 ALTER TABLE `folder` ADD INDEX `fid` ( `fid` ( 6 ) );
 ALTER TABLE `fitem` ADD INDEX ( `fid` ( 6 ) );
 ALTER TABLE `fitem` ADD INDEX ( `file` );
+ALTER TABLE dlinks
+    ALTER `limit` SET DEFAULT 0,
+    ADD INDEX `time` (`time`(14));
 
+ALTER TABLE dlsessions
+    ADD INDEX ip (ip(16));
 
-INSERT INTO `config` ( `id` , `name` , `value` , `description1` , `description2` , `group` , `type` , `invincible` )
-VALUES 
-(NULL , 'use_memcache', '0', 'Use Memcache', 'Yes|-|No', 'Memcache', 'yesno', '1'), 
-(NULL , 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).', 'Memcache', 'text', '1'),
-(NULL , '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
+ALTER TABLE downloads
+    DROP INDEX id;
+
+ALTER TABLE faq
+    ALTER pos SET DEFAULT 0;
+
+ALTER TABLE faq_items
+    ALTER pos SET DEFAULT 0,
+    ALTER faq SET DEFAULT 0,
+    ALTER status SET DEFAULT 0;
+
+ALTER TABLE files
+    ALTER size SET DEFAULT 0,
+    ALTER ban SET DEFAULT 0,
+    ALTER report SET DEFAULT 0,
+    ADD INDEX filename1 (filename(40)),
+    ADD INDEX featured (featured, password(40), approved, status),
+    ADD INDEX user (ipaddress(16), description(255), `group`(1));
+
+ALTER TABLE groups
+    ALTER show_direct_link SET DEFAULT 0,
+    ALTER files_restrict_allowed SET DEFAULT 0,
+    ALTER no_ads SET DEFAULT 0,
+    ALTER file_expire SET DEFAULT 0;
+
+ALTER TABLE lang
+    ALTER `default` SET DEFAULT 0,
+    ALTER status SET DEFAULT 0;
+
+ALTER TABLE transactions
+    ALTER approved SET DEFAULT 0;
+
+ALTER TABLE users
+    ALTER lang SET DEFAULT 0;
 
 ";
 $q1 = explode(';',$q1);
@@ -919,7 +956,7 @@ xuSetupHeader();
   <font color="#FF0000">YOU MUST DELETE THE SETUP FOLDER FROM YOUR SERVER BEFORE XTRAUPLOAD WILL WORK! </font></b><br>
   </font>
   <P><font color="black" size="2" face="verdana"><strong>&lt;&lt; Log into your admin area &gt;&gt; </strong><BR>
-  <a href="./admin/"><strong>Login Here</strong></a></font>
+  <a href="../admin/"><strong>Login Here</strong></a></font>
   <P><font color="black" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>The admin </strong></font><font color="black" size="2" face="verdana"><strong> login information is:</strong></font>
   <table width="309" border="0" cellspacing="2" cellpadding="0">
         <tr>
