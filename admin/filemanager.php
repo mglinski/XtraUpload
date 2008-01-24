@@ -213,7 +213,7 @@ if(!$noMain)
 			foreach($_POST['massCheck'] as $id)
 			{
 				$id = intval($id);
-				$sql = "SELECT * FROM files WHERE id='".intval($_GET['ban'])."'";
+				$sql = "SELECT * FROM files WHERE id='".$id."'";
 				$qr1 = $db->query($sql);
 				$row = $db->fetch($qr1,'obj');
 				$db->query("UPDATE files SET `ban` = '1' WHERE id='".intval($_GET['ban'])."'");
@@ -363,14 +363,14 @@ if(!$noMain)
 <h1><span><? if($_GET['byban']){?>Banned <? }?>File Manager</span>XtraFile :: Admin Panel</h1>
 <div class="actionsMenu">
   <? if($_GET['byban']){?>
-  <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byall=1&amp;act=unban'; massForm.submit();">
+  <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byban=1&amp;act=unban'; massForm.submit();">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/unlock.png);"></div>
     <div class="txt">Unban File(s)</div>
   </div>
   </a>
   <? }else{?>
-  <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byall=1&amp;act=ban'; massForm.submit();">
+  <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byban=1&amp;act=ban'; massForm.submit();">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/private.png);"></div>
     <div class="txt">Ban File(s)</div>
@@ -382,7 +382,7 @@ if(!$noMain)
     <div class="txt">Delete File(s)</div>
   </div>
   </a> 
-  <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byall=1&amp;act=approve'; massForm.submit();">
+  <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byappr=1&amp;act=approve'; massForm.submit();">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/ok.png);"></div>
     <div class="txt">Approve File(s)</div>
@@ -646,7 +646,7 @@ if(!$noMain)
 				
 				?>
           <tr style='background-color:<?=$bgcolor?>' onmouseover="this.style.backgroundColor = '#C1DEF0'" onmouseout="this.style.backgroundColor = '<?=$bgcolor?>'">
-            <td style="border-right:1px #000000 solid;" width='27'><div align="center"><input name="massCheck[]" type="checkbox" value="<?=$a->id?>" /></div></td>
+            <td style="border-right:1px #000000 solid;" width='27'><div align="center"><input name="massCheck[ ]" type="checkbox" value="<?=$a->id?>" /></div></td>
             <td width='312'><center>
                 <?=elipsis($a->o_filename)?>
               </center></td>

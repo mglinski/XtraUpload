@@ -39,8 +39,21 @@ else
 	$upgrade = false;
 }
 
-
-if($upgrade)
+if(isset($_GET['forceInstall']) or $_SESSION['forceInstall'])
+{
+	if(session_id() == "")
+	{
+		session_start();
+	}
+	
+	if(!$_SESSION['forceInstall'])
+	{
+		$_SESSION['forceInstall'] = true;
+		session_register('forceInstall');
+	}
+	include('./setup/install.php');	
+}
+else if($upgrade)
 {
 	$upgradeRunning = true;
 	// Yes, lets upgrade to the new version

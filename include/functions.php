@@ -1126,7 +1126,12 @@ function check_file_descriptive($hash)
 	$sql = "SELECT * FROM files WHERE hash='".$hash."'";
 	$qr1 = $kernel->db->query($sql);
 	$qr1 = $kernel->db->fetch($qr1);
-	if($qr1->status == '1')
+	
+	if($qr1->ban)
+	{
+		return "File was banned for violating our TOS.";
+	}
+	else if($qr1->status == '1')
 	{
 		if(strstr($siteurl,$qr1->server))
 		{

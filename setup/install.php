@@ -38,7 +38,7 @@ xuSetupHeader();
 	
 				 <table width='100%' border='0' cellpadding='0' cellspacing='0' align='center'>
 							<tr>
-							 <td width="12%" valign="middle"><center><img style="vertical-align:middle;" src="images/angle/install.png" width="128" height="128"></center></td>
+							 <td width="12%" valign="middle"><center><img style="vertical-align:middle;" src="../images/angle/install.png" width="128" height="128"></center></td>
 							 <td width="88%"><br />
 							   <br />
 							   Thank you for Downloading XtraUpload. <br />
@@ -68,7 +68,7 @@ xuSetupHeader();
 	</div>
 <? 
 	xuSetupFooter();
-
+	die();
 }
 
 if($_GET['step'] == '1')
@@ -84,7 +84,7 @@ xuSetupHeader();
 	
 				 <table width='100%' border='0' cellpadding='0' cellspacing='0' align='center'>
 							<tr>
-							 <td width="12%" valign="middle"><center><img style="vertical-align:middle;" src="images/angle/install.png" width="128" height="128"></center></td>
+							 <td width="12%" valign="middle"><center><img style="vertical-align:middle;" src="../images/angle/install.png" width="128" height="128"></center></td>
 							 <td width="88%">						       <span class="style2">You must aggree to the XtraUpload EULA before installing XtraUpload.<br />
 						     By Installing XtraUpload, regardless if you read the EULA, you are bound by it.</span><br />
 						     An online copy of this license can be found at <a href="http://xtrafile.com/license.php">http://xtrafile.com/license.php</a><br />
@@ -263,6 +263,7 @@ xuSetupHeader();
 	}
 	else
 	{
+		$isNewConf = false;
 		$pass_fail = '<font color="#009900" size="4"><b>Passed</b></font>';
 	}
 	?>
@@ -335,7 +336,11 @@ Permissions Found: <?=$perms?></strong>
 	<tr>
 	  <td class='pformleftw'><b>Make sure this is correct  </b>
 	    <div class='description'>Please make sure it starts <b></b>with http:// and also it is the address of all your files ie. http://www.yoursite.com/upload </div></td>
-	  <td class='pformright'><input type='text' id='textinput' name='url' value='<? $dir=dirname(__FILE__); $dir=explode('/public_html/',$dir); $dir=str_replace('/setup','',$dir[1]); echo 'http://'.$_SERVER['SERVER_NAME'].'/'.$dir?>'></td>
+	  <td class='pformright'><input type='text' id='textinput' name='url' value='<?php 
+	  $dir = dirname(__FILE__); 
+	  $dir = dirname($dir.'../');
+	  $dir = substr($dir, strlen($_SERVER['DOCUMENT_ROOT'])+1);
+	  echo 'http://'.$_SERVER['SERVER_NAME'].'/'.$dir?>'></td>
 	</tr>
 	</table>
 	</div>
@@ -372,9 +377,7 @@ Permissions Found: <?=$perms?></strong>
     <tr>
 	  <td class='pformleftw'><b>Use MySQLi?</b>
 	    <div class='description'>Use the improved version of MySQL(improvements only noticable on large sites)</div></td>
-	  <td class='pformright'><input name="mysqli" type="radio" id="mysqli_t" value="true" /> Yes<br />
-      <input name="mysqli" type="radio" id="mysqli_f" value="false" />no</td>
-	</tr>
+	  <td class='pformright'><input name="mysqli" type="checkbox" id="mysqli_t" value="true" /> Yes<br /></td>	</tr>
 	
 
 	</table>
@@ -946,7 +949,7 @@ xuSetupHeader();
 	<div class='pformstrip'>Details About The Install Are Below </div>
 	<table width="100%" height="40" border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td width="19%" valign="middle"><center><img src="images/angle/checkmark.png" width="128" height="128" />
+        <td width="19%" valign="middle"><center><img src="../images/angle/checkmark.png" width="128" height="128" />
         </center></td>
         <td width="62%"><br>
           <br><center>

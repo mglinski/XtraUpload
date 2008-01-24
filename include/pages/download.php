@@ -397,7 +397,7 @@ function makeFileDownloadLink($id, $orig)
 }
 
 // Grab fine info and make sure its there
-$sql = $db->query("SELECT * FROM files WHERE `hash` = '".txt_clean($_GET['hash'])."' AND `status` = '1'");
+$sql = $db->query("SELECT * FROM files WHERE `hash` = '".txt_clean($_GET['hash'])."' AND `status` = '1' AND `ban` != '1'");
 $num = $db->num($sql);
 if ($num == 0 && !(isset($_REQUEST['link'])))
 {
