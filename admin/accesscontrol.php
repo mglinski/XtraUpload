@@ -33,7 +33,7 @@ if($site_offline)
 		header("location: ./login.php");
 		exit();
 	}
-	else if(md5(getAdminSessionString()) != $_SESSION['adminSecret'])
+	else if(!isset($_SESSION['adminSecret']) or md5(getAdminSessionString()) != $_SESSION['adminSecret'])
 	{
 		header("location: ./login.php");
 		exit();
@@ -62,7 +62,7 @@ else
 		header("location: ".makeXuLink('index.php','p=login'));
 		exit();
 	}
-	else if(md5(getAdminSessionString()) != $_SESSION['adminSecret'])
+	else if(!isset($_SESSION['adminSecret']) or md5(getAdminSessionString()) != $_SESSION['adminSecret'])
 	{
 		header("location: ./login.php");
 		exit();

@@ -33,7 +33,7 @@ if(isset($_POST['s2']))
 		log_action('New User('.$_POST['NewAdmin'].') Added', 'user:new', 'New User('.$_POST['NewAdmin'].') Added', 'ok', 'admin/user.php');
 		$db->query($q1);
 	}
-	echo "<br><center>New Admin <b>$_POST[NewAdmin]</b> was added.</center>";
+	echo "<br><center>New User <b>$_POST[NewAdmin]</b> was added.</center>";
 }
 
 ?>

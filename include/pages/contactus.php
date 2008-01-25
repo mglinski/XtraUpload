@@ -76,7 +76,7 @@ if(isset($_POST['submit']))
 }
 
 $kernel->tpl->assign('msg', $msg);
-if(!$valid)
+if(!$valid and $allow_imaging)
 {
 	$kernel->tpl->assign('captcha',$captcha->display_form());
 }

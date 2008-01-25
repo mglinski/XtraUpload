@@ -26,6 +26,7 @@ include("admin/header.php");
 <h1><span>Login</span>XtraFile :: Admin Panel</h1>
 <?
 $msg = 'No Administration Session Found';
+$passed=0;
 if( (isset($_POST['username'])) && (isset($_POST['password'])) )
 {
 

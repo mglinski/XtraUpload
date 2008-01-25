@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-$versionSql = "INSERT INTO `config` VALUES (26, 'version', '1.6.0,0.0.2.0', '', '', '', '', 0);";
+$versionSql = "INSERT INTO `config` VALUES (NULL , 'version', '1.6.0,0.0.3.0', '', '', '', '', 0);";
 if(!isset($_GET['step']))
 {
 	
@@ -531,26 +531,27 @@ CREATE TABLE `config` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM   ;
 
-INSERT INTO `config` VALUES (1, 'sitename', 'XtraUpload Install ', 'Site Name:', '(Site Name)', 'Main Settings', 'text', 1);
-INSERT INTO `config` VALUES (2, 'siteurl', '".$url."', 'Site URL', '(URL to the Main Folder) ', 'Main Settings', 'text', 1);
-INSERT INTO `config` VALUES (3, 'adminemail', 'admin@localhost', 'Admin Email Address', '(Your Email Address) ', 'Main Settings', 'text', 1);
-INSERT INTO `config` VALUES (4, 'sess_time', '3600', 'Session Time Limit:', '( In Seconds)', 'Main Settings', 'text', 1);
-INSERT INTO `config` VALUES (7, 'upload_cgi', '0', 'Upload Method', 'CGI ( Progress bar, Slower)|-|PHP ( Faster, No Progress bar ) ', 'Feature Settings', 'yesno', 1);
-INSERT INTO `config` VALUES (8, 'rewrite_links', '0', 'Use mod_rewrite Links? ', 'Yes ( Links look like: /files/2343n423i4n3i4)|-|No (Llinks look like: /download.php?hash=2343n423i4n3i4) ', 'Feature Settings', 'yesno', 1);
-INSERT INTO `config` VALUES (9, 'allow_imaging', '0', 'Use Image Processing?', 'Yes ( Requires GD2 )|-|No (No BBCode links or Image Thumbnailing) ', 'Image Processing Settings', 'yesno', 1);
-INSERT INTO `config` VALUES (10, 'allow_featured', '0', 'Allow Featured Uploads?', 'Yes|-|No  ', 'Feature Settings', 'yesno', 1);
-INSERT INTO `config` VALUES (16, 'site_offline', '0', 'Site Closed', 'Yes, your site is closed|-|No, your site is open', 'Closure Settings', 'text\r\n', 1);
-INSERT INTO `config` VALUES (17, 'offline_message', '<font size=\"4\" color=\"#ff0000\"><strong>Testing site closed system.</strong></font>', 'Site Offline Messaage', 'The message that is displayed if your site is offline.', 'Closure Settings', 'box', 1);
-INSERT INTO `config` VALUES (18, 'metakey', '', 'Meta Tag: Keywords', 'Keywords that describe your site.', 'Site Meta', 'text', 1);
-INSERT INTO `config` VALUES (19, 'metadesc', '', 'Meta Tag: Description', 'Your Site Description, to appear in the description meta tag.', 'Site Meta', 'text', 1);
-INSERT INTO `config` VALUES (20, 'shortcut_icon', 'favicon.ico', 'Favicon', 'Your Site''s Favicon URL', 'Site Meta', 'text', 1);
-INSERT INTO `config` VALUES (21, 'report_links', '1', 'Show Report File Link?', 'Yes|-|No', 'Feature Settings', 'yesno', 1);
-INSERT INTO `config` VALUES (22, 'imageCopyText', 'XtraUpload - Free File Hosting!', 'Uploaded Image Text', 'The Text to be displayed on all images uploaded that can be processed.', 'Image Processing Settings', 'text', 1);
-INSERT INTO `config` VALUES (23, 'imageTextColor', '#ff0000', 'Uploaded Image Color', 'The color of the above text.', 'Image Processing Settings', 'color', 1);
-INSERT INTO `config` VALUES (24, 'imageFontSize', 'dynamic', 'Uploaded Image Font Size', 'The font size in pixels to be written to a uploaded image.', 'Image Processing Settings', 'text', 1);
-INSERT INTO `config` VALUES (25, 'use_memcache', '0', 'Use Memcache', 'Yes|-|No', 'Memcache', 'yesno', '1');
-INSERT INTO `config` VALUES (26, 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).','Memcache', 'text', '1');
-INSERT INTO `config` VALUES (27, '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
+INSERT INTO `config` VALUES (NULL , 'sitename', 'XtraUpload Install ', 'Site Name:', '(Site Name)', 'Main Settings', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'siteurl', '".$url."', 'Site URL', '(URL to the Main Folder) ', 'Main Settings', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'adminemail', 'admin@localhost', 'Admin Email Address', '(Your Email Address) ', 'Main Settings', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'sess_time', '3600', 'Session Time Limit:', '( In Seconds)', 'Main Settings', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'upload_cgi', '0', 'Upload Method', 'CGI ( Progress bar, Slower)|-|PHP ( Faster, No Progress bar ) ', 'Feature Settings', 'yesno', 1);
+INSERT INTO `config` VALUES (NULL , 'rewrite_links', '0', 'Use mod_rewrite Links? ', 'Yes ( Links look like: /files/2343n423i4n3i4)|-|No (Llinks look like: /download.php?hash=2343n423i4n3i4) ', 'Feature Settings', 'yesno', 1);
+INSERT INTO `config` VALUES (NULL , 'allow_imaging', '0', 'Use Image Processing?', 'Yes ( Requires GD2 )|-|No (No BBCode links or Image Thumbnailing) ', 'Image Processing Settings', 'yesno', 1);
+INSERT INTO `config` VALUES (NULL , 'allow_featured', '0', 'Allow Featured Uploads?', 'Yes|-|No  ', 'Feature Settings', 'yesno', 1);
+INSERT INTO `config` VALUES (NULL , 'site_offline', '0', 'Site Closed', 'Yes, your site is closed|-|No, your site is open', 'Closure Settings', 'text\r\n', 1);
+INSERT INTO `config` VALUES (NULL , 'offline_message', '<font size=\"4\" color=\"#ff0000\"><strong>Testing site closed system.</strong></font>', 'Site Offline Messaage', 'The message that is displayed if your site is offline.', 'Closure Settings', 'box', 1);
+INSERT INTO `config` VALUES (NULL , 'metakey', '', 'Meta Tag: Keywords', 'Keywords that describe your site.', 'Site Meta', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'metadesc', '', 'Meta Tag: Description', 'Your Site Description, to appear in the description meta tag.', 'Site Meta', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'shortcut_icon', 'favicon.ico', 'Favicon', 'Your Site''s Favicon URL', 'Site Meta', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'report_links', '1', 'Show Report File Link?', 'Yes|-|No', 'Feature Settings', 'yesno', 1);
+INSERT INTO `config` VALUES (NULL , 'imageCopyText', 'XtraUpload - Free File Hosting!', 'Uploaded Image Text', 'The Text to be displayed on all images uploaded that can be processed.', 'Image Processing Settings', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'imageTextColor', '#ff0000', 'Uploaded Image Color', 'The color of the above text.', 'Image Processing Settings', 'color', 1);
+INSERT INTO `config` VALUES (NULL , 'imageFontSize', 'dynamic', 'Uploaded Image Font Size', 'The font size in pixels to be written to a uploaded image.', 'Image Processing Settings', 'text', 1);
+INSERT INTO `config` VALUES (NULL , 'use_memcache', '0', 'Use Memcache', 'Yes|-|No', 'Memcache', 'yesno', '1');
+INSERT INTO `config` VALUES (NULL , 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).','Memcache', 'text', '1');
+INSERT INTO `config` VALUES (NULL , '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
+INSERT INTO `config` VALUES (NULL , 'check_version', '1', 'Check Latest Version', 'Allow XU to check the latest version of itself.', 'Main Settings', 'yesno', '1' );
 ".$versionSql."
 
 CREATE TABLE `dlinks` (

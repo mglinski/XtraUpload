@@ -17,7 +17,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/include("./init.php");
+*/
+
+include("./init.php");
+	
+if(!isset($_GET['act']))
+{
+	$_GET['act'] = '';
+}
 	
 $pageno = 0;
 if(isset($_REQUEST['pageno']))
@@ -39,7 +46,10 @@ if($limit == '')
 {
 	$limit = 50;
 }
-if($_GET['edit'])
+
+$noMain = false;
+
+if(isset($_GET['edit']))
 {
 	if($_POST['submit'] == 'Submit Changes')
 	{
@@ -55,6 +65,7 @@ if($_GET['edit'])
 		WHERE id='".intval($_GET['file'])."'");
 		$msg = "File Settings Changed";
 		log_action('File('.txt_clean($_POST['sfilename']).') Edited', 'file:edit', 'The file('.txt_clean($_POST['sfilename']).') was edited', 'ok', 'admin/filemanager.php');
+		
 	}
 	else
 	{
@@ -360,9 +371,9 @@ if(!$noMain)
 		$endtime = $_REQUEST['endtime'];
 	}
 ?>
-<h1><span><? if($_GET['byban']){?>Banned <? }?>File Manager</span>XtraFile :: Admin Panel</h1>
+<h1><span><? if(isset($_GET['byban'])){?>Banned <? }?>File Manager</span>XtraFile :: Admin Panel</h1>
 <div class="actionsMenu">
-  <? if($_GET['byban']){?>
+  <? if(isset($_GET['byban'])){?>
   <a href="#" onclick="massForm.action = './filemanager.php?report=1&amp;byban=1&amp;act=unban'; massForm.submit();">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/unlock.png);"></div>
@@ -390,7 +401,7 @@ if(!$noMain)
   </a>
   <? }?>
   <div class="spacer"></div>
-   <? if(!$_GET['byappr']){?>
+   <? if(!isset($_GET['byappr'])){?>
   <a href="filemanager.php?report=1&amp;byappr=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/go.png);"></div>
@@ -398,7 +409,7 @@ if(!$noMain)
   </div>
   </a>
   <? }?>
-  <? if(!$_GET['byrepo']){?>
+  <? if(!isset($_GET['byrepo'])){?>
   <a href="filemanager.php?report=1&amp;byrepo=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/public.png);"></div>
@@ -406,7 +417,7 @@ if(!$noMain)
   </div>
   </a>
   <? }?>
-  <? if(!$_GET['byban'] ){?>
+  <? if(!isset($_GET['byban'] )){?>
   <a href="filemanager.php?report=1&amp;byban=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/stop.png);"></div>
@@ -414,7 +425,7 @@ if(!$noMain)
   </div>
   </a>
   <? }
-  if(!$_GET['byall'] ){?>
+  if(!isset($_GET['byall']) ){?>
   <a href="filemanager.php?report=1&amp;byall=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/hard_disk.png);"></div>
@@ -422,7 +433,7 @@ if(!$noMain)
   </div>
   </a> 
   <? }?>
-  <? if($_POST['report'] == 'Sort By Date' or $_POST['report'] == 'Search Files' and !$_GET['byban']){?>
+  <? if(isset($_POST['report']) and ($_POST['report'] == 'Sort By Date' or $_POST['report'] == 'Search Files') and !isset($_GET['byban'])){?>
   <a href="filemanager.php?report=1&amp;byall=1">
   <div class="item">
     <div class="img" style="background-image:url(../images/small/hard_disk.png);"></div>
@@ -445,7 +456,7 @@ if(!$noMain)
   </div>
   </a> </div>
 <br />
-<? if($msg != ''){?>
+<? if(isset($msg) and $msg != ''){?>
 <div id="msgBox" class="msgBox"> <img class="okImg" src="../images/actions/OK_24x24.png" alt="Ok!"  /> <span>
   <?=$msg?>
   </span> <a href="javascript:;" onclick="hideMsgBox()"> <img class="closeImg" src="../images/small/Close.png" alt="Close"  /> </a> </div>
@@ -568,7 +579,7 @@ if(!$noMain)
 			$rowcount = $db->num($qr1);
 			$pagecount = ceil($realRetNum / $limit);
 			?>
-            <br /><b><font color=red>Number of files<? if($_POST['report'] == 'Sort By Date' or $_POST['report'] == 'Search Files' and !$_GET['byban']){?> found<? }?>: 
+            <br /><b><font color=red>Number of files<? if(isset($_POST['report']) and ($_POST['report'] == 'Sort By Date' or $_POST['report'] == 'Search Files') and !isset($_GET['byban'])){?> found<? }?>: 
             (<?=((int)$pageno*(int)$limit).'-'.($limit < $realRetNum ? (((int)$pageno+1)*(int)$limit):$realRetNum)?>) of <?=$realRetNum?></font></b>
 			<br /><br><?
 			if(isset($_REQUEST['byip']))

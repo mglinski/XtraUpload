@@ -21,12 +21,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 include("./init.php");
 
-if($_REQUEST['process'])
+if(isset($_REQUEST['process']))
 {
 	$post_valid = $_POST['valid'];
 	if($post_valid == "yes")
 	{
-		if($_POST['all_filetypes'])
+		if(isset($_POST['all_filetypes']))
 		{
 			$_POST['att_filetypes'] = '*|'.$_POST['att_filetypes'];
 		}
@@ -50,7 +50,7 @@ if($_REQUEST['process'])
 		$valid = false;
 	}
 }
-else if($_REQUEST['add'])
+else if(isset($_REQUEST['add']))
 {
 	$post_valid = $_POST['valid'];
 	if($post_valid == "yes")
@@ -65,7 +65,7 @@ else if($_REQUEST['add'])
 		$valid = false;
 	}
 }
-else if($_REQUEST['delete'])
+else if(isset($_REQUEST['delete']))
 {
 	$sql_pre = "SELECT * FROM `config` WHERE `id` = '".intval($_GET['delete'])."'";
 	$pre = $db->query($sql_pre);
@@ -107,7 +107,7 @@ else
       </a> 
   </div>
 <br />
-<? if($msg != ''){?>
+<? if(isset($msg) and $msg != ''){?>
 <div id="msgBox" class="msgBox"> <img class="okImg" src="../images/actions/OK_24x24.png" alt="Ok!"  /> <span>
   <?=$msg?>
   </span> <a href="javascript:;" onclick="hideMsgBox()"> <img class="closeImg" src="../images/small/Close.png" alt="Close"  /> </a> 
@@ -168,6 +168,10 @@ else
 				  </tr>
 				</table>';
 				
+				if(!isset($groups[$config->group]))
+				{
+					$groups[$config->group] = '';
+				}
 				$groups[$config->group] .= $html;
 			   }
 			   

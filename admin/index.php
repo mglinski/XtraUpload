@@ -192,18 +192,25 @@ require_once("admin/header.php");
 <tr>
               <td width="98" height="22"><div align="right"><span class="style1">Latest Version:</span></div></td>
     <td width="199"><? 
-	/*
-	$kernel->loadUserExt('version');
-	if(!XU_VERSION_CHECK)
+	
+	if($check_version)
 	{
-		$r_version = $version;
+		$kernel->loadUserExt('version');
+		if(!XU_VERSION_CHECK)
+		{
+			$r_version = $version;
+		}
+		else
+		{
+			$r_version = parseVersion($kernel->ext->version->version);
+		}
+		echo $r_version;
 	}
 	else
 	{
-		$r_version = parseVersion($kernel->ext->version->version);
+		echo 'Disabeled';
 	}
-	*/
-	echo 'Disabeled';//$r_version?></td>
+	?></td>
   </tr>
             <tr>
               <td height="22"><div align="right"><span class="style1">Your Version:</span></div></td>
