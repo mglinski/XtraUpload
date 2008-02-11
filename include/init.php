@@ -77,7 +77,7 @@ if (get_magic_quotes_gpc())
 	@ini_set('session.bug_compat_warn','off');
 	
 	// Define Hard Coded Script Version
-	$versionDefault = '1.6.0,0.2.0.0'; // 1.6 Beta 2
+	$versionDefault = '1.6.0,0.3.0.0'; // 1.6 Beta 3
 	
 	// Define PEAR folder For PEAR Includes
 	define("PEAR_DIR", "include/kernel/pear/");
