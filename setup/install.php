@@ -331,7 +331,7 @@ $dbUser = "'.$_POST['sql_user'].'"; // mysql username
 $dbPass = "'.$_POST['sql_pass'].'"; //mysql password
 $dbName = "'.$_POST['sql_name'].'"; //mysql database
 $serverurl = "'.$server.'"; // URL to compare to for Progress bar
-$use_mysqli = "'.$_POST['mysqli'].'"; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
+$use_mysqli = "'.(isset($_POST['mysqli']) ? 'true' : 'false').'"; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
 ?>';
 
 $fp = fopen('./config.php', 'w');

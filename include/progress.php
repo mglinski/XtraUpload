@@ -30,8 +30,10 @@ include("./include/init.php");
 
 $_GET['server'] = urldecode($_GET['server']);
 
-if($_GET['server'] != $serverurl)
+if($_GET['server'] != $serverurl && ($siteurl != $serverurl))
 {
+	echo 'alert("ERROR WITH REMOTE SERVER: '.$errstr.'");';
+	die();
 	echo '// Server: '.$serverurl.' != '.$_GET['server'].'
 ';
 	flush();

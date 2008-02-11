@@ -66,9 +66,10 @@ function show_upload_browse()
 
 function popUP()
 {
-document.getElementById("p_bar_text").style.display = "inline";
-document.getElementById("upload_sect").style.display = "none";
-document.getElementById("link_block").style.display = 'none';
+	$("#p_bar_text").css('display', "inline");
+	$("#upload_sect").css('display', "none");
+	$("#link_block").css('display', 'none');
+	$("#uploadMethods").css('display', 'none');
 }
 
 function redirect(URLStr) 
@@ -89,10 +90,6 @@ function up_image(width)
 	$("#progress_img").animate({width: width}, "normal");
 }
 
-function close_loading()
-{
-	TB_remove_load();
-}
 
 function make_color(css)
 {  

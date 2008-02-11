@@ -1,7 +1,5 @@
-<script type="text/javascript" >
-<{if $forceLogin eq "1"}>
-	location = '<{$loginLink}>';
-<{/if}>
+<script type="text/javascript" language="javascript">
+<{if $forceLogin eq "1"}>location = '<{$loginLink}>';<{/if}>
 var progress_window;
 
 var lang1 = '<{$lang.script.1}>';
@@ -283,22 +281,81 @@ function flashBrowseButton()
 	flashUploadCancel = true;
 	$('#flashFileName').attr('value', '');
 	$('#flashFileUploadButton').attr('disabled',true);
-	swfu.cancelUpload();
+	cancelQueue();
 	flashUploadCancel = false;
 	swfu.selectFile();
 }
 
 function flashBrowseComplete(file)
 {
-	$('#flashFileName').attr('value', file.name);
-	$('#flashFileUploadButton').attr('disabled',false);
+	var fileTypes = '<{$filetypes}>';
+	var checkMethod = <{$files_restrict_allowed}>;// 0 is Allowed, 1 is restricted
+	
+	var types = '';
+	var extention = file.name.split('.');
+	var allow = false;
+	extension = extention[extention.length-1];
+	
+	if(fileTypes != '*')
+	{
+		fileTypes = fileTypes.split('|');
+		if(checkMethod)
+		{
+			allow = true;
+			for(var i=0; i<fileTypes.length; i++)
+			{
+				if(extension == fileTypes[i] && allow)
+				{
+					allow = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			for(var i=0; i<fileTypes.length; i++)
+			{
+				if(extension == fileTypes[i] && !allow)
+				{
+					allow = true;
+					break;
+				}
+			}
+		}
+	}
+	
+	if(allow)
+	{
+		$('#flashFileName').attr('value', file.name);
+		$('#flashFileUploadButton').attr('disabled',false);
+	}
+	else
+	{
+		cancelQueue();
+		alert('Error: Filetype ".'+extension+'" is not allowed!');
+	}
 }
+
+function cancelQueue()
+{
+	var stats = swfu.getStats();
+	swfu.customSettings.queue_cancelled_flag = false;
+
+	if (stats.in_progress > 0) {
+		swfu.customSettings.queue_cancelled_flag = true;
+	}
+	
+	while(stats.files_queued > 0) {
+		swfu.cancelUpload();
+		stats = swfu.getStats();
+	}
+};
 
 function flashUploadError(file, errorCode, message)
 {
-	if(!flashUploadCancel)
+	if(errorCode != -280)
 	{
-		alert("Upload Failed: "+ message);
+		alert("Upload Failed("+errorCode+"): "+ message);
 	}
 }
 
@@ -358,23 +415,9 @@ function sendFlashUpload()
 
 function load_flash()
 {
-	var fileTypes = '<{$filetypes}>';
-	var types = '';
-	if(fileTypes != '*')
-	{
-		fileTypes = fileTypes.split('|');
-		for(var x=0; x<fileTypes.length; x++)
-		{
-			types += "*."+fileTypes[x]+",";
-		}
-	}
-	else
-	{
-		types = '*.*';
-	}
 
 	var settings_object = { 
-		file_types : types, 
+		file_types : "*.*", 
 		file_types_description: "Allowed Files", 
 		file_size_limit : (<{$limit_size_int}>*1024*1024), 
 		file_upload_limit : 1, 
@@ -494,7 +537,7 @@ $(document).ready(function()
       <div id="link_block">
         <p align="center" class="style114 style115">
         <{* Check to see if we are logged in here *}>
-          <{if !$smarty.session.loggedin}>
+          <{if !$templatelite.session.loggedin}>
 		  	<br /><{$lang.home.10}><a href="<{$fpLink}>"><{$lang.home.33}></a><br />
 		  <{/if}>
           <br>
@@ -518,6 +561,7 @@ $(document).ready(function()
           <br />
           <br />
         </div>
+        <div id="uploadMethods">
         <div align="center" id='up_plain' style="display:<{if $shownUploadMethod neq "1"}>none<{/if}>">
           <{if $can_cgi eq '1'}>
               <span class="style3 style123">
@@ -761,6 +805,7 @@ $(document).ready(function()
           <br />
           <div align="center"></div>
           <{/if}>
+        </div>
         </div>
       </div>
       <br />

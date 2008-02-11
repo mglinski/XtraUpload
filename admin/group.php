@@ -23,7 +23,7 @@ include("./init.php");
 if(isset($_GET['group']) && $_GET['group'] != '')
 {
 	$group = intval($_GET['group']);
-	if($_GET['update'])
+	if(isset($_GET['update']))
 	{
 		$sql = "UPDATE `groups` SET 
 		`days` = '".intval($_POST['days'])."',
@@ -308,9 +308,16 @@ if(isset($_GET['group']) && $_GET['group'] != '')
 }
 else
 {
-	$step = $_REQUEST['step'];
-	$uid = $_REQUEST['uid'];
-	if (!$step)
+	if(isset($_REQUEST['step']))
+	{
+		$step = $_REQUEST['step'];
+	}
+	
+	if(isset($_REQUEST['uid']))
+	{
+		$uid = $_REQUEST['uid'];
+	}
+	if (!isset($step))
 	{
 		$step = 1;
 	}
@@ -442,7 +449,7 @@ else
 					?></a>&nbsp;<? 
 				}
 			}
-			?><a href="<?=$PHP_SELF?>?group=<?=$row->id?>"><img border='0' alt='Edit Group Settings' src='../images/actions/Edit_24x24.png' /></a>&nbsp;<? 
+			?><a href="./group.php?group=<?=$row->id?>"><img border='0' alt='Edit Group Settings' src='../images/actions/Edit_24x24.png' /></a>&nbsp;<? 
 			if($row->id != '1')
 			{
 				if($row->id != '2')
