@@ -20,9 +20,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */include("./init.php");
 
 
-if($_GET['edit'])
+if(isset($_GET['edit']))
 {
-	if($_POST['submit'] == 'Submit Changes')
+	if(isset($_POST['submit']) and $_POST['submit'] == 'Submit Changes')
 	{
 		$db->query("UPDATE `lang` SET
 		`file` = '".txt_clean($_POST['file'])."',
@@ -122,16 +122,17 @@ else
 {
 
 
-	if($_POST['submit'])
+	if(isset($_POST['submit']))
 	{
 		$block = $_POST['block'];
 		$title = txt_clean($_POST['title']);
 		$author = txt_clean($_POST['author']);
 		$db->query("INSERT INTO lang (`file`,`name`,`default`,`status`, `cc`) VALUES ('".txt_clean($_POST['file'])."','".txt_clean($_POST['name'])."','".intval($_POST['default'])."','".intval($_POST['active'])."','".txt_clean($_POST['cc'])."')");
 		log_action('Language Added', 'lang:add', 'A XtraUpload Translation was added', 'ok', 'admin/lang.php');
+		header("Location: ./lang.php");
 	}
 	
-	if($_GET['default'])
+	if(isset($_GET['default']))
 	{
 			while($res1 = $db->fetch($db->query("SELECT * FROM lang WHERE `default` = '1' ")))
 			{
@@ -142,28 +143,30 @@ else
 			log_action('Language Set as Default', 'lang:default', 'A languagee was set as default.', 'ok', 'admin/lang.php');
 	}
 	
-	if($_GET['active'])
+	if(isset($_GET['active']))
 	{
 			$db->query("UPDATE lang SET status = '1' WHERE id = '".intval($_GET['active'])."' ");
 			log_action('Language Set as active', 'lang:active', 'A language was set as active.', 'ok', 'admin/lang.php');
 	}
 	
-	if($_GET['deactive'])
+	if(isset($_GET['deactive']))
 	{
 			$db->query("UPDATE lang SET status = '0' WHERE id = '".intval($_GET['deactive'])."' ");
 			log_action('Language Set as not active', 'lang:active', 'A languagee was set as not active.', 'ok', 'admin/lang.php');
 	}
 
-	$id = intval($_REQUEST['id']);
+	
 
-	if($_REQUEST['step'] == "4")
+	if(isset($_REQUEST['step']) and $_REQUEST['step'] == "4")
 	{
+		$id = intval($_REQUEST['id']);
 		$sql1 = "DELETE FROM `lang` WHERE `id` = '$id' LIMIT 1 ";
 		log_action('Lang Deleted', 'lang:delete', 'Language File Was Deleted', 'ok', 'admin/lang.php');
 		$db->query($sql1);
 	}
 ?>
-<?php if(isset($_GET['add'])){ ?>
+<?php if(isset($_GET['add']))
+{ ?>
 <h1><span>Add Language</span>XtraFile :: Admin Panel</h1>
 <div class="actionsMenu">
     <a href="lang.php">

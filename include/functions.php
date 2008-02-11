@@ -249,7 +249,7 @@ function getAdminSessionString()
 
 function isValidEmail($e)
 {
-	if(eregi("^[a-zA-Z0-9]+[_a-zA-Z0-9]*(\.[_a-z0-9-]+)*@[a-z 0-9]+(-[a-z 0-9+)*(\.[a-z 0-9-]+)*(\.[a-z]{2,4}$",$e))
+	if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3,4,5})$",$e))
 	{
 		return true;
 	}

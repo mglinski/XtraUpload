@@ -84,7 +84,6 @@ class users
 			//$db->query("UPDATE users SET ipaddr = '".$_SERVER['REMOTE_ADDR']."' WHERE username = '".$this->name."'");
 			$this->ipaddr = $_SERVER['REMOTE_ADDR'];
 			$this->isadmin = $res1->isadmin;
-			$this->oldsessionid = $res1->sessionid;
 			$this->perm_level = $res1->group;
 			$this->userid = $res1->uid;
 			$this->loggedin =  true;

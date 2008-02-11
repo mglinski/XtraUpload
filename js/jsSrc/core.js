@@ -89,41 +89,6 @@ function up_image(width)
 	$("#progress_img").animate({width: width}, "normal");
 }
 
-function check_upload()
-{
-	if(document.getElementById('attached').attached.value.length == '0')
-	{
-		return false;
-	}
-	return true;
-}
-
-function check_url()
-{
-	if(document.getElementById("urlfile").value.length <= '12')
-	{
-		alert(lang4);
-		return false;
-	}
-	else
-	{
-		if(check_types('urlfile'))
-		{	
-			//document.getElementById("url_txt").style.display = "inline"; 
-			document.getElementById("link_block").style.display = "none";
-			document.getElementById("up_url").style.display = "none";
-			document.getElementById("p_bar_load").style.display='';
-			document.getElementById("p_bar_text").style.display='';
-			setTimeout('cgiUploadBar()', 5000);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-}
-
 function close_loading()
 {
 	TB_remove_load();
@@ -147,13 +112,6 @@ function disable_button()
 		return true;
 	}
 	return false;
-}
-
-function cgiUploadBar()
-{
-	var ourl = $('#p_link').attr('value');
-	
-	$.getScript(ourl, function(){setTimeout("cgiUploadBar()",6000);});
 }
 
 function showUploadUrlOptions()

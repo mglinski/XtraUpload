@@ -109,7 +109,7 @@ if(isset($_GET['act']))
 		$order = $db->fetch($db->query("SELECT * FROM `transactions` WHERE `id` = '".intval($_GET['id'])."'"));
 			?>
                 <h1><span>Orders - Edit Order</span>XtraFile :: Admin Panel</h1>
-<form id="form1" name="form1" method="post" action="./orders.php?act=edit">
+<form id="form1" name="massCheck" method="post" action="./orders.php?act=edit">
 			<input type="hidden" name="id" value="<?=intval($_POST['edit'])?>"  />
 			<table width="600" border="0" align="center" cellpadding="3" cellspacing="0">
   <tr>
@@ -300,7 +300,7 @@ if(!$noMain)
 </div>
 <? }?>
 <br />
-<form method="post" id="massForm">
+<form method="post" name="massForm" id="massForm">
 <table id="mainTable" width="849" style="border:#000 thin solid" border="0" cellpadding="2" cellspacing="0" align="center">
   <tr>
     <th style="border-right:1px #000000 solid;" width="27"><input type="checkbox" name="mass" value="" onchange="if(this.checked){$('input[@type=checkbox]','#mainTable').attr('checked','checked');}else{$('input[@type=checkbox]','#mainTable').attr('checked','');}" /></th>

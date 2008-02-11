@@ -50,13 +50,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 .titleText{ font-size:24px}
 </style>
 <div align="center"><h1><?=$lang['usercp']['1']?></h1><br />
-    <br />
-	<form>
-  <? if($g->expire != '0'){?><input onclick="location='<?=makeXuLink('index.php', 'p=points')?>';" value="<?=$lang['points']['14']?>" type="button" /><? }?> 
+  <br />
+  <input onclick="location='<?=makeXuLink('index.php', 'p=points')?>';" value="<?=$lang['points']['14']?>" type="button" />
   <input type="button" onclick="location = '<?=makeXuLink('index.php', 'p=files')?>'" value="<?=$lang['usercp']['16']?>" />
   <input type="button" onclick="location = '<?=makeXuLink('index.php', array('p'=>'folders','act'=>'create'))?>'" value="<?=$lang['usercp']['17']?>" />
   <br />
-  </form>
   <br />
 </div>
 <table width="877" height="447" border="0" align="center" cellpadding="3" cellspacing="0">
@@ -288,7 +286,8 @@ $s = $db->fetch($re,"obj"); echo $s->points?>
             </tr>
           </table></td>
         </tr>
-</table>
+</table><br />
+
 <script>
 <? // damn IE makeing me do this, FIX THE DAMN BUGS M$!?>
 $(document).ready(function(){

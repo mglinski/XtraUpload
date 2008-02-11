@@ -26,7 +26,7 @@
 //***************************************************************************************************************
 
 chdir("..");
-include("./include/functions.inc.php");
+include("./include/init.php");
 
 $_GET['server'] = urldecode($_GET['server']);
 

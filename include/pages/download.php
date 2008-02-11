@@ -39,6 +39,17 @@ function startDownloadProcess($action,$captcha_is=false,$captchaHTML='',$captcha
 		header("Location: ".$siteurl."index.php?p=file_error");
 		exit;
 	}
+	
+	// 
+	$tD = $db->query("SELECT SUM(`filesize`) AS `total` FROM `downloads` WHERE `ip` = '".$_SERVER['REMOTE_ADDR']."'");
+	$dlTotal = $db->fetch($tD);
+	$totaldownload += intval($dlTotal->total);
+	
+	if (($limit != 0) && ($totaldownload >= ($limit * 1024 * 1024))) 
+	{
+		header('Location: '.makeXuLink('index.php','p=errordl'));
+		die();
+	}
 
 	if($action == '3')
 	{
@@ -154,17 +165,6 @@ function doDirectDownload($link)
 		/* Check if user has exceeded limit */
 		$totaldownload = 0;
 		$db->query("DELETE FROM `dlinks` WHERE `time` > '".(time() + 3600)."'");
-		$tD = $db->query("SELECT `filesize` FROM `downloads` WHERE `ip` = '".$_SERVER['REMOTE_ADDR']."'");
-		while($dlTotal = $db->fetch($tD))
-		{
-			$totaldownload += intval($dlTotal->filesize);
-		}
-		
-		if (($limit != 0) && ($totaldownload >= ($limit * 1024 * 1024))) 
-		{
-			header('Location: '.makeXuLink('index.php','p=errordl'));
-			die();
-		}
 
 		/* Read in the original file and present dialog to user */
 		$limit_speed = intval($limit_speed);

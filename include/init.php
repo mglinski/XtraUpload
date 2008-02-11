@@ -148,8 +148,12 @@ if (get_magic_quotes_gpc())
 		$kernel->tpl->assign($name, $a->value);
 	}
 	
-	$perm_level = $_SESSION['perm_level'];
-	if($perm_level == '')
+	$perm_level = '';
+	if(isset($_SESSION['perm_level']))
+	{
+		$perm_level = $_SESSION['perm_level'];
+	}
+	else
 	{
 		$perm_level = '1';	
 		$_SESSION['perm_level'] = '1';
@@ -316,7 +320,7 @@ if(class_exists('Memcache'))
 		$language2 = $db->fetch($dbq);
 		if($language2->lang != '')
 		{
-			$language = $language2->file;
+			$language = $language1->file;
 			$_SESSION['language'] = $language;
 			session_register('language');
 		}
@@ -466,14 +470,16 @@ if(class_exists('Memcache'))
 		
 		$_SESSION['time'] = time();
 		
-		if($_SESSION['file_name']=='')
+		if(!isset($_SESSION['file_name']))
 		{
 			$_SESSION['file_name'] = $lang['functions']['8'];
+			session_register('file_name');
 		}
 		
-		if($_SESSION['file_size']=='')
+		if(!isset($_SESSION['file_size']))
 		{
 			$_SESSION['file_size'] = '0';
+			session_register('file_size');
 		}
 		
 		//----------------------------

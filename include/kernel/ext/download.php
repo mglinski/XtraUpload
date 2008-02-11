@@ -177,7 +177,7 @@ class download {
 			$size -= $bufsize;
 			flush();
 			
-			if ($speed > 0 && ($this->bandwidth > $speed*$packet*1024*8))
+			if ($this->speed > 0 && ($this->bandwidth > ($this->speed * $packet * $this->bufsize)))
 			{
 				sleep(1);
 				$packet++;

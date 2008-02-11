@@ -130,15 +130,16 @@ h1,h2,h3 {
 .langTable
 {
 	background-color:#E1E0EB;
-	width:100%;
+	width:180px;
+	text-align:center;
 	height:auto;
 }
 
 .langBtn
 {
 	float:left;
-	margin-left:50%;
-	margin-right:50%;
+	padding-right:5px;
+	margin:auto;
 }
 
 .title h1 {

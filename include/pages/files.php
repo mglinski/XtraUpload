@@ -41,7 +41,7 @@ if($limit == '')
 }
 $kernel->tpl->assign('limit', $limit);
 
-if($_GET['del'])
+if(isset($_GET['del']))
 {
 	if($can_delete)
 	{

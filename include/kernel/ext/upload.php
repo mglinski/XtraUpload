@@ -66,12 +66,14 @@ class upload
 		
 		if(!$name)
 		{
+			
 			return false;
 		}
 		
 		if(!file_exists($name))
 		{
 			$this->error = 'tmp_exists:'.$name;
+			
 			return false;
 		}
 		
@@ -79,6 +81,7 @@ class upload
 		$this->return = $this->complete();
 		if(!$this->return)
 		{
+			
 			return false;
 		}
 		else
@@ -286,6 +289,7 @@ function url()
 			if(($file_size > ($limit_size * 1024 * 1024)) && $limit_size != '0')
 			{
 				$this->error = 'size';
+				
 				return false;
 			}
 			
@@ -407,6 +411,7 @@ function url()
 		{
 			$this->error = 'banned';
 			@unlink($file_temp_name);
+			
 			return false;
 		}
 		
@@ -480,14 +485,16 @@ function url()
 				
 			if(!$isok)
 			{
-				errform($lang['url']['4'].''.$arr.''.$lang['url']['5']);
-				$step = 1;
+				$this->error = 'unknown';
+				
+				return false;
 			}
 			
 			$arr = $arr_old;
 			if(!file_exists($file_temp_name))
 			{
 				$this->error = 'unknown';
+				
 				return false;
 			}
 			
@@ -511,23 +518,21 @@ function url()
 				@unlink($file_temp_name);
 				@rmdir(str_replace('/upload_postdata','',$file_temp_name));
 			}
-			else
-			{
-				@unlink($file_temp_name);
-			}
 
 			$this->file_loc = $file_loc;
 			
 			if(!file_exists($file_loc))
 			{
 				$this->error = 'unknown';
+				
 				return false;
 			}
 			
 			$this->file_name = $file_name;
 			update_total_size($this->file_name);
 			$ipaddress = $_SERVER['REMOTE_ADDR'];
-			$strQuery  = "INSERT INTO files SET ";	
+			
+			$strQuery  = "INSERT INTO `files` SET ";	
 			$strQuery .= "`filename` = '".$file_name."',";
 			$strQuery .= "`o_filename` = '".$file_real_name."',";
 			$strQuery .= "`ipaddress` = '{$ipaddress}',";
@@ -548,6 +553,7 @@ function url()
 				
 			$result = $db->query($strQuery);
 			$aid = mysql_insert_id();
+			
 			if($rewrite_links)
 			{
 				$furl = $server . '/download/' . $hash ;

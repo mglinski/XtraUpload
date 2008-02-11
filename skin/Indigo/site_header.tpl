@@ -194,13 +194,13 @@
     <{* // Language Selector -- Header.tpl *}>
         <div id='langSel' onmouseover='langDown(this)' onmouseout='langUp(this)'>
             <center>
-                <div class="langTable">
+                <div class="langTable" style="text-align:center;">
                     <{section name=lang loop=$langFlags}>
-                        <a class='langBtn' href='<{$langFlags[lang].link}>'> 
+                        <a class='langBtn' title="<{$langFlags[lang].name}>" href='<{$langFlags[lang].link}>'> 
                             <img border='0' src='<{$siteurl}>images/flags/<{$langFlags[lang].cc}>.png' alt='<{$langFlags[lang].name}>' /> 
                         </a> 
                     <{/section}>
-                </div>
+                </div><br />
                 Language
             </center>
         </div>

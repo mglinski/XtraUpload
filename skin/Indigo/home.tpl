@@ -128,7 +128,7 @@ function postIt()
 			popUP();
 			<{if $can_cgi eq "1"}>
 			document.getElementById("p_bar_load").style.display='';
-			setTimeout('cgiUploadBar()',5000);
+			cgiUploadBar();
 			<{/if}>
 			document.getElementById("attached").submit();
 		}
@@ -174,6 +174,48 @@ function flashUpdate(u,p,d,a,t,e)
 		$('#percent').html(e);
 		$("#progress_img").animate({width: e*6}, 'fast');
 	}
+}
+
+function check_upload()
+{
+	if(document.getElementById('attached').attached.value.length == '0')
+	{
+		return false;
+	}
+	return true;
+}
+
+function check_url()
+{
+	if(document.getElementById("urlfile").value.length <= '12')
+	{
+		alert(lang4);
+		return false;
+	}
+	else
+	{
+		if(check_types('urlfile'))
+		{	
+			//document.getElementById("url_txt").style.display = "inline"; 
+			document.getElementById("link_block").style.display = "none";
+			document.getElementById("up_url").style.display = "none";
+			document.getElementById("p_bar_load").style.display='';
+			document.getElementById("p_bar_text").style.display='';
+			cgiUploadBar();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+function cgiUploadBar()
+{
+	var ourl = $('#p_link').attr('value');
+	
+	$.getScript(ourl, function(){setTimeout("cgiUploadBar()",4000);});
 }
 
 function flashUploadProgress(file, sofar, total)

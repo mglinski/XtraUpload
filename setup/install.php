@@ -89,146 +89,7 @@ xuSetupHeader();
 						     By Installing XtraUpload, regardless if you read the EULA, you are bound by it.</span><br />
 						     An online copy of this license can be found at <a href="http://xtrafile.com/license.php">http://xtrafile.com/license.php</a><br />
 						       <br />
-						       <textarea name="textarea" readonly="readonly" cols="70" rows="15" wrap="off" id="textarea">XtraUpload :: File Hosting System
-
-License Agreement (v1.1)
-
-------------------------------------
-END USER LICENSE AGREEMENT FOR
-XTRAUPLOAD FILE HOSTING SYSTEM SOFTWARE PRODUCT
-
-XtraFile
-For One (1) Computer
-
-Notice to User:
-
-This End User License Agreement (EULA) is a CONTRACT between you (either an individual or a single
-entity) and XtraFile, which covers your use of the XtraFile software product that accompanies this
-EULA and related software components, which may include associated media, printed materials, and
-"online" or electronic documentation. All such software and materials are referred to herein as the
-"Software Product." A software license, issued to a designated user only by XtraFile or its
-authorized agents, is required for each user of the Software Product. If you do not agree to the
-terms of this EULA, then do not install or use the Software Product or the Software Product License.
-By explicitly accepting this EULA, however, or by installing, copying, downloading, accessing, or
-otherwise using the Software Product and/or Software Product License, you are acknowledging and
-agreeing to be bound by the following terms:
-
-
-1. GRANT OF NON-EXCLUSIVE LICENSE.
-
-(a) Software Product License. The Software Product License, which is issued to a designated user,
-enables such designated user to use the Software Product on a single computer system. Each user on a
-multi-user computer system who uses the Software Product requires an additional Software Product
-License. You may not modify or create derivative copies of the Software Product License.
-
-(b) Grant of License. Subject to a validly issued Software Product License, XtraFile grants to you
-the non-exclusive, non-transferable right for you to use the Software Product on a single computer
-running a validly licensed copy of the operating system for which the Software Product was designed.
-You may not modify or create derivative copies of the Software Product. All rights not expressly
-granted to you are retained by XtraFile.
-
-(c) Backup Copy: Software Product. You may make copies of Software Product as reasonably necessary
-for the use authorized above, including as needed for backup and/or archival purposes. No other
-copies may be made. Each copy must reproduce all copyright and other proprietary rights notices on
-or in the Software Product.
-
-(d) Backup Copy: Software Product License. You may install each Software Product License on a
-single computer system and make copies of the Software Product License as necessary only for backup
-and/or archival purposes. No other copies may be made. Each copy must reproduce all copyright and
-other proprietary rights notices on or in the Software Product License.
-
-
-2. INTELLECTUAL PROPERTY RIGHTS RESERVED BY XTRAFILE.
-
-The Software Product is protected by U.S. and international copyright laws and treaties, as well as
-other intellectual property laws and treaties. You must not remove or alter any copyright notices on
-any copies of the Software Product. This Software Product copy is licensed, not sold. Furthermore,
-this EULA does not grant you any rights in connection with any trademarks or service marks of
-XtraFile. XtraFile reserves all intellectual property rights, including copyrights, and trademark
-rights.
-
-
-3. NO RIGHT TO TRANSFER.
-
-You may not rent, lease, lend, or in any way distribute or transfer any rights in this EULA or the
-Software Product to third parties without XtraFile's written approval and subject to written
-agreement by the recipient of the terms of this EULA.
-
-
-4. PROHIBITION ON REVERSE ENGINEERING, DECOMPILATION, AND DISASSEMBLY.
-
-You may not reverse engineer, decompile, defeat license encryption mechanisms, or disassemble the
-Software Product or Software Product License except and only to the extent that such activity is
-expressly permitted by applicable law notwithstanding this limitation.
-
-
-5. SUPPORT SERVICES.
-
-XtraFile may provide you with support services related to the Software Product. Use of any such
-support services is governed by the XtraFile polices and programs described in "online"
-documentation and/or other XtraFile-provided materials. Any supplemental software code or related
-materials that XtraFile provides to you as part of the support services is to be considered part of
-the Software Product and is subject to the terms and conditions of this EULA. With respect to any
-technical information you provide to XtraFile as part of the support services, XtraFile may use such
-information for its business purposes without restriction, including for product support and
-development. XtraFile will not use such technical information in a form that personally identifies
-you.
-
-
-6. TERMINATION WITHOUT PREJUDICE TO ANY OTHER RIGHTS.
-
-XtraFile may terminate this EULA if you fail to comply with any term or condition of this EULA. In
-such event, Licensee agrees to return to Licensor or to destroy all copies of the Software upon
-termination of the License. XtraFile may also terminate this EULA for any reason as XtraFile sees fit.
-
-
-7. NO WARRANTIES.
-
-YOU ACCEPT THE SOFTWARE PRODUCT AND SOFTWARE PRODUCT LICENSE "AS IS," AND XTRAFILE (AND ITS THIRD
-PARTY SUPPLIERS AND LICENSORS) MAKE NO WARRANTY AS TO ITS USE, PERFORMANCE, OR OTHERWISE. TO THE
-MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, XTRAFILE (AND ITS THIRD PARTY SUPPLIERS AND LICENSORS)
-DISCLAIM ALL OTHER REPRESENTATIONS, WARRANTIES, AND CONDITIONS, EXPRESS, IMPLIED, STATUTORY, OR
-OTHERWISE, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY,
-SATISFACTORY QUALITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. THE ENTIRE RISK
-ARISING OUT OF USE OR PERFORMANCE OF THE SOFTWARE PRODUCT REMAINS WITH YOU.
-
-
-8. LIMITATION OF LIABILITY.
-
-THIS LIMITATION OF LIABILITY IS TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW. IN NO EVENT
-SHALL XTRAFILE (OR ITS THIRD PARTY SUPPLIERS AND LICENSORS) BE LIABLE FOR ANY COSTS OF SUBSTITUTE
-PRODUCTS OR SERVICES, OR FOR ANY SPECIAL, INCIDENTAL, INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER
-(INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, OR LOSS
-OF BUSINESS INFORMATION) ARISING OUT OF THIS EULA OR THE USE OF OR INABILITY TO USE THE SOFTWARE
-PRODUCT OR THE FAILURE TO PROVIDE SUPPORT SERVICES, EVEN IF XTRAFILE HAS BEEN ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGES. IN ANY CASE, XTRAFILE'S (AND ITS THIRD PARTY SUPPLIERS' AND LICENSORS')
-ENTIRE LIABILITY ARISING OUT OF THIS EULA SHALL BE LIMITED TO THE GREATER OF THE AMOUNT ACTUALLY
-PAID BY YOU FOR THE SOFTWARE PRODUCT OR U.S. $5.00; PROVIDED, HOWEVER, THAT IF YOU HAVE ENTERED INTO
-A XTRAFILE SUPPORT SERVICES AGREEMENT, XTRAFILE'S ENTIRE LIABILITY REGARDING SUPPORT SERVICES SHALL
-BE GOVERNED BY THE TERMS OF THAT AGREEMENT.
-
-
-9. GOVERNING LAW; ENTIRE AGREEMENT.
-
-This EULA is governed by the laws of the State of Florida, U.S.A., excluding the application
-of its conflict of law rules. The United Nations Convention for the International Sale of Goods
-shall not apply. This EULA is the entire agreement between us and supersedes any other
-communications or advertising with respect to the Software Product; this EULA may be modified only
-by written agreement signed by authorized representatives of you and XtraFile.
-
-
-10. CONTACT INFORMATION
-
-If you have any questions about this EULA, or if you want to contact XtraFile for any reason,
-please direct all correspondence to:
-
-XtraFile.com
-3107 Stirling Rd. 
-Fort Lauderdale, FL 33312
-
-or 
-
-Email: sales@xtrafile.com.</textarea>
+						       <textarea name="textarea" readonly="readonly" cols="70" rows="15" wrap="off" id="textarea"></textarea>
 						       <br>
 							   <br>
 							   <b>By clicking the &quot;Continue&quot; button below and/or installing XtraUpload you are bound by the above license aggrement! </b>
@@ -469,10 +330,8 @@ $dbServer = "'.$_POST['sql_server'].'"; // mysql host
 $dbUser = "'.$_POST['sql_user'].'"; // mysql username
 $dbPass = "'.$_POST['sql_pass'].'"; //mysql password
 $dbName = "'.$_POST['sql_name'].'"; //mysql database
-$trans = "'.$_POST['trans'].'"; // Currently: EN = English, DE = Deutsch/German, SP = Spanish, KR = Korean, CH = Chinese, More to come soon!
-$language = "english.php"; // The File That Contains all the Text for XtraUpload. Located in the include/languages folder.
 $serverurl = "'.$server.'"; // URL to compare to for Progress bar
-$use_mysqli = '.$_POST['mysqli'].'; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
+$use_mysqli = "'.$_POST['mysqli'].'"; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
 ?>';
 
 $fp = fopen('./config.php', 'w');
@@ -752,7 +611,10 @@ CREATE TABLE `lang` (
   FULLTEXT KEY `name` (`name`)
 ) ENGINE=MyISAM   ;
 
-INSERT INTO `lang` VALUES (1, 1, 1, 'English', '', 'english.php', 'us');
+INSERT INTO `lang` (`id`, `default`, `status`, `name`, `users`, `file`, `cc`) VALUES
+(1, 1, 1, 'English', '', 'english.php', 'us'),
+(2, 0, 1, 'German', '', 'german.php', 'de'),
+(3, 0, 1, 'Spanish', '', 'spanish.php', 'es');
 
 
 
