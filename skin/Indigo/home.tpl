@@ -323,6 +323,10 @@ function flashBrowseComplete(file)
 			}
 		}
 	}
+	else
+	{
+		allow = true;
+	}
 	
 	if(allow)
 	{
