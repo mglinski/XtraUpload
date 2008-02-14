@@ -64,8 +64,12 @@ class db_conn
 		{
 			if(!$pdBconn)
 			{
-				$this->connection = mysqli_connect($server,$conn_username,$conn_password,true) or $this->error_out('Could not connect to the database: '.mysqli_error($this->connection).'<br />');
-				mysqli_select_db($database_name) or $this->error_out('Could not select the database: '.mysqli_error($this->connection).'<br />');
+				$this->connection = mysqli_connect($server,$conn_username,$conn_password,$database_name);
+				/* check connection */
+				if (!$this->connection) 
+				{
+					$this->error_out('Could not connect to the database: '.mysqli_connect_error().'<br />');
+				}
 			}
 			else
 			{
@@ -80,7 +84,7 @@ class db_conn
 	{
 		$msg = '<html>
 <head>
-<title>ERROR :: XtraFile DB FramWork</title>
+<title>ERROR :: XtraUpload Database System</title>
 <style type="text/css">
 <!--
 .style1 {
@@ -211,7 +215,7 @@ class db_conn
 		
 		if(!$this->mysqli)
 		{
-			$result = mysql_insert_id($query);
+			$result = mysql_insert_id($this->connection);
 			if (!$result and $this->memcacheStore == '') 
 			{
 				$error = 'Could not get insert id: ' . mysql_error().'<br />'.$place;
@@ -220,7 +224,7 @@ class db_conn
 		}
 		else
 		{
-			$result = mysqli_insert_id($query);
+			$result = mysqli_insert_id($this->connection);
 			if (!$result and $this->memcacheStore == '') 
 			{
 				$error = 'Could not get insert id: ' . mysqli_error($this->connection).'<br />'.$place;
