@@ -177,7 +177,7 @@ class db_conn
 			}
 			else
 			{
-				$result = mysqli_query($query);
+				$result = mysqli_query($this->connection, $query);
 			}
 		}
 		
