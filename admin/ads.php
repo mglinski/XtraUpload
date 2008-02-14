@@ -19,14 +19,14 @@ along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 include("./init.php");
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
 
 	if($_POST['image'] == '')
 	{
 		$image_src = './cache/ads/ads_'.time().'_'.rand().'_'.$_FILES['image']['name'];
 		move_uploaded_file($_FILES['image']['tmp_name'],$image_src);
-		$image_name = addslashes($_POST['name']);
+		$image_name = $_POST['name'];
 		$o_name = $_FILES['image']['name'];
 	}
 	else
@@ -44,11 +44,17 @@ if($_POST['submit'])
 	$db->query("INSERT INTO ads (name,o_name,link,src,status,type,allow_imp,nolimit) VALUES ('$image_name','$o_name','$link','$image_src',1,'$type','$impressions','$imp_nolimit')", 'insert_1');
 	log_action('Advertisement Added', 'ads:add', 'An Advertisement('.$image_name.') was Added', 'ok', 'admin/ads.php');
 }
+	if(isset($_REQUEST['step']))
+	{
+		$step = $_REQUEST['step'];
+	}
+	
+	if(isset($_REQUEST['id']))
+	{
+		$id = $_REQUEST['id'];
+	}
 
-	$step = $_REQUEST['step'];
-	$id = $_REQUEST['id'];
-
-	if (!$step)
+	if (!isset($step) or $step == '')
 	{
 		$step = 1;// Set a default $step Value
 	}
@@ -84,7 +90,7 @@ if($_POST['submit'])
 }
 -->
 </style>
-<? if($_GET['add'])
+<? if(isset($_GET['add']))
 {
 ?>
 <h1><span>Advertisement Manager - Add</span>XtraFile :: Admin Panel</h1>
@@ -187,7 +193,7 @@ document.getElementById('image_1').innerHTML = '<textarea cols=\'25\' rows=\'6\'
     <td class='a1'><div align="center">
         <?=$row->clicks?>
       </div></td>
-    <td class='a1'><div align="center"><a href="<?=$PHP_SELF?>?a=<?=$a2?>&step=5&id=<?=$row->id?>"> <img border='0' alt='Ad <?=$status?>' src='../images/actions/Light Bulb (<?=$status?>)_24x24.png' /> </a> <a onclick="return confirm('Are you sure you wish to delete this Advert?');" href="<?=$PHP_SELF?>?step=4&id=<?=$row->id?>"> <img border='0' alt='Delete Ad' src='../images/actions/Close_24x24.png' /> </a> </div></td>
+    <td class='a1'><div align="center"><a href="ads.php?a=<?=$a2?>&step=5&id=<?=$row->id?>"> <img border='0' alt='Ad <?=$status?>' src='../images/actions/Light Bulb (<?=$status?>)_24x24.png' /> </a> <a onclick="return confirm('Are you sure you wish to delete this Advert?');" href="ads.php?step=4&id=<?=$row->id?>"> <img border='0' alt='Delete Ad' src='../images/actions/Close_24x24.png' /> </a> </div></td>
   </tr>
   <?
 		}

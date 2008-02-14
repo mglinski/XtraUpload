@@ -217,3 +217,4 @@
             <div class="main">
                 <div class="content" align="center">
                     <{insert name="ads"}>
+                    <!-- Ads here -->

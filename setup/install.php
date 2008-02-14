@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-$versionSql = "INSERT INTO `config` VALUES (NULL , 'version', '1.6.0,0.0.3.0', '', '', '', '', 0);";
+$versionSql = "INSERT INTO `config` VALUES (NULL , 'version', '1.6.0,0.0.4.0', '', '', '', '', 0);";
 if(!isset($_GET['step']))
 {
 	
@@ -238,7 +238,7 @@ Permissions Found: <?=$perms?></strong>
     <tr>
 	  <td class='pformleftw'><b>Use MySQLi?</b>
 	    <div class='description'>Use the improved version of MySQL(improvements only noticable on large sites)</div></td>
-	  <td class='pformright'><input name="mysqli" type="checkbox" id="mysqli_t" value="true" /> Yes<br /></td>	</tr>
+	  <td class='pformright'><input name="mysqli" type="checkbox" id="mysqli" value="true" /> Yes<br /></td>	</tr>
 	
 
 	</table>
@@ -331,7 +331,7 @@ $dbUser = "'.$_POST['sql_user'].'"; // mysql username
 $dbPass = "'.$_POST['sql_pass'].'"; //mysql password
 $dbName = "'.$_POST['sql_name'].'"; //mysql database
 $serverurl = "'.$server.'"; // URL to compare to for Progress bar
-$use_mysqli = "'.(isset($_POST['mysqli']) ? 'true' : 'false').'"; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
+$use_mysqli = '.(isset($_POST['mysqli']) ? 'true' : 'false').'; // Use MySQLi - Only recomended for large sites(over 4 servers or over unique 5000 hits a day)
 ?>';
 
 $fp = fopen('./config.php', 'w');

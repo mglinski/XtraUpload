@@ -77,7 +77,7 @@ if (get_magic_quotes_gpc())
 	@ini_set('session.bug_compat_warn','off');
 	
 	// Define Hard Coded Script Version
-	$versionDefault = '1.6.0,0.3.0.0'; // 1.6 Beta 3
+	$versionDefault = '1.6.0,0.0.4.0'; // 1.6 Beta 4
 	
 	// Define PEAR folder For PEAR Includes
 	define("PEAR_DIR", "include/kernel/pear/");
@@ -193,29 +193,27 @@ if (get_magic_quotes_gpc())
 	define('XU_VER', $version);
 	$version = parseVersion($version);
 	
-##########################
-## MemCache System Code ##
-##########################
-// Memcache System
-$kernel->db->use_memcache = $use_memcache;
-$db->use_memcache = $use_memcache;
-
-if(class_exists('Memcache'))
-{	
-	if($use_memcache)
-	{
-		$kernel->memcache = new Memcache;
-		if(!$kernel->memcache->connect($memcache_server, $memcache_port))
+//----------------------------
+// MemCache System Code
+//----------------------------
+	$kernel->db->use_memcache = $use_memcache;
+	$db->use_memcache = $use_memcache;
+	
+	if(class_exists('Memcache'))
+	{	
+		if($use_memcache)
 		{
-			echo("Could not connect to memcache server $memcache_server:$memcache_port<br /><br />\n\n");
-		}
-		else
-		{
-			//$db->addHook($code, $location, 'memcache_query');
+			$kernel->memcache = new Memcache;
+			if(!$kernel->memcache->connect($memcache_server, $memcache_port))
+			{
+				echo("Could not connect to memcache server $memcache_server:$memcache_port<br /><br />\n\n");
+			}
+			else
+			{
+				//$db->addHook($code, $location, 'memcache_query');
+			}
 		}
 	}
-}
-
 
 //----------------------------
 // Grab Group Settings From Database
@@ -332,7 +330,7 @@ if(class_exists('Memcache'))
 	else
 	{
 	//----------------------------
-	// Damn free users, serve them the default language!
+	// Damn free users, Serve them the default language!
 	//----------------------------
 		$language = $language1->file;
 	}
@@ -442,12 +440,13 @@ if(class_exists('Memcache'))
 	
 	if($_SESSION['loggedin'])
 	{
-		if($_COOKIE[substr(md5($sitename),0,5).'xuUser'] != '')
+		if(isset($_COOKIE[substr(md5($sitename),0,5).'xuUser']) and $_COOKIE[substr(md5($sitename),0,5).'xuUser'] != '')
 		{
 			$split = explode('|-|',processUserCookie($_COOKIE[substr(md5($sitename),0,5).'xuUser'], 'dec'));
 			$username = $split[0];
 		}
-		if($username != '')
+		
+		if(isset($username) and $username != '')
 		{
 			$check = false;
 			if($username == $_SESSION['username'])
@@ -485,7 +484,7 @@ if(class_exists('Memcache'))
 		//----------------------------
 		// I Can Has Coooookiez?
 		//----------------------------
-		if($_COOKIE[substr(md5($sitename),0,5).'xuUser'] == '')
+		if(isset($_COOKIE[substr(md5($sitename),0,5).'xuUser']) and $_COOKIE[substr(md5($sitename),0,5).'xuUser'] == '')
 		{ 
 			$secure = $_SERVER['SERVER_PORT'] == '443' ? 1 : 0; // secure(1) = using SSL
 			$domain = explode('/', $siteurl);

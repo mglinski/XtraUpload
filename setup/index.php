@@ -39,7 +39,7 @@ else
 	$upgrade = false;
 }
 
-if(isset($_GET['forceInstall']) or $_SESSION['forceInstall'])
+if(isset($_GET['forceInstall']) or isset($_SESSION['forceInstall']))
 {
 	if(session_id() == "")
 	{

@@ -18,10 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
 class ads
 {
 	var $ad_id;
-	var $sitelink;
 	var $src;
 	var $type;
 	var $no_ads;
@@ -31,7 +31,6 @@ class ads
 		global $no_ads;
 		if($no_ads)
 		{
-			$this->sitelink = $siteurl;
 			$this->choose_ad();
 		}
 		$this->no_ads = $no_ads;
@@ -39,12 +38,11 @@ class ads
 	
 	function make_link()
 	{
-		global $no_ads;
 		if($this->no_ads)
 		{
 			if($this->type == 'image')
 			{
-				$a='<center><a href="'.$this->sitelink.'index.php?p=click&id='.$this->ad_id.'" target="_blank">
+				$a='<center><a href="'.makeXuLink('index.php','p=click&id='.$this->ad_id).'" target="_blank">
 				<img src="'.$this->src.'" alt="Advertisement" border="0" />
 				</a></center>';
 				return $a;
@@ -59,35 +57,27 @@ class ads
 	function choose_ad()
 	{
 		global $db;	
-		$qr3 = $db->query("SELECT * FROM `ads` WHERE `status` = '1' ", "ads_1");	
-
-		while($c = $db->fetch($qr3,"obj"))
-		{
-		
-			if($c->impressions >= $c->allow_imp && $c->nolimit == '0')
-			{
-				$qr = $db->query("UPDATE `ads` SET `status` = '0'  WHERE `id` = '".$c->id."'", "ads_update_1");
-			}
-			
-		}
-		
+		$qr3 = $db->query("SELECT * FROM `ads` WHERE `status` = '1' ");	
 		$ads_array = array();
 		$i = 0;
-		
-		while($c = $db->fetch($qr3,"obj"))
-		{	
-			$ads_array[$i] = $c->id;
-			$i++;
+		while($c = $db->fetch($qr3))
+		{
+			if($c->impressions >= $c->allow_imp && $c->nolimit == '0')
+			{
+				$qr = $db->query("UPDATE `ads` SET `status` = '0'  WHERE `id` = '".$c->id."'");
+			}
+			else
+			{
+				$ads_array[] = $c->id;
+			}
 		}
-		$i--;
-		//echo $i.'<br />';
-		$ads_id = rand(0,$i);
-		$aid = $ads_array[$ads_id];
-		//echo '|| '.(int)$aid.' ||';
-		$qr2 = $db->query("SELECT * FROM `ads` WHERE `id` = '".intval($aid)."' LIMIT 1", "ads_2");	
-		$d = $db->fetch($qr2,"obj");
+
+		array_rand($ads_array);
+		$aid = $ads_array[0];
+		$qr2 = $db->query("SELECT * FROM `ads` WHERE `id` = '".intval($aid)."' LIMIT 1");	
+		$d = $db->fetch($qr2);
 		
-		$db->query("UPDATE `ads` SET `impressions` = '".($d->impressions + 1)."' WHERE `id` = '".intval($aid)."' LIMIT 1",'');
+		$db->query("UPDATE `ads` SET `impressions` = '".($d->impressions + 1)."' WHERE `id` = '".intval($aid)."' LIMIT 1");
 		
 		$this->type = $d->type;
 		$this->src = $d->src;

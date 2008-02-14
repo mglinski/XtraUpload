@@ -64,8 +64,8 @@ class db_conn
 		{
 			if(!$pdBconn)
 			{
-				$this->connection = mysqli_connect($server,$conn_username,$conn_password,true) or $this->error_out('Could not connect to the database: '.mysqli_error().'<br />');
-				mysqli_select_db($database_name) or $this->error_out('Could not select the database: '.mysqli_error().'<br />');
+				$this->connection = mysqli_connect($server,$conn_username,$conn_password,true) or $this->error_out('Could not connect to the database: '.mysqli_error($this->connection).'<br />');
+				mysqli_select_db($database_name) or $this->error_out('Could not select the database: '.mysqli_error($this->connection).'<br />');
 			}
 			else
 			{
@@ -190,7 +190,7 @@ class db_conn
 		{
 			 if (!$result) 
 			{
-				$error = 'Could not run query: ' . mysqli_error().'<br />'.$place;
+				$error = 'Could not run query: ' . mysqli_error($this->connection).'<br />'.$place;
 				$this->error_out($error.$query);
 			}
 		}
@@ -223,7 +223,7 @@ class db_conn
 			$result = mysqli_insert_id($query);
 			if (!$result and $this->memcacheStore == '') 
 			{
-				$error = 'Could not get insert id: ' . mysqli_error().'<br />'.$place;
+				$error = 'Could not get insert id: ' . mysqli_error($this->connection).'<br />'.$place;
 				$this->error_out($error.$query);
 			}
 		}

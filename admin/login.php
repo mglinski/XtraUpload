@@ -32,7 +32,7 @@ if( (isset($_POST['username'])) && (isset($_POST['password'])) )
 
 	$username = txt_clean($_POST['username']);
 	$password = md5($_POST['password']);
-	
+	$failed = false;
 	if(!$site_offline)
 	{
 		if(!admin_login($username,$password))

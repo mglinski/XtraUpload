@@ -32,6 +32,7 @@ class sqlBackup
     var $GZ_enabled=null;
     
     var $debug=false;
+	var $fp=false;
 	var $output = '';
     
     function sqlBackup($db='')
@@ -45,11 +46,8 @@ class sqlBackup
 
         $starttime = $this->getmicrotime();
         
-        $this->dbServer=$host;
 		$this->db = $db;
-        $this->dbUser=$user;
-        $this->dbPass=$pass;
-
+		
         if($this->GZ_enabled == NULL)
 		{
         	$this->GZ_enabled = (bool)function_exists('gzopen');
@@ -72,16 +70,22 @@ class sqlBackup
 		}
 	}
 	
-    function AddDatabase()
+    function AddDatabase($db1='')
     {
 		global $dbName;
 		$this->ListOfDatabasesToMaybeBackUp = $dbName;
+		if(!empty($db1))
+		{
+			$this->ListOfDatabasesToMaybeBackUp = $db1;
+		}
 		
     }
+	
     function AddTable($dbname='',$table)
     {
         if($dbname&&$table) $this->SelectedTables[$dbname][] = $table;
     }
+	
     function Start($stucture,$data,$complete)
     {
         if($stucture=='1'){ $this->BackupType='_stucture';}
@@ -103,11 +107,12 @@ class sqlBackup
         	$this->BackupData();
 		}
     }
+	
     function Store($tofile='')
     {
         $this->CloseFile();
         
-        $backuptimestamp    = '.'.date('Y-m-d'); // timestamp
+        $backuptimestamp = '.'.date('Y-m-d'); // timestamp
 	    $backuptimestamp = '.'.'XtraUpload'.$backuptimestamp;
 
         if($tofile=='')
@@ -123,6 +128,7 @@ class sqlBackup
 		}
 		rename($this->BackupDir.$this->tempbackupfilename, $this->BackupDir.$this->backupfilename);
     }
+	
     function Email()
     {
         if ($fp = @fopen($this->BackupDir.$this->backupfilename, 'rb')) {
@@ -134,38 +140,26 @@ class sqlBackup
 			unset($emailattachmentfiledata);
 		}
     }
-    function FTP()
-    {
 
-    }
     function GetBackupTables()
     {
         $NeverBackupDBtypes = array('HEAP');
         //get table from db
+		
         $dbname = $this->ListOfDatabasesToMaybeBackUp;
-			set_time_limit(60);
-			$tables = mysql_list_tables($dbname);
-			if (is_resource($tables)) 
+		set_time_limit(60);
+		$tables = mysql_list_tables($dbname);
+		if (is_resource($tables)) 
+		{
+			$tablecounter = 0;
+			while (list($tablename) = mysql_fetch_array($tables)) 
 			{
-				$tablecounter = 0;
-				while (list($tablename) = mysql_fetch_array($tables)) 
-				{
-					$TableStatusResult = mysql_query('SHOW TABLE STATUS LIKE "'.mysql_escape_string($tablename).'"');
-					if ($TableStatusRow = mysql_fetch_array($TableStatusResult)) 
-					{
-						if (in_array($TableStatusRow['Type'], $NeverBackupDBtypes)) 
-						{
-
-							// no need to back up HEAP tables, and will generate errors if you try to optimize/repair
-
-						} else {
-
-							$this->SelectedTables[$dbname][] = $tablename;
-						}
-					}
-				}
+				$this->SelectedTables[$dbname][] = $tablename;
+				echo $tablename."<br />";
 			}
+		}
     }
+	
     /**
     Check table status,repair it,if nessesary,Repair table
     */
@@ -219,9 +213,9 @@ class sqlBackup
     {
         if(count($this->SelectedTables)==0) die("No table selected to backup");
         $alltablesstructure = '';
-        //$dbname = $this->SelectedTables;
+        $dbname = $this->ListOfDatabasesToMaybeBackUp;
 		//mysql_select_db($dbname);
-        $table_num= count($this->SelectedTables[$dbname]);
+        $table_num = count($this->SelectedTables[$dbname]);
 		for ($t = 0; $t < $table_num; $t++) {
 			set_time_limit(60);
 			$this->OutputInformation('Creating structure for <b>'.$dbname.'.'.$this->SelectedTables[$dbname][$t].'</b>');
@@ -369,17 +363,19 @@ class sqlBackup
 		}
         return  $alltablesdata;
     }
+	
     function OpenFile()
     {
         if(is_resource($this->fp)) return true;
 
         if(!is_writable($this->BackupDir)) die($this->backupabsolutepath." is not writable,exit");
         if($this->GZ_enabled)
-        $this->fp=@gzopen($this->BackupDir.'/'.$this->tempbackupfilename, 'wb');
+        $this->fp = @gzopen($this->BackupDir.'/'.$this->tempbackupfilename, 'wb');
         else
-        $this->fp=@fopen($this->BackupDir.'/'.$this->tempbackupfilename, 'wb');
+        $this->fp = @fopen($this->BackupDir.'/'.$this->tempbackupfilename, 'wb');
 
     }
+	
     function Write2File($content)
     {
          if($this->GZ_enabled)
@@ -387,6 +383,7 @@ class sqlBackup
          else
          fwrite($this->fp, $content, strlen($content));
     }
+	
     function CloseFile()
     {
         if($this->GZ_enabled)
@@ -394,6 +391,7 @@ class sqlBackup
         else
         fclose($this->fp);
     }
+	
     function FormattedTimeRemaining($seconds, $precision=1)
     {
 	if ($seconds > 86400) {

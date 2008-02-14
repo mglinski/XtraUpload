@@ -62,8 +62,8 @@ function remove_slashes($str)
 function logout()
 {
 	global $kernel;
-	$kernel->users->terminate();
 	log_action('User Logged Out', 'user:logout', 'User ('.$_SESSION['username'].') has logged out.', 'ok', 'logout.php');
+	$kernel->users->terminate();
 }
 
 //----------------------------
@@ -612,11 +612,12 @@ function get_ads()
 {
 	global $kernel, $no_ads;
 	
-	// Advertisement Class
+	// Load Advertisement Class
 	if(!isset($kernel->ext->ads))
 	{
 		$kernel->loadUserExt('ads');
 	}
+	
 	return $kernel->ext->ads->make_link();
 }
 	

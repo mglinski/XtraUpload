@@ -19,9 +19,10 @@ along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-function runUpgradeProcess($curver,$newver)
+function runUpgradeProcess($curver, $newver)
 {
 	global $db;
+	
 	if($curver == $newver)
 	{
 		return true;
@@ -82,6 +83,11 @@ function runUpgradeProcess($curver,$newver)
 		// Update to 1.6.0 BETA2 DB
 		include('./setup/upgrade/15.php');
 	}
+	else if($curver == "1.6.0,0.0.3.0")
+	{
+		// Update to 1.6.0 BETA2 DB
+		include('./setup/upgrade/16.php');
+	}
 	return false;
 }
 
@@ -135,7 +141,7 @@ else if($_GET['step'] == '2')
     <table width='100%' border='0' cellpadding='0' cellspacing='0' align='center'>
       <tr>
         <td width="12%" valign="middle"><center>
-            <img style="vertical-align:middle;" src="images/angle/install.png" width="128" height="128">
+            <img style="vertical-align:middle;" src="../images/angle/install.png" width="128" height="128">
           </center></td>
         <td width="88%"><p> <b>We are upgrading your install now. You can check the progress below...</b> </p>
             <pre><code><?
@@ -151,11 +157,13 @@ if(empty($curver))
 	$curver = $ds->value;
 	$db->query("UPDATE `config` SET `name` = 'version' WHERE `name` = 'config'");
 }
+
 if(isset($_GET['override']))
 {
 	$curver = $_GET['override'];
 }
-$ret = runUpgradeProcess($curver, $versionDefault);
+
+$ret = runUpgradeProcess(trim($curver), trim($versionDefault));
 
 if($ret)
 {

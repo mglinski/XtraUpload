@@ -21,14 +21,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 include("./init.php");
 $kernel->loadUserExt('sqlBackup');
 
-if($_GET['cleanup'])
+if(isset($_GET['cleanup']))
 {
 	$kernel->ext->sqlBackup->act('maintain');
 }
-else if($_GET['manage'])
+else if(isset($_GET['manage']))
 {
 
-	if (isset ($_POST['delete']))
+	if (isset($_POST['delete']))
 	{
 		if (is_file('./db/' . txt_clean($_POST['dbfile'])))
 		{
@@ -67,16 +67,11 @@ else if($_GET['manage'])
 		die;
 
 }
-else if($_GET['new'])
+else if(isset($_GET['new']))
 {
 	$task = $_POST['task'];
 	if($task == 'backup')
 	{
-		define ('BACKTICKCHAR', '`');
-		define ('QUOTECHAR', '\'');
-		define ('LINE_TERMINATOR', '
-');
-		define ('BUFFER_SIZE', 32768);
 	
 		if ($_POST['gzip'] == 1)
 		{
@@ -88,8 +83,8 @@ else if($_GET['new'])
 		}
 		
 		$kernel->ext->sqlBackup->AddDatabase();
-		//echo intval($_POST['structure']) . intval($_POST['data']) . intval($_POST['complete']) . ' | ';
-		if($_POST['structure'])
+
+		if(!$_POST['structure'])
 		{
 			$_POST['structure'] = 1;
 		}
