@@ -666,7 +666,7 @@ if(!$noMain)
 				  
 				if($a->user)
 				{
-					list($username) = mysql_fetch_array( mysql_query("SELECT username FROM users WHERE uid='".$a->user."'") );
+					list($username) = $db->fetch( $db->query("SELECT username FROM users WHERE uid='".$a->user."'"),'assoc');
 					echo "		<a href='filemanager.php?byuid=".$a->user."&report=1'>".$username."</a><br>";
 				}
 				else

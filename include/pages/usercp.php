@@ -191,7 +191,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	{
 	$js_folder = '';
 			$sql = "SELECT * FROM folder WHERE user='".intval($_SESSION['myuid'])."' ORDER BY `id` DESC LIMIT 5";
-			$qr1 = mysql_query($sql);
+			$qr1 =  $db->query($sql);
 	?></form>
 	<form onsubmit='return false;'>
 	<table width="530" border="1" bordercolor="#000000" align="center" cellpadding="5" cellspacing="0">
@@ -201,7 +201,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<th width="139"><?=$lang['usercp']['9']?></th>
 	</tr>
 <?
-			while( $a = mysql_fetch_object($qr1) )
+			while( $a =  $db->fetch($qr1) )
 			{
 				
 			

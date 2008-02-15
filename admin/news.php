@@ -184,9 +184,9 @@ else
 </tr>
 <?
 	$sql = "SELECT * FROM news";
-	$result = mysql_query($sql) or die( mysql_error() );
+	$result = $db->query($sql);
 	if ($result){
-		while( $row = mysql_fetch_object($result) ){
+		while( $row =  $db->fetch($result) ){
 ?>
 			<tr style='background-color:' onmouseover="this.style.backgroundColor = '#C1DEF0';" onmouseout="this.style.backgroundColor = '';">
 				<td height="25" class='a1'>

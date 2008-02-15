@@ -160,7 +160,7 @@ function doDirectDownload($link)
 		
 		// Make new thread
 		$db->query("INSERT INTO `dlsessions` (`file`) VALUES ('".$link."')");
-		$dlid = mysql_insert_id();
+		$dlid =  $db->insert_id();
 		
 		/* Check if user has exceeded limit */
 		$totaldownload = 0;

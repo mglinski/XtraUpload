@@ -76,7 +76,7 @@ if($can_create_folders)
 	<th width="116"><?=$lang['userFolders']['4']?></th>
 	</tr>
 <?
-			while( $a = mysql_fetch_object($qr1) )
+			while( $a =  $db->fetch($qr1) )
 			{
 			$count++;
 				if ($limit != 0 &&  $count > $upper)

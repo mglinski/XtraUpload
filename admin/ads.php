@@ -167,9 +167,9 @@ document.getElementById('image_1').innerHTML = '<textarea cols=\'25\' rows=\'6\'
   </tr>
   <?
 	$sql = "SELECT * FROM ads";
-	$result = mysql_query($sql) or die( mysql_error() );
+	$result =  $db->query($sql);
 	if ($result){
-		while( $row = mysql_fetch_object($result) ){
+		while( $row =  $db->fetch($result) ){
 		
 		if($row->status == "1"){
 		$a2 =  "0";
