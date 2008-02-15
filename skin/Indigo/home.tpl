@@ -23,82 +23,47 @@ function loadFileForDownload(link)
 
 function check_types(id) 
 {
-	var isgood = false;
-	var array = fileExt.split("|");
+	var types = '';
+	var extention = document.getElementById(id).value.split('.');
+	var allow = false;
+	extension = extention[extention.length-1];
 	
-	var file; 
-	var p;
-	var file_array;
-	
-	file = document.getElementById(id).value;
-	file_array = file.split(".");	
-	
-	p =	file_array.length;
-	p--;
-	
-	file = file_array[p].toLowerCase();
-	
-	if(files_restricted)
+	if(fileTypes != '*')
 	{
-		// File types are restricted
-		for(var i=0 ; i < array.length ; i++)
-		{				
-			if(!isgood)
-			{
-				if(array[i] == '*')
-				{
-					isgood = true;
-				}
-				else
-				{
-					if(file == array[i].toLowerCase())
-					{
-						isgood = false;
-					}
-				}
-			}	
-		}
-		if(isgood)
+		fileTypes = fileTypes.split('|');
+		if(checkMethod)
 		{
-			return true;
+			allow = true;
+			for(var i=0; i<fileTypes.length; i++)
+			{
+				if(extension == fileTypes[i] && allow)
+				{
+					allow = false;
+					break;
+				}
+			}
 		}
 		else
 		{
-			alert(lang1+file+lang2);
-			return false;
+			for(var i=0; i<fileTypes.length; i++)
+			{
+				if(extension == fileTypes[i] && !allow)
+				{
+					allow = true;
+					break;
+				}
+			}
 		}
-		
 	}
 	else
 	{
-		// File types are allowed
-		for(var i=0 ; i < array.length ; i++)
-		{				
-			if(!isgood)
-			{
-				if(array[i] == '*')
-				{
-					isgood = true;
-				}
-				else
-				{
-					if(file == array[i].toLowerCase())
-					{
-						isgood = true;
-					}
-				}
-			}	
-		}
-		
-		if(isgood)
-		{
-			return true;
-		}
-		else
-		{
-			alert(lang1+file+lang2);
-			return false;
-		}
+		allow = true;
+	}
+	
+	if(!allow)
+	{
+		alert('Error: Filetype ".'+extension+'" is not allowed!');
+		return false;
 	}
 	
 }
@@ -288,56 +253,7 @@ function flashBrowseButton()
 
 function flashBrowseComplete(file)
 {
-	var fileTypes = '<{$filetypes}>';
-	var checkMethod = <{$files_restrict_allowed}>;// 0 is Allowed, 1 is restricted
-	
-	var types = '';
-	var extention = file.name.split('.');
-	var allow = false;
-	extension = extention[extention.length-1];
-	
-	if(fileTypes != '*')
-	{
-		fileTypes = fileTypes.split('|');
-		if(checkMethod)
-		{
-			allow = true;
-			for(var i=0; i<fileTypes.length; i++)
-			{
-				if(extension == fileTypes[i] && allow)
-				{
-					allow = false;
-					break;
-				}
-			}
-		}
-		else
-		{
-			for(var i=0; i<fileTypes.length; i++)
-			{
-				if(extension == fileTypes[i] && !allow)
-				{
-					allow = true;
-					break;
-				}
-			}
-		}
-	}
-	else
-	{
-		allow = true;
-	}
-	
-	if(allow)
-	{
-		$('#flashFileName').attr('value', file.name);
-		$('#flashFileUploadButton').attr('disabled',false);
-	}
-	else
-	{
-		cancelQueue();
-		alert('Error: Filetype ".'+extension+'" is not allowed!');
-	}
+	c
 }
 
 function cancelQueue()

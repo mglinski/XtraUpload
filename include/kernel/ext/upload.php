@@ -241,7 +241,7 @@ function url()
 		$file_error = $_FILES['attached']['error'];
 		$file_name = txt_clean($_FILES['attached']['name']);
 		$file_temp_name = $_FILES['attached']['tmp_name'];
-		$description = txt_clean(urldecode($_POST['description']));
+		$description = html_clean(urldecode($_POST['description']));
 		$email = txt_clean($_POST['email']);
 		$password = txt_clean(urldecode($_POST['password']));
 		$server = txt_clean(urldecode($_POST['server']));
@@ -264,7 +264,7 @@ function url()
 			$server = txt_clean(urldecode($_GET['server']));
 			$secid = txt_clean(urldecode($_GET['sid']));
 			$email = txt_clean($_GET['email']);
-			$description = txt_clean(urldecode($_GET['description']));
+			$description = html_clean(urldecode($_GET['description']));
 			$password = txt_clean(urldecode($_GET['password']));
 			$featured = intval($_POST['featured']);
 		}
@@ -275,7 +275,7 @@ function url()
 			$file_error = $_FILES['Filedata']['error']; 
 			$file_name = txt_clean($_FILES['Filedata']['name']);
 			$file_temp_name = $_FILES['Filedata']['tmp_name'];
-			$description = txt_clean(urldecode($_GET['description']));
+			$description = html_clean(urldecode($_GET['description']));
 			$email = txt_clean(urldecode($_GET['email']));
 			$password = txt_clean($_GET['password']);
 			$server = urldecode($_GET['server']);

@@ -318,7 +318,7 @@ else
 }
 
 $file = '<?PHP
-// XtraUpload  |  1.5.0
+// XtraUpload  |  1.6.0
 // http://XtraFile.com/forums
 // This file is (C) XtraFile.com
 // All Rights Reserved Unless Explictly Noted.
