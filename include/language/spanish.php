@@ -24,6 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // so for the file main2.php the first piece of text in this array would look like this:
 // $lang['home']['1'] = 'Uploading your file! ';
 
+//Language Charset, MetaTag
+$lang_charset = "UTF-8";
+
 $lang = array(); // Define the $lang variable as an array
 ####################################
 ####################################
@@ -56,7 +59,7 @@ $lang['home']['21'] = '<strong>Contraseña:</strong> (Opcional) ';
 $lang['home']['22'] = '  Subir archivo  ';
 $lang['home']['23'] = 'Archivo a subir';
 $lang['home']['24'] = 'Introduzca un ID de Archivo para descargar:';
-$lang['home']['25'] = '  Descargar archivo!  ';
+$lang['home']['25'] = '  ¡Descargar archivo!  ';
 $lang['home']['26'] = '<b>Hacer archivo destado</b>';
 $lang['home']['27'] = 'Si';
 $lang['home']['28'] = 'No';
@@ -64,7 +67,7 @@ $lang['home']['29'] = 'Archivos destacados ';
 $lang['home']['30'] = 'Enviar detalles por email';
 $lang['home']['31'] = 'Separa las direcciones de email con comas(,)';
 $lang['home']['32'] = 'Mas de 100 direcciones. Los emails escritos recibiran los detalles de la contraseña.';
-$lang['home']['33'] = 'Contraseña Rapida!';
+$lang['home']['33'] = '¡Cuenta Premium!';
 $lang['home']['34'] = 'Opciones';
 $lang['home']['35'] = '';
 // END FILE: include/pages/home.php
@@ -84,7 +87,7 @@ $lang['main']['4'] = 'Intentalo de nuevo';
 ####################################
 // BEGIN FILE: include/pages/logout.php
 $lang['logout'] = array(); 
-$lang['logout']['1'] = 'Te has deslogueado correctamente!';
+$lang['logout']['1'] = '¡Se ha cerrado la sesion correctamente!';
 $lang['logout']['2'] = 'Estas siendo redireccionado.';
 // END FILE: include/pages/logout.php
 ####################################
@@ -117,7 +120,7 @@ $lang['points'] = array();
 $lang['points']['1'] = 'Tu cuenta ha sido extendida por ';
 $lang['points']['2'] = ' Dias';
 $lang['points']['3'] = 'No dispones de puntos para extender tu cuenta';
-$lang['points']['4'] = 'No tienes permiso para exterder tu cuenta';
+$lang['points']['4'] = 'No tienes permiso para extender tu cuenta';
 $lang['points']['5'] = 'Nombre: ';
 $lang['points']['6'] = 'Grupo: ';
 $lang['points']['7'] = 'Tu cuenta ';
@@ -129,7 +132,7 @@ $lang['points']['12'] = ' puntos';
 $lang['points']['13'] = 'Actualmente tienes ';
 $lang['points']['14'] = 'Extender tu cuenta';
 $lang['points']['15'] = 'Debes estar logueado para manejar tus puntos.';
-$lang['points']['16'] = 'Tu cuenta nunca expira, por tanto no puede ser extendida.';
+$lang['points']['16'] = 'Tu cuenta no tiene fecha de expiracion, por ello no puede ser extendida.';
 $lang['points']['17'] = 'No tienes suficientes puntos para extenderla. <br />
 El minimo requerido es ';
 $lang['points']['18'] = 'puntos';
@@ -140,7 +143,7 @@ $lang['points']['18'] = 'puntos';
 // BEGIN FILE: include/pages/support.php
 $lang['support'] = array(); 
 $lang['support']['1'] = 'Por favor, elija una de las siguientes opciones, a fin de recibir el servicio de atención al cliente más conforme. <br />
-Actualmente no ofrecemos un numero de soporte gratuito, quizas sea ofrecido en un futuro. ';
+Actualmente no ofrecemos un numero de telefono de soporte gratuito, quizas sea ofrecido en un futuro. ';
 $lang['support']['2'] = 'Preguntas frecuentes (FAQ)';
 $lang['support']['3'] = 'Email de atención al cliente';
 // END FILE: include/pages/support.php
@@ -178,7 +181,7 @@ $lang['url']['26'] = 'Vista previa para forums 1: ';
 $lang['url']['27'] = 'Vista previa para forums 2: ';
 $lang['url']['28'] = 'Enlace para sitios web (HTML): ';
 $lang['url']['29'] = 'Enlace directo:';
-$lang['url']['30'] = 'Subida completada!<br />
+$lang['url']['30'] = '¡Subida completada!<br />
 Por favor espera mientras recuperamos la informacion del archivo.';
 // END FILE: include/pages/url.php
 ####################################
@@ -257,12 +260,12 @@ $lang['view']['16'] = 'Enviar';
 // BEGIN FILE: include/pages/advertising.php
 $lang['advertising'] = array(); 
 $lang['advertising']['1'] = 'Anunciarse con ';
-$lang['advertising']['2'] = '¿Quiere atraer más visitantes a su sitio? Nuestras campañas publicitarias le proporcionan las mejores opciones para que sus anuncios sean vistos por miles de visitantes cada día! ';
+$lang['advertising']['2'] = '¿Quiere atraer más visitantes a su sitio? ¡Nuestras campañas publicitarias le proporcionan las mejores opciones para que sus anuncios sean vistos por miles de visitantes cada día! ';
 $lang['advertising']['3'] = 'Enlaces de texto:<br />	<strong><span class="style4">Precio : $15</span><span class="style11"> / Enlace de texto </span><br /> Validez: 1 mes ';
 $lang['advertising']['4'] = 'Banners de 460X60: <br /><strong>Precio: </strong> <strong>20€ / Banner</strong><br />
 <strong>Validez: </strong> <strong>1 mes';
-$lang['advertising']['5'] = 'Por favor <a href="index.php?p=contact">Pincha Aqui</a> para ponerte en contacto con nosotros y que podamos enviarle un enlace de pago y su procesar su información. ';
-$lang['advertising']['6'] = 'Una vez efectuado el pago, su anuncio será colocado en el sitio dentro de unas 3 horas. ';
+$lang['advertising']['5'] = 'Por favor <a href="index.php?p=contact">Pincha Aqui</a> para ponerte en contacto con nosotros y que podamos enviarle un enlace de pago y procesar su información. ';
+$lang['advertising']['6'] = 'Una vez efectuado el pago, su anuncio aparecera en unas 3 horas aproximadamente. ';
 $lang['advertising']['7'] = 'Ayúdanos añadiendo una imagen enlace o los códigos siguientes a su sitio:';
 $lang['advertising']['8'] = ' - Sube tus archivos gratis! ';
 // END FILE: include/pages/advertising.php
@@ -271,8 +274,8 @@ $lang['advertising']['8'] = ' - Sube tus archivos gratis! ';
 ####################################
 // BEGIN FILE: include/pages/delacc.php
 $lang['delacc'] = array(); 
-$lang['delacc']['1'] = 'Borrado de cuenta completado! ';
-$lang['delacc']['2'] = 'Sentimos que te vallas! <br />
+$lang['delacc']['1'] = '¡Borrado de cuenta completado! ';
+$lang['delacc']['2'] = '¡Sentimos que te vallas! <br />
 No se olvide de cancelar su suscripción paypal. ';
 $lang['delacc']['3'] = 'Estas seguro de que deseas borrar esta cuenta?';
 $lang['delacc']['4'] = 'Si';
@@ -307,7 +310,7 @@ $lang['download']['1'] = 'Enlace de descarga invalido';
 $lang['download']['2'] = '¡El enlace de descarga es invalido!';
 $lang['download']['3'] = 'Tu enlace de descarga: ';
 $lang['download']['4'] = 'DESCARGA INSTANTANEA';
-$lang['download']['5'] = 'Enlace de descarga invalido!';
+$lang['download']['5'] = '¡Enlace de descarga invalido!';
 $lang['download']['6'] = 'La direccion IP actual no coincide con la de descarga.';
 $lang['download']['7'] = '  Estas siendo redireccionado, por favor espera.';
 $lang['download']['8'] = 'Ilimitado';
@@ -352,8 +355,8 @@ $lang['editimg']['9'] = 'Estado de archivo';
 ####################################
 // BEGIN FILE: include/pages/errordl.php
 $lang['errordl'] = array(); 
-$lang['errordl']['1'] = 'Limite de banda ancha excedido! </font></strong> <br />
-Para descargar mas debes usar una cuenta premium. <br /><strong>Intentalo de nuevo en 1 hora ';
+$lang['errordl']['1'] = 'Limite de transferencia excedido! </font></strong> <br />
+Para descargar mas debes usar una cuenta premium. <br /><strong>O espera 1 hora para seguir descargando ';
 $lang['errordl']['2'] = 'Por favor lee nuestros ';
 $lang['errordl']['3'] = 'Terminos de servicio / Codigo de conducta';
 // END FILE: include/pages/errordl.php
@@ -362,9 +365,9 @@ $lang['errordl']['3'] = 'Terminos de servicio / Codigo de conducta';
 ####################################
 // BEGIN FILE: include/pages/error.php
 $lang['error'] = array(); 
-$lang['error']['1'] = 'Archivo no encontrado! </span><br /> El archivo especificado no se encuentra en nuestros servidores! ';
+$lang['error']['1'] = '¡Archivo no encontrado! </span><br /> El archivo especificado no se encuentra en nuestros servidores! ';
 $lang['error']['2'] = 'Esto puede deberse a distintas razones: ';
-$lang['error']['3'] = '1. Denuncias<br /> 2. El archivo ha estado inactivo durante demasiado tiempo<br /> 3. El usuario ha borrado el archivo ';
+$lang['error']['3'] = '1. Denuncias al archivo por infringir nuestras normas.<br /> 2. El archivo ha estado inactivo durante demasiado tiempo<br /> 3. El usuario ha borrado el archivo ';
 // END FILE: include/pages/error.php
 ####################################
 ####################################
@@ -397,9 +400,9 @@ $lang['folder']['13'] = 'Agregar archivos';
 $lang['folder']['14'] = ' Guardar archivo';
 $lang['folder']['15'] = ' Agregar archivo al directorio';
 $lang['folder']['16'] = 'Enviar cambios';
-$lang['folder']['17'] = ' Archivo(s) borrado(s)!';
+$lang['folder']['17'] = ' ¡Archivo(s) borrado(s)!';
 $lang['folder']['18'] = 'Contraseña de administrador actualizada!';
-$lang['folder']['19'] = ' Nuevos archivos añadidos!';
+$lang['folder']['19'] = ' ¡Nuevos archivos añadidos!';
 $lang['folder']['20'] = 'Directorio borrado!';
 $lang['folder']['21'] = 'Administrar directorio: ';
 $lang['folder']['22'] = 'Administrar archivos del directorio';
@@ -416,7 +419,7 @@ $lang['folder']['33'] = 'Administrar archivos:';
 $lang['folder']['34'] = 'Borrar';
 $lang['folder']['35'] = 'Enlace de archivo';
 $lang['folder']['36'] = 'Borrar archivos seleccionados';
-$lang['folder']['37'] = 'No existen directorios con los detalles especificados!';
+$lang['folder']['37'] = '¡No existen directorios con los detalles especificados!';
 $lang['folder']['38'] = 'Borrar archivo ';
 $lang['folder']['39'] = 'Por favor intruduzca la contraseña de administrador para borrar esta carpeta';
 $lang['folder']['40'] = 'ID de directorio: ';
@@ -425,10 +428,10 @@ $lang['folder']['42'] = 'Borrar directorio';
 $lang['folder']['43'] = 'Agregar archivos al directorio ';
 $lang['folder']['44'] = 'Acceda a su carpeta antes de añadir archivos a la misma! ';
 $lang['folder']['45'] = 'Administrar directorios ';
-$lang['folder']['46'] = 'Acceda asu carpeta antes de comenzar a administrarla! ';
+$lang['folder']['46'] = '¡Acceda asu carpeta antes de comenzar a administrarla! ';
 $lang['folder']['47'] = 'Añadir archivos';
 $lang['folder']['48'] = 'Directorio de administrador';
-$lang['folder']['49'] = '¿Ya tienes una carpeta? Logueate para iniciar su gestión! ';
+$lang['folder']['49'] = '¿Ya tienes una carpeta? Inicia sesion para administrarla! ';
 $lang['folder']['50'] = '';
 // END FILE: include/pages/folder.php
 ####################################
@@ -437,16 +440,16 @@ $lang['folder']['50'] = '';
 /*
 // BEGIN FILE: include/pages/flash.php
 $lang['flash'] = array(); 
-$lang['flash']['1'] = 'Success';
-$lang['flash']['2'] = ' Download Link : ';
-$lang['flash']['3'] = 'File ID: ';
-$lang['flash']['4'] = '&quot;Rate This File&quot; Link: ';
-$lang['flash']['5'] = 'Description: ';
-$lang['flash']['6'] = 'Password: ';
-$lang['flash']['7'] = 'Your IP ';
-$lang['flash']['8'] = ' has been logged for security purposes. ';
+$lang['flash']['1'] = 'Completado';
+$lang['flash']['2'] = ' Enlace de descarga : ';
+$lang['flash']['3'] = 'ID del archivo: ';
+$lang['flash']['4'] = '&quot;Votar este archivo&quot; Enlace: ';
+$lang['flash']['5'] = 'Descripcion: ';
+$lang['flash']['6'] = 'Contraseña: ';
+$lang['flash']['7'] = 'Tu IP ';
+$lang['flash']['8'] = ' ha sido guardada por motivos de seguridad. ';
 $lang['flash']['9'] = ' There was a problem uploading your file. You are being transferred back to the main page.';
-$lang['flash']['10'] = 'Delete File Link:';
+$lang['flash']['10'] = 'Enlace de borrado:';
 // END FILE: include/pages/flash.php
 ####################################
 ####################################
@@ -484,12 +487,12 @@ $lang['login'] = array();
 $lang['login']['1'] = 'Ingresar a  ';
 $lang['login']['2'] = 'Nombre: ';
 $lang['login']['3'] = 'Contraseña:';
-$lang['login']['4'] = 'Has perdido tu contraseña?';
-$lang['login']['5'] = 'Registrar uan nueva cuenta!';
+$lang['login']['4'] = '¿Has perdido tu contraseña?';
+$lang['login']['5'] = '¡Crear una nueva cuenta!';
 $lang['login']['6'] = 'Nombre/Contraseña no ha(n) sido encontrados en nuestra base de datos. Por favor intentelo de nuevo.';
 $lang['login']['7'] = 'El tiempo de tu sesion ha acabado.<br />
 Por favor logueese de nuevo';
-$lang['login']['8'] = 'Has ingresado correctamente!';
+$lang['login']['8'] = '¡Has ingresado correctamente!';
 $lang['login']['9'] = 'Por favor espera mientras eres redireccionado.';
 // END FILE: include/pages/logout.php
 // END FILE: include/pages/login.php
@@ -553,7 +556,7 @@ $lang['paypal']['3'] = "\n".'Nombre: ';
 $lang['paypal']['4'] = "\n".'Contraseña: ';
 $lang['paypal']['5'] = 'Gracias por registrarse,'."\n";
 $lang['paypal']['6'] = ' Staff';
-$lang['paypal']['7'] = 'Pague ahora con PayPal!';
+$lang['paypal']['7'] = '¡Pague ahora con PayPal!';
 // END FILE: include/payment/paypal.php
 ####################################
 ####################################
@@ -669,14 +672,14 @@ $lang['open']['25'] = ' Sin limite';
 $lang['open']['26'] = 'Cuentas restantes';
 $lang['open']['27'] = 'Ilimitadas';
 $lang['open']['28'] = 'Accounts Left';
-$lang['open']['29'] = 'Registrarse!';
+$lang['open']['29'] = '¡Registrarse!';
 $lang['open']['30'] = 'No requiere registro';
-$lang['open']['31'] = '  Registrarse!';
+$lang['open']['31'] = '  ¡Registrarse!';
 $lang['open']['32'] = 'Estos tipos de archivos estan ';
 $lang['open']['33'] = 'no ';
 $lang['open']['34'] = 'Tipo de archivo';
 $lang['open']['35'] = 'Descargas';
-$lang['open']['36'] = 'Descargar ahora!';
+$lang['open']['36'] = '¡Descargar ahora!';
 $lang['open']['37'] = 'permitidos: ';
 
 // END FILE: include/open.functions.inc.php
@@ -687,11 +690,11 @@ $lang['open']['37'] = 'permitidos: ';
 $lang['functions'] = array(); 
 $lang['functions']['1'] = 'El archivo no existe';
 $lang['functions']['2'] = 'El archivo ha sido borrado';
-$lang['functions']['3'] = 'Archivo no encontrado!';
-$lang['functions']['4'] = 'Archivo borrado!';
-$lang['functions']['5'] = 'Archivo borrado!';
-$lang['functions']['6'] = 'Archivo expirado!';
-$lang['functions']['7'] = 'Archivo no encontrado!';
+$lang['functions']['3'] = '¡Archivo encontrado!';
+$lang['functions']['4'] = '¡Archivo borrado!';
+$lang['functions']['5'] = '¡Archivo borrado!';
+$lang['functions']['6'] = '¡Archivo expirado!';
+$lang['functions']['7'] = '¡Archivo no encontrado!';
 $lang['functions']['8'] = 'Ningun archivo descargado en esta sesion';
 $lang['functions']['9'] = '';
 // END FILE: ./include/functions.inc.php
@@ -704,9 +707,9 @@ $lang['download_summary']['1'] = 'Nombre de archivo';
 $lang['download_summary']['2'] = 'Uploader';
 $lang['download_summary']['3'] = 'Tamaño';
 $lang['download_summary']['4'] = 'Descargas';
-$lang['download_summary']['5'] = ' Banda ancha permitida';
+$lang['download_summary']['5'] = 'Transferencia permitida';
 $lang['download_summary']['6'] = 'MB por hora';
-$lang['download_summary']['7'] = ' Descripcion';
+$lang['download_summary']['7'] = 'Descripcion';
 $lang['download_summary']['8'] = 'Al descargar un archivo usted está de acuerdo con nuestros ';
 $lang['download_summary']['9'] = 'Terminos del servicio';
 $lang['download_summary']['10'] = '';
@@ -802,19 +805,19 @@ $lang['userFolders']['9'] = '';
 $lang['usercp'] = array(); 
 $lang['usercp']['1'] = 'Panel de usuario ';
 $lang['usercp']['2'] = '5 subidas mas recientes ';
-$lang['usercp']['3'] = 'Configuracion personalPersonal Settings ';
+$lang['usercp']['3'] = 'Configuracion personal';
 $lang['usercp']['4'] = 'Ver mas archivos';
 $lang['usercp']['5'] = ' 5 directorios mas recientes';
-$lang['usercp']['6'] = 'Ver tus estadisticas de uso';
-$lang['usercp']['7'] = 'Nombre de directorio';
+$lang['usercp']['6'] = 'Estadisticas de uso';
+$lang['usercp']['7'] = 'Nombre';
 $lang['usercp']['8'] = 'Codigo de directorio';
 $lang['usercp']['9'] = 'Acciones';
 $lang['usercp']['10'] = 'Sin nombre';
 $lang['usercp']['11'] = 'Ver todos tus directorios';
-$lang['usercp']['12'] = 'Nuemero de subidas:';
+$lang['usercp']['12'] = 'Numero de subidas:';
 $lang['usercp']['13'] = 'Numero de directorios:';
 $lang['usercp']['14'] = 'Puntos totales: ';
-$lang['usercp']['15'] = 'Espacio total usado en disco: ';
+$lang['usercp']['15'] = 'Espacio total usado: ';
 $lang['usercp']['16'] = 'Ver todos los archivos';
 $lang['usercp']['17'] = 'Crear nuevo directorio';
 $lang['usercp']['18'] = '';
@@ -825,10 +828,10 @@ $lang['usercp']['18'] = '';
 // BEGIN FILE: ./include/kernel/rss.php
 $lang['rss'] = array(); 
 $lang['rss']['1'] = 'Feeds RSS';
-$lang['rss']['2'] = 'Aquí tenemos una colección de feeds RSS para subir archivos.';
+$lang['rss']['2'] = 'Aquí tenemos una colección de feeds RSS.';
 $lang['rss']['3'] = 'Top 10 archivos destacados';
-$lang['rss']['4'] = '10 archivos destacados mas recientes';
-$lang['rss']['5'] = '10 archivos menos destacados  ';
+$lang['rss']['4'] = 'Top 10 archivos destacados mas recientes';
+$lang['rss']['5'] = 'Top 10 archivos menos destacados  ';
 $lang['rss']['6'] = '';
 // END FILE: ./include/kernel/rss.php
 ####################################
@@ -849,14 +852,14 @@ $lang['report']['6'] = '';
 // BEGIN FILE: ./include/kernel/linkchecker.php
 $lang['linkchecker'] = array(); 
 $lang['linkchecker']['1'] = 'Compruebe sus enlaces de archivos ';
-$lang['linkchecker']['2'] = 'Puede utilizar esta característica para comprobar si los enlaces son válidos o no.<br />
-Basta pegar los enlaces, uno por línea en el texto, a continuación pulse validar. Se le dirá si los enlaces siguen siendo válidos o no.';
+$lang['linkchecker']['2'] = 'Con esta utilidad usted puede comprovar si loa enlaces son aun validos o han expirado.<br />
+Pegue los enlces, uno por cada linea, en el cuadro de texto, despues pulse "Validad Enlaces".';
 $lang['linkchecker']['3'] = 'Enlaces validados ';
 $lang['linkchecker']['4'] = ' de ';
 $lang['linkchecker']['5'] = 'Los enlaces son validos ';
-$lang['linkchecker']['6'] = 'Comprobar mas enlaces!';
+$lang['linkchecker']['6'] = '¡Comprobar mas enlaces!';
 $lang['linkchecker']['7'] = 'Validar enlaces';
-$lang['linkchecker']['8'] = 'Comprobar mas enlaces!';
+$lang['linkchecker']['8'] = '¡Comprobar mas enlaces!';
 $lang['linkchecker']['9'] = '';
 // END FILE: ./include/kernel/linkchecker.php
 ####################################
@@ -918,17 +921,17 @@ $lang['']['25'] = '';
 ####################################
 // BEGIN FILE: ./include/kernel/uploadError.php
 $lang['uploadError'] = array(); 
-$lang['uploadError']['1'] = 'El archivo subido es demasiado grande!';
+$lang['uploadError']['1'] = '¡El archivo subido es demasiado grande!';
 $lang['uploadError']['2'] = 'El archivo que ha subido es demasiado grande para nuestra red .';
 $lang['uploadError']['3'] = 'Tamaños mas grandes pueden ser subidos si usted ';
 $lang['uploadError']['4'] = 'actualiza su cuenta';
 $lang['uploadError']['5'] = ' o ';
 $lang['uploadError']['6'] = 'ingresa';
 $lang['uploadError']['7'] = ' con una existente.';
-$lang['uploadError']['8'] = 'No es posible conectarse al FTP con estos datos!';
+$lang['uploadError']['8'] = '¡No es posible conectarse al FTP con estos datos!';
 $lang['uploadError']['9'] = 'Error de ingreso FTP';
 $lang['uploadError']['10'] = 'La información de inicio de sesión FTP que indicó en el enlace de su archivo es incorrecta.';
-$lang['uploadError']['11'] = 'El archivo subido esta prohibido en nuestra red!';
+$lang['uploadError']['11'] = '¡El archivo subido esta prohibido en nuestra red!';
 $lang['uploadError']['12'] = 'El archivo que ha subido ha sido prohibido en nuestra red.';
 $lang['uploadError']['13'] = 'Hemos recibido quejas de que el archivo que ha subido esta violando nuestra ';
 $lang['uploadError']['14'] = 'Ha ocurrido un error desconocido';

@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <head>
 	<title><?=$sitename?></title>
     
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
 	<link rel="StyleSheet" href="./css/style.css" type="text/css" />
 	<link type="text/css" rel="stylesheet" href="./css/menu.css" />

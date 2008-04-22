@@ -36,21 +36,21 @@ if(isset($_GET['thumb']))
 	
 	$type = str_replace('.','',strtolower (strrchr ($file, '.')));
 	
-	if($type = "gif")
+	if($type == "gif")
 	{
-		$type = 'gif';
+		$type == 'gif';
 	}
-	else if($type = "bmp")
+	else if($type == "bmp")
 	{
-		$type = 'bmp';
+		$type == 'bmp';
 	}
-	else if($type = "jpg")
+	else if($type == "jpg")
 	{
-		$type = 'jpeg';
+		$type == 'jpeg';
 	}
-	else if($type = "png")
+	else if($type == "png")
 	{
-		$type = 'png';
+		$type == 'png';
 	}
 	
 	header("Content-type: image/".$type);
@@ -70,27 +70,23 @@ else
 	$md5 = $ret->md5;
 	$md5 = substr($md5,0,2);
 	$file = $ret->filename;
-	$type = str_replace('.','',strtolower (strrchr ($img, '.')));
+	$type = str_replace('.','',strtolower (strrchr ($file, '.')));
 	
-	if($type = "gif")
+	if($type == "gif")
 	{
-		$type = 'gif';
+		$type == 'gif';
 	}
-	else if($type = "bmp")
+	else if($type == "bmp")
 	{
-		$type = 'bmp';
+		$type == 'bmp';
 	}
-	else if($type = "jpg")
+	else if($type == "jpg")
 	{
-		$type = 'jpeg';
+		$type == 'jpeg';
 	}
-	else if($type = "'tif")
+	else if($type == "png")
 	{
-		$type = 'tiff';
-	}
-	else if($type = "png")
-	{
-		$type = 'png';
+		$type == 'png';
 	}
 	
 	$af = './files/'.$md5.'/'.$file;

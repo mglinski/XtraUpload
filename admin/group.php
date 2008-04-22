@@ -159,7 +159,7 @@ if(isset($_GET['group']) && $_GET['group'] != '')
             </tr>
             <tr>
               <td width="250" height="32"><div align="right"><strong>Account Expiry Time(In Days)</strong></div></td>
-              <td width="304"><input name="expire" type="text" size="30" value="<?=$groups->expire?>"  />
+              <td width="304"><input name="days" type="text" size="30" value="<?=$groups->days?>"  />
                 <br />
                 &quot;0&quot; Means Account Never Exipres </td>
             </tr>
@@ -209,11 +209,12 @@ if(isset($_GET['group']) && $_GET['group'] != '')
             </tr>
             <tr>
               <td ><div align="right"><strong>Display CAPTCHA on Home Page? </strong></div></td>
-              <td><p>
+              <td>
                   <input name="home_captcha" type="radio" value="1"  <? if($groups->home_captcha){ ?>checked<? }?> />
                   Yes ( Image Verification on Home Page) <br />
                   <input name="home_captcha" type="radio" value="0" <? if(!$groups->home_captcha){ ?>checked<? }?> />
-                  No </p></td>
+                  No 
+			  </td>
             </tr>
             <tr>
               <td width="250" height="32"><div align="right"><strong>Can Use Down Accelerators:</strong></div></td>

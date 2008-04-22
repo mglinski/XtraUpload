@@ -14,6 +14,15 @@ var flashUploadFileId;
 var pbUpd = 0;
 var flashUploadCancel = false;
 
+var defaultUpload = <{$shownUploadMethod}>;
+
+if(defaultUpload == 3)
+{
+	window.onload = function()
+	{
+		flashBrowseButton();
+	}
+}
 
 function loadFileForDownload(link)
 {
@@ -468,7 +477,7 @@ $(document).ready(function()
         </div>
         <div class="style118" id="upload_sect" style="display:" align="center">
           <{if $can_flash}>
-          	<a href="javascript:;" class="style119" onclick="show_upload_flash()" ><{$lang.home.13}></a> |
+          	<a href="javascript:;" class="style119" onclick="show_upload_flash();flashBrowseButton();" ><{$lang.home.13}></a> |
           <{/if}>
           
           <{if $can_url}>

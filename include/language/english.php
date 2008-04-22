@@ -24,6 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // so for the file main2.php the first piece of text in this array would look like this:
 // $lang['home']['1'] = 'Uploading your file! ';
 
+//Language Charset, MetaTag
+$lang_charset = "UTF-8";
+
 $lang = array(); // Define the $lang variable as an array
 ####################################
 ####################################

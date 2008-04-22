@@ -125,7 +125,7 @@ function doDirectDownload($link)
 	$q = $db->query("SELECT * FROM dlinks WHERE down_id = '".intval($_REQUEST['link'])."' ");
 
     /* Start by making sure the file actually exists */
-    if($db->num($q) == '1')
+    if($db->num($q) > 0)
     {
 		$res = $db->fetch($q,'obj');
 		$q1 = $db->query("SELECT * FROM files WHERE filename = '".$res->store_name."' ");
@@ -396,6 +396,12 @@ function makeFileDownloadLink($id, $orig)
 	return $rand_id;
 }
 
+if(isset($_GET['link']))
+{
+	doDirectDownload($_REQUEST['link']);
+	die();
+}
+
 // Grab fine info and make sure its there
 $sql = $db->query("SELECT * FROM files WHERE `hash` = '".txt_clean($_GET['hash'])."' AND `status` = '1' AND `ban` != '1'");
 $num = $db->num($sql);
@@ -428,12 +434,7 @@ else
 	{
 		$waited = true;
 	}
-	
-	if(isset($_GET['link']))
-	{
-		$down_link = intval($_GET['link']);
-	}
-	
+		
 	if(isset($file->password) && $file->password != "")
 	{
 		$pass_image = false;
@@ -517,24 +518,15 @@ else
 		}
 		else
 		{
-	
-			if(isset($down_link))
+			if ($waited)
 			{
-				startDownloadProcess('2');
-				die();	
-			}
-			else
+				startDownloadProcess("3",$captcha_is,$captchaHTML,$captchaValid);
+				die;
+			} 
+			else 
 			{
-				if ($waited)
-				{
-					startDownloadProcess("3",$captcha_is,$captchaHTML,$captchaValid);
-					die;
-				} 
-				else 
-				{
-					startDownloadProcess("1",$captcha_is,$captchaHTML,$captchaValid);
-					die;
-				}
+				startDownloadProcess("1",$captcha_is,$captchaHTML,$captchaValid);
+				die;
 			}
 		}
 	}
@@ -560,24 +552,15 @@ else
 		}
 		else
 		{
-	
-			if(isset($down_link))
+			if ($waited)
 			{
-				startDownloadProcess('2');
-				die();	
-			}
-			else
+				startDownloadProcess("3");
+				die;
+			} 
+			else 
 			{
-				if ($waited)
-				{
-					startDownloadProcess("3");
-					die;
-				} 
-				else 
-				{
-					startDownloadProcess("1");
-					die;
-				}
+				startDownloadProcess("1");
+				die;
 			}
 		}
 	}

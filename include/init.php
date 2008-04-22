@@ -373,9 +373,8 @@ if (get_magic_quotes_gpc())
 // include the above language
 //----------------------------
 	include("./include/language/".$language);
-	$kernel->tpl->assign('lang',$lang);
-
-
+	$kernel->tpl->assign('lang', $lang);
+	$kernel->tpl->assign('lang_charset', $lang_charset);
 
 ########################
 ## Points System Code ##

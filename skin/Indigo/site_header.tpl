@@ -6,7 +6,7 @@
     	<title><{$sitename}></title> 
     
     <{* //Meta Section of Header Code *}>
-    	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    	<meta http-equiv="Content-Type" content="text/html; charset=<{$lang_charset}>" />
     	<meta name="description" content="<{$metadesc}>" />
     	<meta name="keywords" content="<{$metakey}>" />
     
@@ -185,7 +185,8 @@
 		</script>
     </head>
     
-    <body>
+    <body >
+    <div 
     <{* // Menu Bar -- Header.tpl *}>
         <div style="position:absolute; top:68; left:200px;">
             <div id="staticMenuBar" style="padding-top:68px" align="left"></div>

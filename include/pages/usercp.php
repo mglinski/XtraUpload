@@ -289,7 +289,9 @@ $s = $db->fetch($re,"obj"); echo $s->points?>
 </table><br />
 
 <script>
-<? // damn IE makeing me do this, FIX THE DAMN BUGS M$!?>
+<?php
+// damn IE makeing me do this, FIX THE DAMN BUGS M$!
+?>
 $(document).ready(function(){
 <?=$scriptBlock?>
 });

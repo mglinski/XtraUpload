@@ -28,7 +28,7 @@ if(isset($_GET['ajaxStats']))
 	list($users) = $db->fetch( $db->query("SELECT COUNT(*) FROM users"),'NUM');
 	list($files) = $db->fetch( $db->query("SELECT COUNT(*) FROM `files` WHERE `status` = '1' "),'NUM');
 
-	?>
+	?>en
   <table width="100%" border="0" align="left" cellpadding="2" cellspacing="2">
             <tr>
               <td width="239" height="22"><div align="right"><span class="style1">Number of Uploads:</span></div></td>

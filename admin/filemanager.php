@@ -807,7 +807,7 @@ if(!$noMain)
 		elseif($pageInfo[$i]['type'] == 'elip')
 		{
 			?>
-        <span>….</span>
+        <span>â€¦.</span>
         <? 
 		}
 		elseif($pageInfo[$i]['type'] == 'none')

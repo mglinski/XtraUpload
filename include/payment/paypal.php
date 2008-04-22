@@ -302,7 +302,7 @@ class gate
 		
 		$sql = "INSERT INTO `transactions` SET `username` = '".$this->username."', `password` = '".$this->pass."', `email` = '".$this->email."', `group` = '".intval($_POST['group'])."', `ammount` = '".$group->price."', `processor` = '".intval($_POST['gate'])."', `result` = '2', `notes` = 'Transaction Is Pending User Action', `approved` = '0'";
 		$db->query($sql);
-		$id = mysql_insert_id();
+		$id = $db->insert_id();
 		
 		$form = '<p><form method="post" action="https://www.paypal.com/" id="paypal_co">'."\n";
 		$form .= '<input type="hidden" name="business" value="'.$pay->sell_id.'" />'."\n";

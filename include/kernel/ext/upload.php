@@ -402,6 +402,7 @@ function url()
 		$file_temp_name = $this->tmp_name;
 		
 		$file_name = $uniq.".".basename($name);
+		$this->file_name = $file_name;
 		$file_real_name = basename($name);
 		
 		$file_md5 = md5_file($file_temp_name);

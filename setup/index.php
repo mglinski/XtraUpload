@@ -118,11 +118,11 @@ function xuSetupHeader()
 										
 					#button   { background-color: #4C77B6; color: #FFFFFF; font-family:Verdana, Arial; font-size:11px }
 					
-					#textinput { background-color: #EEEEEE; color:Ê#000000; font-family:Verdana, Arial; font-size:11px; width:100% }
+					#textinput { background-color: #EEEEEE; color:ÃŠ#000000; font-family:Verdana, Arial; font-size:11px; width:100% }
 					
-					#dropdown { background-color: #EEEEEE; color:Ê#000000; font-family:Verdana, Arial; font-size:10px }
+					#dropdown { background-color: #EEEEEE; color:ÃŠ#000000; font-family:Verdana, Arial; font-size:10px }
 					
-					#multitext { background-color: #EEEEEE; color:Ê#000000; font-family:Courier, Verdana, Arial; font-size:10px }
+					#multitext { background-color: #EEEEEE; color:ÃŠ#000000; font-family:Courier, Verdana, Arial; font-size:10px }
 					
 					#logostrip {
 	padding: 0px;
@@ -138,7 +138,7 @@ function xuSetupHeader()
 					
 				  </style>
                   <script src="../js/xu.js"></script>
-				  </head>
+				  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
 				 <body marginheight='0' marginwidth='0' leftmargin='0' topmargin='0' bgcolor='#FFFFFF'>
 				 
 				 <div id='logostrip'><img src='images/logo.png' alt='XtraUpload Installer' width="450" height="70" border='0' /></div>

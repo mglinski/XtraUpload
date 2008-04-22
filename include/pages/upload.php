@@ -25,13 +25,12 @@ $ret = $kernel->ext->upload->return;
 
 if(!$upload)
 {
-	header("location: ".makeXuLink('index.php', array('p'=>'uploadError', 'error' => $kernel->upload->error)));
+	header("location: ".makeXuLink('index.php', array('p'=>'uploadError', 'error' => $kernel->ext->upload->error)));
 	die;
 }
 else
 {
-	$kernel->server->update_bandwith($kernel->upload->file_name);
-	//echo 'File Uploaded. Please wait while we process your file.<br />file_upload&secid='.$kernel->upload->secid.'<div class="clearer"></div>';
+	$kernel->server->update_bandwith($kernel->ext->upload->file_name);
 	
 	$img = $kernel->ext->upload->file_name; 
 	$img = str_replace('.','',strtolower (strrchr ($img, '.')));

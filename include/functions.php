@@ -1626,6 +1626,11 @@ function insert_ads()
 
 function parseVersion($v)
 {
+	if(!stristr($v, ','))
+	{
+		return 'Not Found!';
+	}
+	
 	$parts = explode(',',$v);
 	$version = $parts[0];
 	

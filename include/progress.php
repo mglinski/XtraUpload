@@ -107,7 +107,8 @@ else
 		echo "void(0);";
 		exit;
 	}
-	?>update("<? print $bRead;?>", "<? print round($iTotal/1024);?>", "<? print $remainingf;?>", "<? print $lapsedf?>", "<? print $speed;?>", "<? print $percent;?>", "<?=$siteurl.'include/progress.php?sid='.$_GET['sid'].'&start_time='.$_GET['start_time'].'&server='.urlencode($_GET['server'])?>");<?
+	?>
+   update("<? print $bRead;?>", "<? print round($iTotal/1024);?>", "<? print $remainingf;?>", "<? print $lapsedf?>", "<? print $speed;?>", "<? print $percent;?>", "<?=$siteurl.'include/progress.php?sid='.$_GET['sid'].'&start_time='.$_GET['start_time'].'&server='.urlencode($_GET['server'])?>");<?
 
 }
 	///////////////////////////////////////////////////////////////////////////////
