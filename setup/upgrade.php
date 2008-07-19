@@ -88,6 +88,11 @@ function runUpgradeProcess($curver, $newver)
 		// Update to 1.6.0 BETA2 DB
 		include('./setup/upgrade/16.php');
 	}
+	else if($curver == "1.6.0,0.0.4.0")
+	{
+		// Update to 1.6.0 BETA2 DB
+		include('./setup/upgrade/17.php');
+	}
 	return false;
 }
 

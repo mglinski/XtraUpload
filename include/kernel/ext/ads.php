@@ -56,32 +56,35 @@ class ads
 
 	function choose_ad()
 	{
-		global $db;	
-		$qr3 = $db->query("SELECT * FROM `ads` WHERE `status` = '1' ");	
-		$ads_array = array();
-		$i = 0;
-		while($c = $db->fetch($qr3))
+		if($this->no_ads)
 		{
-			if($c->impressions >= $c->allow_imp && $c->nolimit == '0')
+			global $db;	
+			$qr3 = $db->query("SELECT * FROM `ads` WHERE `status` = '1' ");	
+			$ads_array = array();
+			$i = 0;
+			while($c = $db->fetch($qr3))
 			{
-				$qr = $db->query("UPDATE `ads` SET `status` = '0'  WHERE `id` = '".$c->id."'");
+				if($c->impressions >= $c->allow_imp && $c->nolimit == '0')
+				{
+					$qr = $db->query("UPDATE `ads` SET `status` = '0'  WHERE `id` = '".$c->id."'");
+				}
+				else
+				{
+					$ads_array[] = $c->id;
+				}
 			}
-			else
-			{
-				$ads_array[] = $c->id;
-			}
+	
+			array_rand($ads_array);
+			$aid = $ads_array[0];
+			$qr2 = $db->query("SELECT * FROM `ads` WHERE `id` = '".intval($aid)."' LIMIT 1");	
+			$d = $db->fetch($qr2);
+			
+			$db->query("UPDATE `ads` SET `impressions` = '".($d->impressions + 1)."' WHERE `id` = '".intval($aid)."' LIMIT 1");
+			
+			$this->type = $d->type;
+			$this->src = $d->src;
+			$this->ad_id = $d->id;
 		}
-
-		array_rand($ads_array);
-		$aid = $ads_array[0];
-		$qr2 = $db->query("SELECT * FROM `ads` WHERE `id` = '".intval($aid)."' LIMIT 1");	
-		$d = $db->fetch($qr2);
-		
-		$db->query("UPDATE `ads` SET `impressions` = '".($d->impressions + 1)."' WHERE `id` = '".intval($aid)."' LIMIT 1");
-		
-		$this->type = $d->type;
-		$this->src = $d->src;
-		$this->ad_id = $d->id;
 	}
 }
 ?>

@@ -28,7 +28,7 @@ if(!(isset($_GET['secid'])))
 $query  = "SELECT * FROM `files` WHERE `secid` = '".txt_clean($_GET['secid'])."' LIMIT 1";
 $b = $db->query($query);
 $a = $db->fetch($b,'obj');
-if(isset($a->hashS) and !empty($a->hash))
+if(isset($a->hash) and !empty($a->hash))
 {
 	$server = $a->server;
 	$kernel->tpl->assign('sever', $server);
@@ -46,7 +46,7 @@ if(isset($a->hashS) and !empty($a->hash))
 	$kernel->tpl->assign('durl', $durl);
 	
 	$description = $a->description;
-	$kernel->tpl->assign('desc', $$description);
+	$kernel->tpl->assign('desc', $description);
 	
 	$password = $a->password;
 	$kernel->tpl->assign('password', $password);

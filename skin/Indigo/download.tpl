@@ -62,7 +62,7 @@
                       <td height="27"><div align="right" class="style47"><strong><{$lang.download_summary.4}>:</strong></div></td>
                       <td><div align="left" class="style47"><{$DOWNLOADS}></div></td>
                       <td><div align="right" class="style47"><strong><{$lang.download_summary.5}>:</strong></div></td>
-                      <td><div align="left" class="style47"><{$MBLIMIT}><{$lang.download_summary.6}>. </div></td>
+                      <td><div align="left" class="style47"><{$MBLIMIT}> <{$lang.download_summary.6}>. </div></td>
                     </tr>
                   </table>
                   

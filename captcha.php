@@ -182,6 +182,8 @@ class hn_captcha
           *
           **/
 		var $debug = FALSE;
+		var $user_ver;
+		var $gd_ver;
 
 
 
@@ -745,29 +747,28 @@ $s= "
 		{
 
 		    if (! extension_loaded('gd')) { return; }
-		    static $gd_ver = 0;
 
 		    // Just accept the specified setting if it's 1.
-		    if ($user_ver == 1) { $gd_ver = 1; return 1; }
+		    if ($this->user_ver == 1) { $this->gd_ver = 1; return 1; }
 
 		    // Use the static variable if function was called previously.
-		    if ($user_ver !=2 && $gd_ver > 0 ) { return $gd_ver; }
+		    if ($this->user_ver != 2 && $this->gd_ver > 0 ) { return $this->gd_ver; }
 
 		    // Use the gd_info() function if possible.
 		    if (function_exists('gd_info')) {
 		        $ver_info = gd_info();
 		        preg_match('/\d/', $ver_info['GD Version'], $match);
-		        $gd_ver = $match[0];
+		        $this->gd_ver = $match[0];
 		        return $match[0];
 		    }
 
 		    // If phpinfo() is disabled use a specified / fail-safe choice...
 		    if (preg_match('/phpinfo/', ini_get('disable_functions'))) {
-		        if ($user_ver == 2) {
-		            $gd_ver = 2;	
+		        if ($this->user_ver == 2) {
+		            $this->gd_ver = 2;	
 			       return 2;
 		     	   } else {
-		     	       $gd_ver = 1;
+		     	       $this->gd_ver = 1;
 		     	       return 1;
 		         }
 		    }
@@ -779,7 +780,7 @@ $s= "
 		    ob_end_clean();
 		    $info = stristr($info, 'gd version');
 		    preg_match('/\d/', $info, $match);
-		    $gd_ver = $match[0];
+		    $this->gd_ver = $match[0];
 		    return $match[0];
 		}
 

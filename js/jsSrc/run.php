@@ -1,48 +1,182 @@
-<?
-echo "<pre><code>// XtraUpload Javascript Packer\n// Pack all individual JS file into one to save bandwith and server load\n// For: XtraUpload\n// By: Matthew Glinski\n################################################
+<?php
+/*
+JS-AIO-Packer - Javascript File Condenser
+Copyright (C) 2006-2007  Matthew Glinski and XtraFile.com
+Link: http://www.xtrafile.com/JS-AIO-Packer
+-----------------------------------------------------------------
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program(LICENSE.txt); if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+
+######################
+### Config Section ###
+######################
+
+//The file name you want to give all your outputed files, eg: NAME.js, NAME.gz, NAME.php
+$filePrefix = 'xu';
+
+// Comma seperated list of files to load first, before all others. 
+// Useful for jQuery, where you are most likely to load plugins that need jquery first
+$loadFirst = 'jquery.js, misc.js'; 
+
+// The folder to load relative to this file, use '.' if you place this file in the 
+// folder you want to combine.
+$loadDir = '.';
+
+
+############################################
+######[          WARNING!!!          ]######
+######[------------------------------]######
+######[ Only edit the folloring code ]######
+######[ if you know exactly what you ]######
+######[          are doing!          ]######
+############################################
+
+
+####################
+### Code Section ###
+####################
+
+// Load up JS-Min for PHP
+require('php-bin/jsmin.php');
+
+//Spit out crappy processing header, v2 will look much nicer!
+echo "<pre><code>// JS-AIO-Packer \n// Pack all individual JS files in a folder into one to save bandwith and server load\n// By: Matthew Glinski\n################################################
 ################################################
 ";
 
-// Load files
+// Declare some needed global variables
 $script = '';
 $loaded = array();
-loadFiles('jquery,misc'/*,ext-base,ext'*/);
-//loadFiles('jquery,misc');
 
-$temp = @opendir('.');
-$arr = array('index.php', 'run.php', /*'ext.js', 'ext-base.js',*/ 'xu.js', 'jquery.js', 'misc.js');
-//$arr = array('index.php', 'run.php', 'ext.js', 'ext-base.js', 'xu.js', 'jquery.js', 'misc.js');
+// Preload thses files!
+loadFiles($loadFirst);
 
+// Load the specified folder
+$temp = @opendir($loadDir);
+
+// Skip These Files
+$arr = array('index.php', 'run.php');
+foreach(explode(',', $loadFirst) as $filePreLoad)
+{
+	$arr[] = $filePreLoad;
+}
+
+
+// Look in the folder for javascript files
 while ($file = @readdir($temp))
 {
-	if (!in_array($file,$arr) && !is_dir('./' . $file))
+	if (!in_array($file,$arr) and !is_dir('./' . $file) and (substr($file, -3, 3) == '.js'))
 	{
-		loadFiles(str_replace('.js','',$file));
+		// Load Found File
+		loadFiles($file);
 	}
 }
 @closedir ($temp);
 
+// Check for GZip
+$runGZip = false;
+
+// The Regular Crap, no GZip :(
+$php = '<'.'?php 
+header("Content-type: text/javascript; charset: UTF-8");
+header("Cache-Control: must-revalidate");
+header("Expires: " .gmdate("D, d M Y H:i:s",time() + (60 * 60)) . " GMT");
+readfile("'.$filePrefix.'.js");';
+
+// Do you haz GZip?
+if(function_exists('gzdeflate'))
+{
+	// YAY!
+	$runGZip = true;
+	
+	// The Gzip Inflating Magic! :D
+$php = '<'.'?php 
+header("Content-type: text/javascript; charset: UTF-8");
+header("Content-Encoding: deflate");
+header("Cache-Control: must-revalidate");
+header("Expires: " .gmdate("D, d M Y H:i:s",time() + (60 * 60)) . " GMT");
+readfile("'.$filePrefix.'.gz");';
+}
+
+// Output a minified version of the js file.
+file_put_contents('../'.$filePrefix.'.js', JSMin::minify(file_get_contents('../'.$filePrefix.'.js')));
+
+// If GZip, create GZip file
+if($runGZip)
+{
+	file_put_contents('../'.$filePrefix.'.gz', gzdeflate(file_get_contents('../'.$filePrefix.'.js'),9));
+}
+
+// Create php file to load javascript
+file_put_contents('../'.$filePrefix.'.php', $php);
+
+
+echo "-> Javascript Files combined into ".$filePrefix.".js!
+################################################
+################################################";
+echo "</code></pre>";
+
+// End Of Execution
+
+
+
+########################
+### Function Section ###
+########################
+
+/**
+*  Function: loadFiles()
+*  Param: $file -> The name of the file to load
+*  
+*  Return: void()
+*  
+*/
 function loadFiles($file)
 {
-	global $script,$loaded;
+	global $script, $loaded;
 	$arr = explode(',',$file);
 	foreach($arr as $fileN)
 	{
 		if(!in_array($fileN,$loaded))
 		{
 			$loaded[] = $fileN;
-			$script .= file_get_contents('./'.$fileN.'.js')."\n\n\n";
+			$script .= file_get_contents('./'.$fileN)."\n\n\n";
 			echo "-> Loaded File: ".$fileN.".js\n";
 		}
 	}
 }
 
-file_put_contents('../xu.js', $script);
-file_put_contents('../xu.gz.js', gzencode($script, 9, FORCE_GZIP));
-
-
-echo "-> Javascript Files combined into xu.js!
-################################################
-################################################";
-echo "</code></pre>";
+/**
+*  Function: file_put_contents
+*  PHP4 Equvliant of the PHP5 Function with the same name
+*/
+if(!function_exists('file_put_contents'))
+{
+	function file_put_contents($fileName, $data)
+	{
+		$fp = fopen($fileName, 'w');
+		if($fp)
+		{
+			fwrite($fp, $data);
+			fclose($fp);
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
 ?>

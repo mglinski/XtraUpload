@@ -262,7 +262,57 @@ function flashBrowseButton()
 
 function flashBrowseComplete(file)
 {
-	c
+	var fileTypes = '<{$filetypes}>';
+	var checkMethod = <{$files_restrict_allowed}>;// 0 is Allowed, 1 is restricted
+	var types = '';
+	var extention = file.name.split('.');
+	var allow = false;
+	extension = extention[extention.length-1];
+	
+		
+	if(fileTypes != '*')
+	{
+		fileTypes = fileTypes.split('|');
+		if(checkMethod)
+		{
+			allow = true;
+			for(var i=0; i<fileTypes.length; i++)
+			{
+				if(extension == fileTypes[i] && allow)
+				{
+					allow = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			for(var i=0; i<fileTypes.length; i++)
+			{
+				if(extension == fileTypes[i] && !allow)
+				{
+					allow = true;
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		allow = true;
+	}
+	
+		
+	if(allow)
+	{
+		$('#flashFileName').attr('value', file.name);
+		$('#flashFileUploadButton').attr('disabled',false);
+	}
+	else
+	{
+		cancelQueue();
+		alert('Error: Filetype ".'+extension+'" is not allowed!');
+	}
 }
 
 function cancelQueue()

@@ -251,11 +251,11 @@ function readlog($sector='',$limit=0)
   </tr>';
 	if($sector != '')
 	{
-		$log = $db->query("SELECT * FROM `syslog` WHERE sector = '".$sector."' ORDER BY `id` DESC");
+		$log = $db->query("SELECT * FROM `syslog` WHERE sector = '".$sector."' ORDER BY `id` DESC LIMIT 0,5");
 	}
 	else
 	{
-		$log = $db->query("SELECT * FROM `syslog`  ORDER BY `id` DESC");
+		$log = $db->query("SELECT * FROM `syslog`  ORDER BY `id` DESC LIMIT 0,5");
 	}
 	
 	while($syslog = $db->fetch($log))
@@ -280,15 +280,6 @@ function readlog($sector='',$limit=0)
 		<td width="260"><span align="center" class="style1"><center>'.$syslog->desc.'</center></span></td>
 		<td width="200 "><span align="center" class="style1"><center>'.$syslog->date.'</center></span></td>
 	  </tr>';
-	  
-		if($limit > 0 and $i < ($limit-1))
-		{ 
-			$i++;
-		}
-		else if($i = $limit)
-		{
-			break;
-		}
 	}
 	$html .= '</table>';
 	return $html;

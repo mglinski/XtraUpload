@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 function startDownloadProcess($action,$captcha_is=false,$captchaHTML='',$captchaValid='')
 {
 	$hash = $_REQUEST['hash'];
-	global $db, $siteurl, $max_file_streams;
+	global $db, $siteurl, $max_file_streams, $limit;
 	$m_query = $db->query("SELECT * FROM `files` WHERE `hash` = '".txt_clean($hash)."' AND status='1'");  
 	$f_query = $db->fetch($m_query,"obj");
 	
@@ -43,7 +43,7 @@ function startDownloadProcess($action,$captcha_is=false,$captchaHTML='',$captcha
 	// 
 	$tD = $db->query("SELECT SUM(`filesize`) AS `total` FROM `downloads` WHERE `ip` = '".$_SERVER['REMOTE_ADDR']."'");
 	$dlTotal = $db->fetch($tD);
-	$totaldownload += intval($dlTotal->total);
+	$totaldownload = intval($dlTotal->total);
 	
 	if (($limit != 0) && ($totaldownload >= ($limit * 1024 * 1024))) 
 	{
@@ -228,41 +228,32 @@ function doDirectDownload($link)
 
 function displayFileForDownloadSummary($fileToDownload, $orig_filename, $description, $captchaHTML='')   
 {
-	global $siteurl, $rewrite_links, $captcha_is, $sitename, $db, $lang, $limit_wait, $kernel, $downloadLimit, $report_links;
-	$limit = $_SESSION['d_limit'];
-	
+	global $siteurl, $rewrite_links, $captcha_is, $sitename, $db, $lang, $limit_wait, $limit, $limit_speed, $kernel, $downloadLimit, $report_links;
+		
 	$kernel->tpl->assign('description', $description);
 	
 	$qr = $db->query("SELECT * FROM files WHERE filename = '".$fileToDownload."' LIMIT 1");
-	$file = $db->fetch($qr, 'obj');
-	$user = $db->fetch($db->query("SELECT * FROM users WHERE uid = '".$file->user."'"), 'obj');
+	$file = $db->fetch($qr);
 	
-	$user = $user->username;
+	$user = $lang['download']['9'];
+	$uq = $db->query("SELECT * FROM users WHERE uid = '".$file->user."'");
+	if($db->num($uq) == 1)
+	{
+		$user = $db->fetch($uq);
+		$user = $user->username;
+	}
+	
 	$md5 = $file->md5;
 	$size = $file->size;
 	$server = $file->server;
 	$hash = $file->hash;
 	$qa = '';
 	
-   	$wait_time = $limit_wait;	
+   	$wait_time = $limit_wait;
 	
-	if($wait_time == '0')
+	if($downloadLimit == '0')
 	{
-		$nowait = '';
-	}
-	if($wait_time == '1')
-	{
-		$nowait = '';
-	}
-	
-	if($limit == '0')
-	{
-		$limit = $lang['download']['8'];
-	}
-	
-	if($user == '')
-	{
-		$user = $lang['download']['9'];
+		$downloadLimit = $lang['download']['8'];
 	}
 	
 	if($rewrite_links)
@@ -272,6 +263,11 @@ function displayFileForDownloadSummary($fileToDownload, $orig_filename, $descrip
 	else
 	{
 		$d_link = "./index.php?p=download&hash=".$_REQUEST['hash'];
+	}
+	
+	if(!isset($_POST['pass1']))
+	{
+		$_POST['pass1'] = '';
 	}
 	
 	$icon = '';
@@ -296,8 +292,9 @@ function displayFileForDownloadSummary($fileToDownload, $orig_filename, $descrip
 		}
 		$o_filename = $new.'...'.$o_filename_1[$count++].$o_filename_1[$count++].$o_filename_1[$count++].$o_filename_1[$count];
 	}
+	
 	/* Now replace relevant spacers with file data */
-	$rand = rand(1,100);
+	$rand = rand(1,1000);
 
 	$kernel->tpl->assign('FILE_TO_DOWNLOAD', $fileToDownload);
 	$kernel->tpl->assign('ORIG_FILENAME', $o_filename);
@@ -307,13 +304,13 @@ function displayFileForDownloadSummary($fileToDownload, $orig_filename, $descrip
 	$kernel->tpl->assign('WAIT_TIME', $wait_time);
 	$kernel->tpl->assign('RAND_COUNTER', $rand);
 	$kernel->tpl->assign('SITEURL', $siteurl);
-	$kernel->tpl->assign('SITENAME', SITE_NAME);
+	$kernel->tpl->assign('SITENAME', $sitename);
 	$kernel->tpl->assign('MBLIMIT', $downloadLimit);
-	$kernel->tpl->assign('SPEED', SPEED);
+	$kernel->tpl->assign('SPEED', $limit_speed);
 	$kernel->tpl->assign('SIZE', get_filesize_prefix($size));
 	$kernel->tpl->assign('MD5', $md5);
 	$kernel->tpl->assign('ICON', $icon);
-	//$kernel->tpl->assign('COMMENTS', get_comments(txt_clean($_REQUEST['hash'])));
+
 	if($report_links)
 	{
 		$kernel->tpl->assign('REPORT_FILE_LINK', '<a href="'.$siteurl.'index.php?p=report&link='.urlencode($siteurl.'index.php?p=download&hash='.$hash).'" target="_blank">Report this file for breaking our TOS</a>');
@@ -332,7 +329,6 @@ function displayFileForDownloadSummary($fileToDownload, $orig_filename, $descrip
 		$kernel->tpl->assign('CAPTCHA_TRUE', '');
 	}
 	
-	$kernel->tpl->assign('NO_WAIT_PREMIUM', $nowait);
 	$kernel->tpl->assign('UPLOADER', $user);
 	$kernel->tpl->assign('DOWNLOADS', intval($file->downloads));
 	$kernel->tpl->assign('ADS_INCLUDE', get_ads());
@@ -448,7 +444,7 @@ else
 		$pass_image = true;
 	}
 	
-	if($_POST['waited'])
+	if(isset($_POST['waited']))
 	{
 		$pass_image = true;
 	}
@@ -479,7 +475,8 @@ else
 			'debug'          => false
 		);
 		
-		$captcha = null;
+		$captcha = NULL;
+		$captchaValid = false;
 		$captcha = new hn_captcha($CAPTCHA_INIT);
 		//error_reporting(E_ALL);
 		switch($captcha->validate_submit())
@@ -519,12 +516,12 @@ else
 		{
 			if ($waited)
 			{
-				startDownloadProcess("3",$captcha_is,$captchaHTML,$captchaValid);
+				startDownloadProcess("3", $captcha_is, $captchaHTML, $captchaValid);
 				die;
 			} 
 			else 
 			{
-				startDownloadProcess("1",$captcha_is,$captchaHTML,$captchaValid);
+				startDownloadProcess("1", $captcha_is, $captchaHTML, $captchaValid);
 				die;
 			}
 		}
