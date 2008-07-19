@@ -1,40 +1,8 @@
 <?
-
 /**
  @author Nguyen Quoc Bao <quocbao.coder@gmail.com>
- @version 1.3
- @desc A simple object for processing download operation , support section downloading
- Please send me an email if you find some bug or it doesn't work with download manager.
- I've tested it with
- 	- Reget
- 	- FDM
- 	- FlashGet
- 	- GetRight
- 	- DAP
- 	
+ @version 1.3	
  @copyright It's free as long as you keep this header .
- @example
- 
- 1: File Download
- 	$object = new downloader;
- 	$object->set_byfile($filename); //Download from a file
- 	$object->use_resume = true; //Enable Resume Mode
- 	$object->download(); //Download File
- 	
- 2: Data Download
-  $object = new downloader;
- 	$object->set_bydata($data); //Download from php data
- 	$object->use_resume = true; //Enable Resume Mode
- 	$object->set_filename($filename); //Set download name
- 	$object->set_mime($mime); //File MIME (Default: application/otect-stream)
- 	$object->download(); //Download File
- 	
- 	3: Manual Download
- 	$object = new downloader;
- 	$object->set_filename($filename);
-	$object->download_ex($size);
-	//output your data here , remember to use $this->seek_start and $this->seek_end value :)
-	
 **/
 
 class download {
@@ -53,7 +21,7 @@ class download {
 	var $use_auth = false;
 	var $filename = null;
 	var $mime = null;
-	var $bufsize = 2048;
+	var $bufsize = 8192;
 	var $seek_start = 0;
 	var $seek_end = -1;
 	
@@ -136,63 +104,89 @@ class download {
 	 * Start download
 	 * @return bool
 	 **/
-	function sendDownload() 
-	{
-		$this->initialize();
-		
-		$seek = $this->seek_start;
-		$speed = $this->speed;
-		$bufsize = $this->bufsize;
-		$packet = 1;
-		
-		//do some clean up
-		@set_time_limit(0);
-		$this->bandwidth = 0;
-		
-		$size = filesize($this->data);
-		if ($seek > ($size - 1)) $seek = 0;
-		if ($this->filename == null) $this->filename = basename($this->data);
-		
-		$res = fopen($this->data,'rb');
-		if ($seek) fseek($res , $seek);
-		if ($this->seek_end < $seek) $this->seek_end = $size - 1;
-		
-		$this->header($size,$seek,$this->seek_end); //always use the last seek
-		$size = $this->seek_end - $seek + 1;
+	function sendDownload()
+    {
+        $this->initialize();
+        
+        $seek = $this->seek_start;
+        $speed = $this->speed;
+        $bufsize = $this->bufsize;
+        $packet = 1;
+        
+        //do some clean up
+        @set_time_limit(0);
+        $this->bandwidth = 0;
+        
+        $size = filesize($this->data);
+        if ($seek > ($size - 1)) $seek = 0;
+        if ($this->filename == null) $this->filename = basename($this->data);
+        
+        $res = fopen($this->data,'rb');
+        if ($seek) fseek($res , $seek);
+        if ($this->seek_end < $seek) $this->seek_end = $size - 1;
+        
+        $this->header($size,$seek,$this->seek_end); //always use the last seek
+        $size = $this->seek_end - $seek + 1;    
 
-		while (!($user_aborted = connection_aborted() || connection_status() == 1) && $size > 0)
-		//while (!($user_aborted = connection_aborted() || connection_status() != 0))
-		{
-			if ($size < $bufsize)
-			{
-				echo fread($res , $size);
-				$this->bandwidth += $size;
-			}
-			else
-			{
-				echo fread($res , $bufsize);
-				$this->bandwidth += $bufsize;
-			}
-			
-			$size -= $bufsize;
-			flush();
-			
-			if ($this->speed > 0 && ($this->bandwidth > ($this->speed * $packet * $this->bufsize)))
-			{
-				sleep(1);
-				$packet++;
-			}
-		}
-		fclose($res);
-					
-		if ($this->use_autoexit) exit();
+        while (!($user_aborted = connection_aborted() || connection_status() == 1) && $size > 0)
+        //while (!($user_aborted = connection_aborted() || connection_status() != 0))
+        {
+            $startpacket = microtime(1);
+            
+            if ($size < $bufsize)
+            {
+                echo $this->fullread($res , $size);
+                $this->bandwidth += $size;
+            }
+            else
+            {
+                echo $this->fullread($res , $bufsize);
+                $this->bandwidth += $bufsize;
+            }
+            
+            $size -= $bufsize;
+            flush();
+            
+            $timeend = microtime(1);
 
-		//restore old status
-		@ignore_user_abort($old_status);
-		@set_time_limit(ini_get("max_execution_time"));
+            $packettime = $timeend - $startpacket;
+            $microsleep = ($bufsize / ($speed * 1024))*1000*1000 - $packettime;
+            usleep($microsleep);
+            
+        }
+        fclose($res);
+                    
+        if ($this->use_autoexit) exit();
 
-		return $this->bandwidth;
-	}
+        //restore old status
+        @ignore_user_abort($old_status);
+        @set_time_limit(ini_get("max_execution_time"));
+
+        return $this->bandwidth;
+    }
+    
+    function fullread($fh,$size)
+    {
+          $buffer ='';
+          $done = 0;
+          while($done < $size)
+          {
+              if ($size - $done > 8192)
+              {
+                  $thisbuff = fread($fh, 8192);
+                $buffer .= $thisbuff;
+                $did = strlen($thisbuff);
+            }
+            else
+            {
+                $thisbuff = fread($fh, $size - $done);
+                $buffer .= $thisbuff;
+                $did = strlen($thisbuff);
+            }
+            $done = $done + $did;
+        }
+        return $buffer;    
+    }
 	
 	function set_byfile($dir) 
 	{

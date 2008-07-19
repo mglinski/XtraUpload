@@ -28,7 +28,7 @@ if(!(isset($_POST['file'])) || $_POST['file'] == '')
 }
 else
 {
-	include('./incude/transfer.class.php');
+	include('./include/transfer.class.php');
 	$kernel->loadUserExt('upload');
 	$upload = $kernel->ext->upload->set($_POST['file']);
 	$ret = $kernel->ext->upload->return;

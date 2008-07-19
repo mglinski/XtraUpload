@@ -175,6 +175,7 @@ function url()
 					fwrite($fp1,$filesize);
 					fclose($fp1);
 					
+					$i = 0;
 					$fp = fopen($tmp, 'wb');
 					if($iRead < $filesize)
 					{

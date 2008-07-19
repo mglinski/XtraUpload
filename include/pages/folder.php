@@ -52,12 +52,12 @@ if($_GET['act'] == 'manage')
 			$msg = '<span style="color:#009900;font-size:18px"><center>'.$added.$lang['folder']['19'].'</center></span>';
 		}
 		else if(isset($_REQUEST['del']))
-		{
-			$db->query("DELETE FROM folder WHERE fid='".intval($_REQUEST['del'])."'");
-			$db->query("DELETE FROM fitem WHERE fid='".intval($_REQUEST['del'])."'");
-			$msg = '<span style="color:#009900;font-size:18px"><center>'.$lang['folder']['20'].'</center></span>';
-			redirect_foot('','folders');
-		}
+        {
+            $db->query("DELETE FROM `folder` WHERE fid='".txt_clean($_REQUEST['del'])."'");
+            $db->query("DELETE FROM `fitem` WHERE fid='".txt_clean($_REQUEST['del'])."'");
+            $msg = '<span style="color:#009900;font-size:18px"><center>'.$lang['folder']['20'].'</center></span>';
+            redirect_foot('','folders');
+        }
 			
 		$folder = $db->fetch($db->query("SELECT * FROM `folder` WHERE `fid` = '".$_POST['fid']."'"));
 		$kernel->tpl->assign('folder', $folder->namey);

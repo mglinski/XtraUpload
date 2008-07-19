@@ -35,6 +35,14 @@ function toggle1(loc)
 -->
 </style>
 
+<{if isset($validUpload) && !$validUpload}>
+    <h2><{$lang.file_upload.5}></h2><br /><br />
+
+    <script>
+        function r(){location = "<{$siteurl}>index.php?p=home";}
+        setTimeout('r()',1500);
+    </script>
+<{else}>
     <div align="center"><font size="4" face="Verdana, Arial, Helvetica, sans-serif" color="#009900"><span class="style512"><strong><br>
         <{$lang.upload.7}> </strong></span></font><br />
         <strong> <{$filename}> 
@@ -136,3 +144,4 @@ function toggle1(loc)
         <p align="center"> <font face="Verdana, Arial, Helvetica, sans-serif"> <{$lang.upload.13}><{$templatelite.SERVER.REMOTE_ADDR.}><{$lang.upload.14}> </font></p>
       </div>
    </div>
+<{/if}>

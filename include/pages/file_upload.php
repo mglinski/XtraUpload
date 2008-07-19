@@ -28,7 +28,7 @@ if(!(isset($_GET['secid'])))
 $query  = "SELECT * FROM `files` WHERE `secid` = '".txt_clean($_GET['secid'])."' LIMIT 1";
 $b = $db->query($query);
 $a = $db->fetch($b,'obj');
-if($a->hash != '')
+if(isset($a->hashS) and !empty($a->hash))
 {
 	$server = $a->server;
 	$kernel->tpl->assign('sever', $server);
@@ -49,7 +49,7 @@ if($a->hash != '')
 	$kernel->tpl->assign('desc', $$description);
 	
 	$password = $a->password;
-	$kernel->tpl->assign('pass', $password);
+	$kernel->tpl->assign('password', $password);
 	
 	$furl = makeDownLinkFromHash($hash, $a->o_filename);
 	$kernel->tpl->assign('furl', $furl);

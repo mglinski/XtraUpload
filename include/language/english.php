@@ -870,9 +870,9 @@ $lang['file_upload'] = array();
 $lang['file_upload']['1'] = 'This File Can not Be Directly Accessed. ';
 $lang['file_upload']['2'] = 'Hide BB Codes';
 $lang['file_upload']['3'] = 'Show BB Codes';
-$lang['file_upload']['4'] = 'The file you uploaded has already been uploaded. <br />
-Here are the file details.';
-$lang['file_upload']['5'] = '';
+$lang['file_upload']['4'] = 'The file you uploaded has already been uploaded. <br /> Here are the file details.';
+$lang['file_upload']['5'] = 'There was an error uploading your file. Please try again.';
+$lang['file_upload']['6'] = '';
 // END FILE: ./include/kernel/file_upload.php
 ####################################
 ####################################

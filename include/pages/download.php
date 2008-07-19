@@ -116,10 +116,9 @@ function downloadFail($file,$name,$totaldownload,$fileSize,$limit_speed,$dlid)
 
 function doDirectDownload($link)
 {
-	global $db, $kernel, $siteurl, $rewrite_links, $limit_speed, $lang, $siteurl, $myuid, $downloadLimit;
-	
-	// Delete From Download links, old links
-	$db->query("DELETE FROM `dlinks` WHERE `time` < '".time()."'");
+	global $db, $kernel, $siteurl, $rewrite_links, $lang, $siteurl, $myuid, $downloadLimit;
+		
+	$limit_speed = getSpeedFromLink($link);
 	
 	// Get Current dLink Stuff
 	$q = $db->query("SELECT * FROM dlinks WHERE down_id = '".intval($_REQUEST['link'])."' ");
@@ -164,7 +163,7 @@ function doDirectDownload($link)
 		
 		/* Check if user has exceeded limit */
 		$totaldownload = 0;
-		$db->query("DELETE FROM `dlinks` WHERE `time` > '".(time() + 3600)."'");
+		$db->query("DELETE FROM `dlinks` WHERE `time` > (UNIX_TIMESTAMP() + 3600)");
 
 		/* Read in the original file and present dialog to user */
 		$limit_speed = intval($limit_speed);
@@ -391,7 +390,7 @@ function makeFileDownloadLink($id, $orig)
 	
 	$time = time()+3600;
 
-	$db->query("INSERT INTO dlinks (`down_id`, `store_name`, `real_name`, `time`, `resume`, `can_r`, `limit`)VALUES('".$rand_id."','".$a->filename."','".$orig."','".$time."','".$_SERVER['REMOTE_ADDR']."','".$can_resume."','".$max_file_streams."')",'down_link_1');
+	$db->query("INSERT INTO dlinks (`ownerid`, `down_id`, `store_name`, `real_name`, `time`, `resume`, `can_r`, `limit`)VALUES('".$_SESSION['myuid']."','".$rand_id."','".$a->filename."','".$orig."',(UNIX_TIMESTAMP()+3600),'".$_SERVER['REMOTE_ADDR']."','".$can_resume."','".$max_file_streams."')",'down_link_1');
 	$db->query("UPDATE `files` SET `last_download` = '".time()."' WHERE id = '".$id."' LIMIT 1");
 	return $rand_id;
 }

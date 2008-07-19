@@ -249,7 +249,7 @@ function getAdminSessionString()
 
 function isValidEmail($e)
 {
-	if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3,4,5})$",$e))
+	if(preg_match("/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])([-a-z0-9_])+([a-z0-9])*(\.([a-z0-9])([-a-z0-9_-])([a-z0-9])+)*$/i",$e))
 	{
 		return true;
 	}
@@ -1960,232 +1960,29 @@ return '
 ';
 }
 
-/*
-//----------------------------
-// Send upload status to the progress bar
-//----------------------------
-function uploadstatus($iTotal, $iRead, $dtstart)
+function getSpeedFromLink($link)
 {
-	$dtnow = time ();
-	$dtelapsed = $dtnow - $dtstart;
-	$dtelapsed_sec = $dtelapsed % 60;
-	$dtelapsed_min = ($dtelapsed - $dtelapsed_sec) % 3600 / 60;
-	$dtelapsed_hours = ($dtelapsed - $dtelapsed_sec - $dtelapsed_min * 60) % 86400 / 3600;
-	if ($dtelapsed_sec < 10)
-	{
-		$dtelapsed_sec = '' . '0' . $dtelapsed_sec;
-	}
+    global $db;
 
-	if ($dtelapsed_min < 10)
-	{
-		$dtelapsed_min = '' . '0' . $dtelapsed_min;
-	}
+    // get the real $limit_speed based on the group belonging to whomever created the download link
+    // first, get the ownerid for the download link
+    $qg = $db->query("SELECT `ownerid` FROM dlinks WHERE down_id = '".$link."' ");
+    $resg = $db->fetch($qg,'obj');
+    $ownerid = $resg->ownerid;
 
-	if ($dtelapsed_hours < 10)
-	{
-		$dtelapsed_hours = '' . '0' . $dtelapsed_hours;
-	}
+    // then get the groupid for the ownerid
+    $qg = $db->query("SELECT `group` FROM users WHERE uid = '".$ownerid."' ");
+    $resg = $db->fetch($qg,'obj');
+    $groupid = $resg->group;
 
-	$dtelapsedf = '' . $dtelapsed_hours . ':' . $dtelapsed_min . ':' . $dtelapsed_sec;
-	$bSpeed = 0;
-	if (0 < $dtelapsed)
-	{
-		$bSpeed = $iRead / $dtelapsed;
-		$bitSpeed = $bSpeed * 8;
-		$kbitSpeed = $bitSpeed / 1000;
-	}
-	else
-	{
-		$kbitSpeed = $bSpeed;
-	}
+    // then get the speed from the groupid
+    $qg = $db->query("SELECT `limit_speed` FROM groups WHERE id = '".$groupid."' ");
+    $resg = $db->fetch($qg,'obj');
 
-	$bSpeedf = sprintf ('%d', $kbitSpeed);
-	$bRemaining = $iTotal - $iRead;
-	$dtRemaining = 0;
-	if (0 < $bSpeed)
-	{
-		$dtRemaining = $bRemaining / $bSpeed;
-	}
+    // then set the speed
 
-	$dtRemaining = sprintf ('%d', $dtRemaining);
-	$dtRemaining_sec = $dtRemaining % 60;
-	$dtRemaining_min = ($dtRemaining - $dtRemaining_sec) % 3600 / 60;
-	$dtRemaining_hours = ($dtRemaining - $dtRemaining_sec - $dtRemaining_min * 60) % 86400 / 3600;
-	if ($dtRemaining_sec < 10)
-	{
-		$dtRemaining_sec = '' . '0' . $dtRemaining_sec;
-	}
-
-	if ($dtRemaining_min < 10)
-	{
-	  $dtRemaining_min = '' . '0' . $dtRemaining_min;
-	}
-
-	if ($dtRemaining_hours < 10)
-	{
-	  $dtRemaining_hours = '' . '0' . $dtRemaining_hours;
-	}
-
-	$dtRemainingf = '' . $dtRemaining_hours . ':' . $dtRemaining_min . ':' . $dtRemaining_sec;
-	$percent = round($iRead * 100 / $iTotal);
-	echo '' . '<script>update("'.$iRead.'", "'.$iTotal.'", "'.$dtRemainingf.'", "'.$dtelapsedf.'", "'.$bSpeedf.'", "'.$percent.'");</script>';
-	flush();
+    $limit_speed = $resg->limit_speed;
+    return $limit_speed;
 }
 
-//----------------------------
-// gets a file comments
-//----------------------------
-function get_comments($id)
-{
-	
-	global $db, $siteurl;
-	$html = '<br />
-<br />
-<div style="border:1px solid #000000">';
-	$i=0;
-	
-	if($_SESSION['isadmin'])
-	{
-		$base1 = $db->query("SELECT * FROM `comments` WHERE `file` = '".$id."'");
-	}
-	else
-	{
-		$base1 = $db->query("SELECT * FROM `comments` WHERE `file` = '".$id."' AND `status` = '1'");
-	}
-	$base2 = $db->query("SELECT * FROM `files` WHERE `hash` = '".$id."'");
-	
-	while($comment = $db->fetch($base1))
-	{
-		$i++;
-		$html .= '<table width="48%" id="comment_'.$i.'" height="5%" border="0" cellpadding="6" cellspacing="0"  style="border:1px solid #000000">
-  <tr>
-	<td width="100%" height="169"><table width="100%" border="0" cellspacing="0" cellpadding="5">
-		<tr>
-		  <td width="72%"><font size="4"><u><b>'.$comment->title.' </b></u></font><br />
- 		 <font size="3">By: <a href="'.$comment->url.'">'.$comment->author.'</a> On: '.$comment->date.'</font></td>
-		  <td width="28%"><div align="right"><font size="4"><u><b><a href="#comment_'.$i.'">Comment #'.$i.'</a></b></u></font></div></td>
-		</tr>
-	  </table>
-	  <hr noshade="noshade" color="#000000"/><div align="center">
-	  <table width="769" height="48" border="0" cellpadding="5" cellspacing="0">
-		<tr>
-		  <td width="544"><font size="3">'.$comment->body.'</font></td>
-		  <td width="205">';
-		  if($_SESSION['isadmin'])
-		  {
-		  $html .= '<div align="center" style="border: 2px solid #FF0000;"><strong><font color="#FF0000">Quick Admin Actions</font> </strong><hr /><br />
-			  <a href="'.$siteurl.'index.php?p=comments&act=edit&comment='.$comment->id.'&status=1&file='.$id.'">'.get_icon('Comment (Edit)','normal').'</a>
-			  	&nbsp;&nbsp; 
-			  <a onclick="return confirm(\'Are you sure you want to delete this comment?\')" href="'.makeXuLink('index.php','p=comments&act=delete&comment='.$comment->id.'&status=1&file='.$id).'">'.get_icon('Comment (Remove)','normal').' </a>
-			  	&nbsp;&nbsp; ';
-
-			 if(!$comment->status == '1')
-			 {
-			 	
-			 	$html .= '<a href="'.makeXuLink('index.php','p=comments&act=status&comment='.$comment->id.'&status=1&file='.$id).'">'.get_icon('Add (Alt 2)','normal', 'Reveal Comment to Public').'</a>';
-			 }
-			 else
-			 {
-			 	$html .= '<a href="'.makeXuLink('index.php','p=comments&act=status&comment='.$comment->id.'&status=0&file='.$id).'">'.get_icon('Remove (Alt 2)','normal', 'Hide Comment From Public View').'</a>';
-			 }
-			 $html .= '<br />
-				<br />
-		  </div>';
-		  }
-		  $html .= '</td>
-		</tr>
-	  </table>
-	</div></td>
-  </tr>
-</table>
-
-<hr />';
-		
-	}
-	
-	
-	
-	$html .= '
-	<script type="text/javascript">
-	
-var comm_name = false;
-var comm_title = false;
-var comm_body = false;
-var comm_email = false;
-
-function check_comment()
-{
-	if($("#author").attr("value") > 2)
-	{
-		alert(\'You must supply a name to post comments.\')
-		return false;
-	}
-	else if($("#title").attr("value") > 2)
-	{
-		alert(\'You must give your comment a title .\')
-		return false;
-	}
-	else if(!$("#email").attr("value") > 2)
-	{
-		alert(\'You must supply an email address to post comments.\')
-		return false;
-	}
-	else if(!$("#body").attr("value") > 2)
-	{
-		alert(\'You must type a comment post one.\')
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
-	</script>
-	<div align="center">
-<a href="javascript:;" onclick=\'$("#post_comment").slideDown("normal"); $(this).slideUp("normal");\'><br />'.get_icon('Comment (Add)','normal','Add Comment').' <font size="4">Post a comment!</font></a>
-</div>
-<table id="post_comment" style="display:none" border="0">
-  <tr>
-   <td>
-   <hr />
-	<form enctype="application/x-www-form-urlencoded" action="'.makeXuLink('index.php','p=comments&act=add&file='.$id).'" method="post" onsubmit="return check_comment()">
-	<table width="700" height="177" border="0">
-	  <tr>
-		<td width="700"><table width="673" height="75" border="0">
-		  <tr>
-			<td width="197" height="25"><div align="right"><strong>Name:<font color="#FF0000">*</font></strong></div></td>
-			<td width="466"><input type="text" name="author" id="author" size="40" /></td>
-		  </tr>
-		  <tr>
-			<td height="25"><div align="right"><strong>Comment Title:<font color="#FF0000">*</font> </strong></div></td>
-			<td><input type="text" name="title" id="title" size="40"  /></td>
-		  </tr>
-		   <tr>
-			<td height="25"><div align="right"><strong>Website:</strong></div></td>
-			<td><input type="text" name="url" id="url" size="40" value="#" /></td>
-		  </tr>
-		  <tr>
-			<td><div align="right"><strong>Email:<font color="#FF0000">*</font> </strong></div></td>
-			<td><input type="text" name="email" id="email" size="40" /></td>
-		  </tr>
-		  <tr>
-			<td><div align="right"><strong>Comment:<font color="#FF0000">*</font> </strong></div></td>
-			<td><textarea name="body" id="body" cols="40" rows="8" ></textarea></td>
-		  </tr>
-		</table>
-		  <div align="center"><br />
-			<input name="post" type="submit" id="post" value="Post Comment" />
-		  </div></td>
-	  </tr>
-	</table>
-	  <br />
-	  <font color="#FF0000"><strong>*</strong></font> <strong>= <font color="#FF0000"><font color="#000000">required</font></font></strong><font color="#FF0000"><font color="#000000"></font></font>
-	</form>
-   </td>
-  </tr>
- </table>
-</div>';
-	return $html;
-}
-*/
 ?>

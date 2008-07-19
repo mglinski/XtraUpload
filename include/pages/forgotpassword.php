@@ -43,7 +43,7 @@ array(
 );
 $captcha = null;
 $captcha = new hn_captcha($CAPTCHA_INIT);
-
+$valid = false;
 if(isset($_POST['email']))
 {
 	switch($captcha->validate_submit())
@@ -87,10 +87,8 @@ if(isset($_POST['email']))
 	}
 }
 
-if(!$valid)
-{
-	$kernel->tpl->assign('captcha', $captcha->display_form());
-}
+$kernel->tpl->assign('captcha', $captcha->display_form());
+
 $kernel->tpl->assign('valid', $valid);
 $kernel->tpl->display('forgotpassword.tpl');
 ?> 

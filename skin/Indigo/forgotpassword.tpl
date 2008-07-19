@@ -15,7 +15,7 @@
 	<form method="post"><h1><{$lang.forgotpass.11}></h1><br />
 		<p>
 			<{$lang.forgotpass.13}> <input type="text" size="30" name="email" value="" /><br /><br />
-			<{$lang.contactus.11}><{$captcha}><{$lang['contactus']['12}><br />
+			<{$lang.contactus.11}><{$captcha}><{$lang.contactus.12}><br />
 			<input type="submit" name="Submit" value="Change Password" />
 		</p>
 	</form>
