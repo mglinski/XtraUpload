@@ -381,7 +381,9 @@ function url()
 	
 	function complete()
 	{
-		global $kernel, $db, $rewrite_links, $myuid, $lang, $imageCopyText, $imageTextColor, $allow_imaging, $sitename, $siteurl, $adminemail, $can_email;
+		global $kernel, $db, $rewrite_links, $myuid, $lang, $imageCopyText, $imageTextColor, 
+			$allow_imaging, $sitename, $siteurl, $adminemail, $can_email,$allow_identical_files;
+			
 		$name = $this->file;
 		$name = str_replace(',','',$name);
 		$name = str_replace(' ','_',$name);
@@ -420,7 +422,7 @@ function url()
 		$dbq = $db->query("SELECT * FROM `files` WHERE `md5` = '".$file_md5."' AND `status` = '1'");
 		$fileInfo = $db->fetch($dbq);
 		$numFiles = $db->num($dbq);
-		if($numFiles != 0 && file_exists('./files/'.substr($file_md5,0,2).'/'.$fileInfo->filename))
+		if(!$allow_identical_files and ($numFiles != 0 && file_exists('./files/'.substr($file_md5,0,2).'/'.$fileInfo->filename)))
 		{
 			$this->description = $fileInfo->description;
 			$this->password = $fileInfo->password;

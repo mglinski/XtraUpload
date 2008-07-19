@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program(LICENSE.txt); if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-$versionSql = "INSERT INTO `config` VALUES (NULL , 'version', '1.6.0,0.0.4.0', '', '', '', '', 0);";
+$versionSql = "INSERT INTO `config` VALUES (NULL , 'version', '1.6.0,0.1.0.0', '', '', '', '', 0);";
 if(!isset($_GET['step']))
 {
 	
@@ -411,6 +411,7 @@ INSERT INTO `config` VALUES (NULL , 'use_memcache', '0', 'Use Memcache', 'Yes|-|
 INSERT INTO `config` VALUES (NULL , 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).','Memcache', 'text', '1');
 INSERT INTO `config` VALUES (NULL , '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
 INSERT INTO `config` VALUES (NULL , 'check_version', '1', 'Check Latest Version', 'Allow XU to check the latest version of itself.', 'Main Settings', 'yesno', '1' );
+INSERT INTO `config` VALUES (NULL, 'allow_identical_files', '0', 'Yes, Allow identical files to be uploaded|-|No', 'Allow identical files to be uploaded', 'Feature Settings', 'yesno', 1);
 ".$versionSql."
 
 CREATE TABLE `dlinks` (

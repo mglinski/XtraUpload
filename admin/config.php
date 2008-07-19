@@ -270,7 +270,7 @@ function showAddForm()
 	$('#add').slideDown('normal');
 	$('#menu1').css('display','block');
 }
-<? if(strlen($msg)){?>
+<? if(isset($msg)){?>
 function hideMsgBox()
 {
 	$('#msgBox').slideUp('normal');
