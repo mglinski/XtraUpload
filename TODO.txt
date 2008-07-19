@@ -1,27 +1,23 @@
 Design/Layout side:
 
-1. Clean skins - make 1-2 default Web 2.0 skins with tabless, valid CSS+XHTML, also put all skin related files in skin folder, like upload form etc.etc.
-2. Tidy up and clean Admin panel - must admit admin panel is really messed up right now, a Joomla-alike layout would be nice, again with abless, valid CSS+XHTML design.
-3. rewrite log in panel and get rid off stupid Javascript menu - it would be really nice if log in panel will become horizontal and only after being logged in user could see his/her balance, uploaded files count, current bandwith etc.etc.
-4. create skin for mobile devices - so script automatically detects mobile device and switchs to non-image, text based interface with one form, user can enter file ID in that form and download file in mobile phone.
-5. completly move all language strings from being hard-coded to one single language file
-6. stats in admin panel - like: how much files uploaded today, total users, how many users registered today, how many users downloading/uploading currently etc, etc.
-7. server load information in admin panel - also how much space left on server(s) and how much files hosting currently/
+-> Clean skins - make 1-2 default Web 2.0 skins with tabless, valid CSS+XHTML, also put all skin related files in skin folder, like upload form etc.etc.
+-> rewrite log in panel and get rid off stupid Javascript menu - it would be really nice if log in panel will become horizontal and only after being logged in user could see his/her balance, uploaded files count, current bandwith etc.etc.
+-> create skin for mobile devices - so script automatically detects mobile device and switchs to non-image, text based interface with one form, user can enter file ID in that form and download file in mobile phone.
+-> completly move all language strings from being hard-coded to one single language file
+-> stats in admin panel - like: how much files uploaded today, total users, how many users registered today, how many users downloading/uploading currently etc, etc.
+-> server load information in admin panel - also how much space left on server(s) and how much files hosting currently/
 
 
 
 
 Server side:
 
-1. Small System configuration checker script, this script will allow users to pre-check their servers if they can fully suppot xtrafile script (Technical requarments)
-2. recomended PHP.ini, Apache.conf, and My.cfg settings for best perfomance
-3. really nice Readmy file and instalation wizard
-5. better SEO url
-	5.1 http://www.yoursite.com/id?=ds5a5d64sa465sda46sd5a
-	5.2 http://www.yoursite.com/some_file_uploaded.rar
-6. it would be nifty if all uploaded files had some blacklist tool, so if some file like: good_pr0n.rar gets uploaded script automatically renames it to good_love.rar
-7. integrate to some popular forum software like - IPB, vBulleting etc.
-8. Duplicate file to mirror server - duplicate one file to second server, which will be used as mirror, when downloading user will be offered two options: download from main server, or download from mirror server, rsync is not a MUST cause in that case huge load will occur, maybe the good idea will be to allow users manually duplicate (from control panel) already uploaded files that have more than X downloads. That will make sure that only popular content gets mirrored, or it can do it automaticly
+-> Small System configuration checker script, this script will allow users to pre-check their servers if they can fully suppot xtrafile script (Technical requirements)
+-> recomended PHP.ini, Apache.conf, and My.cfg settings for best perfomance
+-> really nice Readme file and instalation wizard
+-> it would be nifty if all uploaded files had some blacklist tool, so if some file like: good_pr0n.rar gets uploaded script automatically renames it to good_love.rar
+-> integrate to some popular forum software like - IPB, vBulleting etc.
+-> Duplicate file to mirror server - duplicate one file to second server, which will be used as mirror, when downloading user will be offered two options: download from main server, or download from mirror server, rsync is not a MUST cause in that case huge load will occur, maybe the good idea will be to allow users manually duplicate (from control panel) already uploaded files that have more than X downloads. That will make sure that only popular content gets mirrored, or it can do it automaticly
 
 
 
@@ -30,8 +26,8 @@ Server side:
 
 Tools:
 
-1. Optional Resume upload possibility for upload app
-2. Yabsoft's Mega file hosting script* to XTRAFILE convertor script. This will generate lots of users for xtrafile and lots of proSupport users.
+-> Optional Resume upload possibility for upload app
+-> Yabsoft's Mega file hosting script* to XTRAFILE convertor script. This will generate lots of users for xtrafile and lots of proSupport users.
 
 
 
@@ -39,33 +35,33 @@ Tools:
 
 Functionality:
 
-1. New payment gateways such as:
-	1.1 http://www.cashu.com/
-	1.2 http://www.wmtransfer.com/eng/merchants/index.shtml
-	1.3 and maybe selling "pre-payed codes" (Coupons, Vouchers) that would be really nice
-2. Download credits to give users ability to purchase not only subscription plans but also for example: 100 downloads. so if user downloads 100 files his premiume will expire.
-3. Points targeting
-	3.1 users will ONLY gain points if their file is downliaded by premium user and/or from specefic country
-	3.2 generated points can be used to convert to extending/new premium account or money/gift etc.
-4. Tagging uploads and tag cloud
+-> New payment gateways such as:
+	->  http://www.cashu.com/
+	->  http://www.wmtransfer.com/eng/merchants/index.shtml
+	->  and maybe selling "pre-payed codes" (Coupons, Vouchers) that would be really nice
+-> Download credits to give users ability to purchase not only subscription plans but also for example: 100 downloads. so if user downloads 100 files his premiume will expire.
+-> Points targeting
+	->  users will ONLY gain points if their file is downliaded by premium user and/or from specefic country
+	->  generated points can be used to convert to extending/new premium account or money/gift etc.
+-> Tagging uploads and tag cloud
 to give users ability to TAG their files with some words, than on frontpage there would be tag cloud with all the popular words + most popular words will be bigger in size. This tag claud must have blacklist thing as well, to block/replace words such as pr0n, sex etc.etc.
-5. better ad manager
-	5.1 set time on how long a add will be posted
-	5.2 ad features for google and yahoo advertising
-6. auto beckup - admin can set when and where to send autmatically created database beckups.
-7. Text link to download or button form to download - make it optionable, also text based count down
-8. Last logged in IP in admin panel - a great security tool that every gr8 script should have
-9. remote upload form for websites - a simple HTML code that webmasters could post on their websites to allow people upload to your server, results must be displayed on the same site.
-10. Uploaders account - like collectors zone
-11. Downloading/Uploading Happy Hours - You can set "Rules" for the hours such as the following examples:
-	11.1 Between 3PM and 5PM -> No Wait Time, 2X Download/speed Limit
-	11.2 Every Tuesday-> No Upload File size or type/speed restrictions.
-	11.3 every 15th of the month no limits on Uploading/Downloading
-12. Uploading of "File Packs" - i think that must be optionable, as it will be CPU consuming.
-13. Choose which server to upload to - Have the option to choose which server you want to upload to if there is multiple servers, Also have special 'premium' servers which only premium users can use.
-14. multi file upload - for example we can set unregistered user can upload 2 files at once only, but premium can upload 10 files at once
-15. Limit upload speed as well - some users have huge upload speeds
-16. your ip is already downloading a file - users can downlad one file at once and you can set the number and the premium can download unlimited files at once
-17. Max Slots Of Downloads Per Country - Add This Feature To User Groups Or Somewhere & aDD sOME 10 Country's And Giv Us There Blank So We Can Adjust Slots Like If US Country Then I Will Enter "500" Slots Then Only 500 Users At A Time From All Over Us Country Will Be Available To Download And Others Then 500 Users Of That Country Will Have To Wait Upto The Slots Get Freee
-18. Wait time based on file size - bigger file is, more wait time
-19. Wait time based on load - if lots of people are downloading then there will be wait time, more people - more wait time
+-> better ad manager
+	->  set time on how long a add will be posted
+	->  ad features for google and yahoo advertising
+-> auto beckup - admin can set when and where to send autmatically created database beckups.
+-> Text link to download or button form to download - make it optionable, also text based count down
+-> Last logged in IP in admin panel - a great security tool that every gr8 script should have
+-> remote upload form for websites - a simple HTML code that webmasters could post on their websites to allow people upload to your server, results must be displayed on the same site.
+-> Uploaders account - like collectors zone
+-> Downloading/Uploading Happy Hours - You can set "Rules" for the hours such as the following examples:
+	-> Between 3PM and 5PM -> No Wait Time, 2X Download/speed Limit
+	-> Every Tuesday-> No Upload File size or type/speed restrictions.
+	-> every 15th of the month no limits on Uploading/Downloading
+-> Uploading of "File Packs" - i think that must be optionable, as it will be CPU consuming.
+-> Choose which server to upload to - Have the option to choose which server you want to upload to if there is multiple servers, Also have special 'premium' servers which only premium users can use.
+-> Multi file upload - for example we can set unregistered user can upload 2 files at once only, but premium can upload 10 files at once
+-> Limit upload speed as well - some users have huge upload speeds
+-> Your ip is already downloading a file - users can downlad one file at once and you can set the number and the premium can download unlimited files at once
+-> Max Slots Of Downloads Per Country - Add This Feature To User Groups Or Somewhere & aDD sOME 10 Country's And Giv Us There Blank So We Can Adjust Slots Like If US Country Then I Will Enter "500" Slots Then Only 500 Users At A Time From All Over Us Country Will Be Available To Download And Others Then 500 Users Of That Country Will Have To Wait Upto The Slots Get Free
+-> Wait time based on file size - bigger file is, more wait time
+-> Wait time based on load - if lots of people are downloading then there will be wait time, more people - more wait time

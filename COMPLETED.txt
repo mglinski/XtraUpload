@@ -2,21 +2,33 @@
 Improvements, Additions
 ============================
 Admin Panel Redesign
-Kernel Recoded
+Kernel Recoded(again)
 Kernel Extensions
 New Template System
-CSS/Div Templates
-Download Code Improved
+CSS/Div/xHTML Templates
+Download Code Vastly Improved
 File Manager Improved
 Upload Error Reporting Improved
 Improved Site Menu System
-Added Memcache Support (for rarely changing SQL Querys)
+New/Updated File Icons Added
+4x Speed Improvements in some places
 Restructured Initilization of XU Core
+Other Small Improvements
 
 ============================
 Bugs
 ============================
-File delete after x days of no downloads
-Fixed issue with MoneyBrokers payment processor
+Fixed Timed File delete, EG: after X days of no downloads
+Fixed Issue with MoneyBrokers payment processor
 Fixed Issue with StormPay Payment Processor
-Account Bandwith Limits Fixed
+Fixed Account Bandwith Limits
+Fixed Folder Delete
+Fixed 200+ PHP Notices
+Fixed Log Reading errors on large sites, admin page kills server
+Fixed Download Limit for Groups
+Fixed Invalid REGEXP to check for valid emails
+Fixed Language Bit not showing for Contact Us page
+Fixed Remote URL Upload Error: Class 'http_class' not found
+Fixed File Password does not show on upload success
+Fixed Invalid PHP Upload Not showing Error
++ Many others
