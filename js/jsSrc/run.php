@@ -150,6 +150,7 @@ function loadFiles($file)
 	$arr = explode(',',$file);
 	foreach($arr as $fileN)
 	{
+		$fileN = trim($fileN);
 		if(!in_array($fileN,$loaded))
 		{
 			$loaded[] = $fileN;
