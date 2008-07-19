@@ -420,14 +420,7 @@ function load_flash()
 $(document).ready(function()
 {
 	load_flash();
-	<{if $shownUploadMethod eq '1'}>
-		currently_showing = 3;
-	<{elseif $shownUploadMethod == '2'}>
-		currently_showing = 2;
-	<{else}>
-		currently_showing = 1;
-	<{/if}>
-	
+	<{if $shownUploadMethod eq '1'}>currently_showing = 3;<{elseif $shownUploadMethod == '2'}>currently_showing = 2;<{else}>currently_showing = 1;<{/if}>
 });
 </SCRIPT>
 <style type="text/css">

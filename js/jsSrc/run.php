@@ -103,12 +103,24 @@ if(function_exists('gzdeflate'))
 	$runGZip = true;
 	
 	// The Gzip Inflating Magic! :D
-$php = '<'.'?php 
-header("Content-type: text/javascript; charset: UTF-8");
-header("Content-Encoding: deflate");
-header("Cache-Control: must-revalidate");
-header("Expires: " .gmdate("D, d M Y H:i:s",time() + (60 * 60)) . " GMT");
-readfile("'.$filePrefix.'.gz");';
+	$php = '<'.'?php 
+	header("Content-type: text/javascript; charset: UTF-8");
+	$isGZip = false;
+	if(ini_get("zlib.output_compression") == "On" or ini_get("output_buffering") == "On")
+	{
+		$isGZip = true;
+		header("Content-Encoding: deflate");
+	}
+	header("Cache-Control: must-revalidate");
+	header("Expires: " .gmdate("D, d M Y H:i:s",time() + (60 * 60)) . " GMT");
+	if($isGZip)
+	{
+		readfile("'.$filePrefix.'.gz");
+	}
+	else
+	{
+		readfile("'.$filePrefix.'.js");
+	}';
 }
 
 // Output a minified version of the js file.
