@@ -97,7 +97,7 @@ function detect_browser($var)
 	return $c;
 }
 
-function downloadFail($file,$name,$totaldownload,$fileSize,$limit_speed,$dlid)
+function downloadFail($file, $name, $totaldownload, $fileSize, $limit_speed, $dlid)
 {
 	global $kernel, $db, $dlComplete;
 	if(!$dlComplete)
@@ -116,20 +116,21 @@ function downloadFail($file,$name,$totaldownload,$fileSize,$limit_speed,$dlid)
 
 function doDirectDownload($link)
 {
-	global $db, $kernel, $siteurl, $rewrite_links, $lang, $siteurl, $myuid, $downloadLimit;
-		
-	$limit_speed = getSpeedFromLink($link);
+	global $db, $kernel, $siteurl, $rewrite_links, $lang, $siteurl, $limit_speed, $myuid, $downloadLimit;
 	
-	// Get Current dLink Stuff
-	$q = $db->query("SELECT * FROM dlinks WHERE down_id = '".intval($_REQUEST['link'])."' ");
+	//$limit_speed = getSpeedFromLink($link);
 
-    /* Start by making sure the file actually exists */
-    if($db->num($q) > 0)
+	// Get Current dLink Stuff
+	$q = $db->query("SELECT * FROM `dlinks` WHERE `down_id` = '".intval($link)."' ");
+
+    /* Start by making sure the file link actually exists */
+    if((int)$db->num($q) > 0)
     {
 		$res = $db->fetch($q,'obj');
 		$q1 = $db->query("SELECT * FROM files WHERE filename = '".$res->store_name."' ");
 		$res1 = $db->fetch($q1,'obj');
-		
+
+
 		// Localize Vars
 		$md5 = $res1->md5;
 		$fileToDownload = $res->store_name;
@@ -143,27 +144,42 @@ function doDirectDownload($link)
 		// I Can Steal Cheezburger? -NO!!!
 		if ($ip != $_SERVER['REMOTE_ADDR']) 
 		{
-			die('Location: '.$siteurl.'index.php?p=download&hash='.$res1->hash);
+			header('Location: '.$siteurl.'index.php?p=download&hash='.$res1->hash);
+			die();
 		}
 		
 		// Terminate if download threads over limit
 		$dlse = 0;
-		$dls = $db->query("SELECT * FROM `dlsessions` WHERE `file` = '" . intval($_REQUEST['link'])."'");  
+		$dls = $db->query("SELECT * FROM `dlsessions` WHERE `file` = '" . intval($_GET['link'])."' AND `ip` = '".$_SERVER['REMOTE_ADDR']."'");  
 		$dlse = $db->num($dls);
-		
-		if($dlse >= $res->limit)
-		{
-			header('Status: 416');
-			exit();
-		}
-		
-		// Make new thread
-		$db->query("INSERT INTO `dlsessions` (`file`) VALUES ('".$link."')");
-		$dlid =  $db->insert_id();
 		
 		/* Check if user has exceeded limit */
 		$totaldownload = 0;
 		$db->query("DELETE FROM `dlinks` WHERE `time` > (UNIX_TIMESTAMP() + 3600)");
+		$tD = $db->query("SELECT `filesize` FROM `downloads` WHERE `ip` = '".$_SERVER['REMOTE_ADDR']."'");
+		while($dlTotal = $db->fetch($tD))
+		{
+			$totaldownload += intval($dlTotal->filesize);
+		}
+		
+		if($dlse >= $res->limit and $res->limit != 0)
+		{
+			header('Status: 416');
+			$dlf = $db->fetch($dls);
+			echo "Download Failure:  Thread Limit Reached, <br />Threads used: ".$dlse."<br /> Threads allowed: ".$res->limit;
+			downloadFail('./files/'.substr($md5,0,2).'/'.$fileToDownload,$orig_filename,$totaldownload,$fileSize,$limit_speed,$dlid);
+			exit();
+		}
+		
+		// Make new thread
+		$dls = $db->query("INSERT INTO `dlsessions` (`file`, `ip`) VALUES ('".$link."', '".$_SERVER['REMOTE_ADDR']."')");
+		$dlid = $db->insert_id($dls);
+		
+		if (($limit != 0) && ($totaldownload >= ($limit * 1024 * 1024))) 
+		{
+			header('Location: '.makeXuLink('index.php','p=errordl'));
+			die();
+		}
 
 		/* Read in the original file and present dialog to user */
 		$limit_speed = intval($limit_speed);
@@ -183,22 +199,14 @@ function doDirectDownload($link)
 		
 		// Function to call if user aborts connection
 		register_shutdown_function('downloadFail','./files/'.substr($md5,0,2).'/'.$fileToDownload,$orig_filename,$totaldownload,$fileSize,$limit_speed,$dlid);
-
-		$kernel->ext->download->set_byfile('./files/'.substr($md5,0,2).'/'.$fileToDownload); //Download from php data
-		$kernel->ext->download->use_resume = ((bool)$res->can_r); //Enable Resume Mode
-		$kernel->ext->download->filename = $orig_filename;
 		
-		if($limit_speed > 0)
-		{
-			$kernel->ext->download->speed = $limit_speed;
-		}
-		else
-		{
-			$kernel->ext->download->speed = 0;
-		}
-		$bw = $kernel->ext->download->sendDownload(); //Download File
+		$config = array();
+		$config['file'] = './files/'.substr($md5,0,2).'/'.$fileToDownload;
+		$config['resume'] = ((bool)$res->can_r);
+		$config['filename'] = $orig_filename;
+		$config['speed'] = (intval($limit_speed) * 1024);
 		
-		log_action('File Downloaded:('.$orig_filename.') ', 'file:download', 'File('.'./files/'.substr($md5,0,2).'/'.$fileToDownload.') was downloaded by '.$_SERVER['REMOTE_ADDR'].'', 'ok', 'download.php');
+		$bw = $kernel->ext->download->send_download($config);
 			
 		$_SESSION['file_size'] = round($bw/1024,2);
 		$db->query('INSERT INTO `downloads` (`ip`,`filesize`,`filename`,`time`) VALUES ("' . $_SERVER['REMOTE_ADDR'] . '", "' . $bw . '", "' . $fileToDownload . '", UNIX_TIMESTAMP())');
@@ -212,13 +220,12 @@ function doDirectDownload($link)
 		
 		$db->query("UPDATE `files` SET `downloads` = downloads+1, `last_download` = '".time()."' WHERE `filename` = '".$fileToDownload."' LIMIT 1");
 		$db->query("DELETE FROM `dlsessions` WHERE `id` = '".$dlid."'");
-		//$db->query("DELETE FROM dlinks WHERE down_id='".intval($_REQUEST['link'])."'");
+		
 	} 
 	else 
 	{
-			if($rewrite_links){$link=$siteurl."download/".intval($_REQUEST['link']);}else{$link = $siteurl."index.php?p=get&file=".intval($_REQUEST['link']);}
-			header("Location: ".makeXuLink('index.php', 'p=home'));
-			die();
+		header("Location: ".makeXuLink('index.php', 'p=home&nolink=1'));
+		die();
 	}
 }
 

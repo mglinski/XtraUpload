@@ -556,7 +556,7 @@ function url()
 			$strQuery .= "`status` = '1'";
 				
 			$result = $db->query($strQuery);
-			$aid = mysql_insert_id();
+			$aid = $aid = $db->insert_id();
 			
 			if($rewrite_links)
 			{

@@ -147,6 +147,8 @@ xuSetupHeader();
 	$chmod['./db'] = "0777";
 	$chmod['./thumbs'] = "0777";
 	$chmod['./cache/ads'] = "0777";
+	$chmod['./cache/compile'] = "0777";
+	$chmod['./cache/dl'] = "0777";
 	$chmod['./cache/mods'] = "0777";
 	$is_chmod = true;
 	foreach($chmod as $file => $perm)
@@ -411,7 +413,7 @@ INSERT INTO `config` VALUES (NULL , 'use_memcache', '0', 'Use Memcache', 'Yes|-|
 INSERT INTO `config` VALUES (NULL , 'memcache_port', '11211', 'Memcache Server Port', 'The port php will connect to memcache with(default is 11211).','Memcache', 'text', '1');
 INSERT INTO `config` VALUES (NULL , '$memcache_server', 'localhost', 'Server Url', 'The url to the memcache server', 'Memcache', 'text', '1');
 INSERT INTO `config` VALUES (NULL , 'check_version', '1', 'Check Latest Version', 'Allow XU to check the latest version of itself.', 'Main Settings', 'yesno', '1' );
-INSERT INTO `config` VALUES (NULL, 'allow_identical_files', '0', 'Yes, Allow identical files to be uploaded|-|No', 'Allow identical files to be uploaded', 'Feature Settings', 'yesno', 1);
+INSERT INTO `config` VALUES (NULL, 'allow_identical_files', '0', 'Allow Identical Files', 'Yes, Allow identical files to be uploaded|-|No', 'Feature Settings', 'yesno', 1);
 ".$versionSql."
 
 CREATE TABLE `dlinks` (

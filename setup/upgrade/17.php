@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 $sql1 = "
-INSERT INTO `config` (`id`, `name`, `value`, `description1`, `description2`, `group`, `type`, `invincible`) VALUES (NULL, 'allow_identical_files', '0', 'Yes, Allow identical files to be uploaded|-|No', 'Allow identical files to be uploaded', 'Feature Settings', 'yesno', 1);
+INSERT INTO `config` (`id`, `name`, `value`, `description1`, `description2`, `group`, `type`, `invincible`) VALUES (NULL, 'allow_identical_files', '0', 'Allow Identical Files', 'Yes, Allow identical files to be uploaded|-|No', 'Feature Settings', 'yesno', 1);
 
 UPDATE `config` SET `value` = '1.6.0,0.1.0.0' WHERE `name` = 'version'
 ";

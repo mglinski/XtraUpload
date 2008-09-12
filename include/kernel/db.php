@@ -201,7 +201,7 @@ class db_conn
         return $result;
     }
 
-    function insert_id($query, $place ='')
+    function insert_id($query='', $place ='')
     {
         $this->debug_html .= '<tr><td style="font-family: Arial, Helvetica, sans-serif"><font size=2>Query: ['.$this->querycount.'] => $db->insert_id("'.$query.'");</font></td></tr>
 ';

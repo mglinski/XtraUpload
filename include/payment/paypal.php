@@ -56,6 +56,7 @@ class gate
 		{
 			$url = 'sandbox.paypal.com';
 		}
+		
 		$fp = fsockopen($url, 80, $error_no, $error_msg, 30);
 		
 		$message = 'Start paypal IPN Log '."\n";
