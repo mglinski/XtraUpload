@@ -1,0 +1,525 @@
+/* ----------------------------------------------
+	Template Name : TechJunkie
+	Template Code : S-0024
+	Version : 1.0   
+	Author : Erwin Aligam
+	Author URI : http://www.styleshout.com/    
+	Last Date Modified : May 31, 2008	
+ ------------------------------------------------ */
+ 
+/* ----------------------------------------------
+   HTML ELEMENTS
+------------------------------------------------- */ 
+
+/* Top Elements */
+* { margin: 0; padding: 0; outline: 0 }
+
+body {
+	background: #f3ebe0 url(../../images/tech_junkie/bg.gif) repeat-x;
+	font: 12px/170% 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: #666666; 
+	text-align: center;	
+}
+
+/* links */
+a, a:visited {	
+	color: #306495;
+	background: inherit;
+	text-decoration: none;
+}
+a:hover {
+	color: #73471B;
+	background: inherit;
+	text-decoration: underline;
+}
+
+/* headers */
+h1, h2, h3 {
+	font-family: 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-serif;
+	font-weight: Bold; 	
+	padding: 10px;		
+	color: #444;	
+}
+h1 {
+	font-size: 2.2em;		
+}
+h2 {
+	font-size: 2em;
+	color: #88ac0b;
+}
+h3 {
+	font-size: 1.4em;
+	font-weight: normal;	
+	padding: 16px 10px 4px 10px;
+}
+
+/* Paragraph */
+p { padding: 12px 10px;	}
+
+/* Lists */
+ul, ol {
+	margin: 10px 20px;
+	padding: 0 20px;	
+}
+ul { list-style: none; }
+
+dl { padding: 10px; margin: 0; }
+
+dt {
+  font-weight: bold;
+  color: #79A62E;
+}
+dd {
+  padding-left: 25px; 
+}
+
+/* images */
+img {
+	background: #fafafa;
+   border: 1px solid #dcdcdc;
+	padding: 7px;
+}
+img.nb {
+	background: none;
+    border: none;
+	padding: 0px;
+	vertical-align:middle;
+}
+img.float-right {
+  	margin: 5px 0px 10px 10px;  
+}
+img.float-left {
+  	margin: 5px 10px 10px 0px;
+}
+
+code {
+  	margin: 5px 0;
+  	padding: 15px;
+  	text-align: left;
+  	display: block;
+  	overflow: auto;  
+  	font: 500 1em/1.5em 'Lucida Console', 'Courier New', monospace ;
+  	/* white-space: pre; */
+  	border: 1px solid #deedae; 
+	background: #F0FFD2; 
+}
+acronym {
+  cursor: help;
+  border-bottom: 1px dotted #895F30;
+}
+blockquote {
+	margin: 15px 10px;
+ 	padding: 5px 7px 5px 40px;  	
+   font-weight: normal;
+	font-size: 17px;
+	line-height: 1.6em;
+	font-style: italic;
+	font-family: Georgia, 'Times New Roman', Times, serif;		
+	color: #80614D;	
+	border: 1px solid #DFF4B5; 
+	background: #F0FFD2 url(../../images/tech_junkie/quote.gif) no-repeat 7px 10px;
+}
+
+/* start - table */
+table {
+	border-collapse: collapse;
+	margin: 15px 10px;		
+}
+th {
+	height: 38px;
+	padding-left: 4px;
+	padding-right: 4px;
+	color: #fff;
+	text-align: left;
+	background: #ADD163;	
+	border-width: 1px;
+  	border-style: solid;
+  	border-color: #C4DE8F #93C138 #93C138 #C4DE8F;	
+}
+tr {
+	height: 34px;
+	background: #fff;
+}
+tr.odd
+{
+	background-color:none;
+}
+tr.even
+{
+	background-color:#F8F8F8;
+}
+tr:hover
+{
+	background-color:#FFFFCC;
+}
+td {
+	padding-left: 4px;
+	padding-right: 4px;
+	border: 1px solid #E7F0CC;	
+}	
+/* end - table */
+
+/* form elements */
+form {
+	margin: 15px 10px; 
+	padding: 5px 10px 20px 10px;
+	border: 1px solid #D8E99E; 
+	background: #deedae; 	
+}
+label {
+	display: block;
+	font-weight: bold;
+	margin: 8px 0 5px 0;
+	color: #895F30;
+}
+input, textarea, select {
+	padding: 4px;
+	color: #666666;		
+	background: #ffffff;
+	
+  	border-width: 1px;
+  	border-style: solid;
+  	border-color: #d4d4d4 #ebebeb #ebebeb #d4d4d4; 
+	
+	font: normal 11px Verdana, sans-serif;
+}
+textarea {
+	display: block;	
+}
+input.button { 
+	font: bold 12px Arial, Sans-serif; 
+	height: 30px;
+	margin: 0;
+	padding: 2px 3px; 
+	color: #fff;
+	background: #A6CD56;
+	
+	border-width: 1px;
+  	border-style: solid;
+  	border-color: #C4DE8F #8DB836 #8DB836 #C4DE8F;
+}
+
+
+/********************************************
+   LAYOUT
+********************************************/ 
+#wrap {
+	position: relative;
+	width: 920px;
+	background: #edf8c7 url(../../images/tech_junkie/wrap.gif) repeat-y center top;
+	margin: 35px auto;
+	text-align: left;	
+}
+#content-wrap {
+	position: relative;
+	clear: both;
+	float: left;	
+	width: 920px;	
+	padding: 25px 0; 	
+	background: #edf8c7 url(../../images/tech_junkie/content.gif) repeat-y;	
+}
+#header {
+	position: relative;
+	width: 920px;
+	height: 205px;
+	background: #317cb1 url(../../images/tech_junkie/header.gif) no-repeat;	
+	color: #fff;	
+	padding: 0;	
+	margin: 0;
+}
+#header h1#logo-text a {
+	position: absolute;
+	margin: 0; padding: 0;
+	font: bold 56px 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-serif;
+	letter-spacing: -3px;
+	text-decoration: none;
+	color: #fff;
+	
+	/* change the values of top and left to adjust the position of the logo*/
+	top: 58px; left: 55px;	
+}
+#header p#slogan {
+	position: absolute;
+	margin: 0; padding: 0;
+	font: bold 15px 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-serif;
+	color: #D6EBAB;
+	letter-spacing: -0.5px;
+	
+	/* change the values of top and left to adjust the position of the slogan*/
+	top: 122px; left: 135px;		
+}
+
+/* header quick search */
+#header form#quick-search {
+	position: absolute;
+	top: 75px; right: 55px;
+	padding: 0; margin: 0;
+	border: none;
+	width: 223px; height: 33px;
+	background: #82c7f4 url(../../images/tech_junkie/header-search.gif) no-repeat;	
+	z-index: 999999;
+}
+#header form#quick-search p {
+	margin: 0; padding: 0;		
+}
+#header form#quick-search input {
+	border: none;
+	background: transparent;
+	color: #0e5792;
+	float: left;
+}
+#header form#quick-search .tbox {
+	margin: 5px 0 0 5px; 
+	width: 170px;	
+	display: inline;	
+}
+#search form#quick-search .btn{
+	width: 25px; height: 25px;		
+}
+#header form#quick-search label {
+	display: none;
+}
+
+/* Navigation */
+#nav {
+	clear: both;	
+	padding: 0;	margin: 0;
+	width: 920px;
+	height: 50px;
+	background: #0e609e url(../../images/tech_junkie/nav.gif) no-repeat;		
+}
+#nav ul {
+	float: left;
+	list-style: none;	
+	margin: 0;
+	padding: 0 0 0 40px;			
+	height: 50px;	
+}
+#nav ul li {
+	display: inline;
+	margin: 0; padding: 0;
+}
+#nav ul li a {
+	display: block;
+	float: left;
+	width: auto;
+	margin: 0;
+	padding: 0 14px;
+	color: #fff;
+	font: bold 16px/50px 'Trebuchet MS', 'Helvetica Neue', Arial, sans-serif;
+	text-decoration: none;	
+	letter-spacing: -0.5px;
+}
+#nav ul li a:hover, 
+#nav ul li a:active {
+	color: #edf8c7;	
+}
+#nav ul li#current a {	
+	background: #0c4e80 url(../../images/tech_junkie/pointer.gif) no-repeat center bottom;	
+	color: #93DAFF;
+}
+
+/* Main Column */
+#main {
+	float: left;
+	width: 525px;
+	padding: 0; margin: 0 0 0 45px;
+	display: inline;	
+}
+#main h2 {
+	font: bold 2.25em 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-serif;
+	color: #115280; 
+	padding: 10px 0 5px 5px; 	
+	margin-left: 5px;		
+	letter-spacing: -1px;
+	border-bottom: 1px solid #D2E9A4;
+}
+#main h2 a {
+	color: #115280;
+	text-decoration: none;		
+}
+#main ul li {
+	list-style-image: url(../../images/tech_junkie/bullet.gif);
+}
+
+#sidebar {
+	float: right;
+	width: 270px;
+	padding: 0; 
+	margin: 0 45px 0 0;
+	display: inline;	
+}
+#sidebar h3 {
+	color: #115280; 
+	font: normal 1.6em 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-serif;
+	text-transform: none;
+	padding: 10px 0 2px 0; 
+	margin: 10px 0 0 10px; 
+}
+
+/* sidebar menu */
+#sidebar .sidemenu {
+	margin: 5px 10px 8px 7px; padding: 0;
+	text-decoration: none;		
+	border-top: 2px solid #D0E89F;
+}
+#sidebar .sidemenu li {
+	list-style: none;
+	margin: 0;
+	padding: 7px 10px; 			
+	border-bottom: 1px solid #DAEBA3;	
+}
+* html body #sidebar .sidemenu li {
+	height: 1%;
+}
+#sidebar .sidemenu li a {
+	text-decoration: none;	
+	color: #684F3E;	
+}
+#sidebar .sidemenu li a span {
+	color: #A98D76;	
+	font-size: .9em;
+	
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-style: italic;
+	font-weight: normal;		
+}
+#sidebar .sidemenu li a:hover {	
+	color: #000;	
+	background: none;	
+}
+#sidebar .sidemenu ul { margin: 0 0 0 5px; padding: 0; }
+#sidebar .sidemenu ul li { border: none; }
+
+/* search form */
+#sidebar .searchform {
+	background-color: transparent;
+	border: none;	
+	margin: 0 0 0 5px; 
+	padding: 10px 0 10px 10px;	
+	width: 260px;	
+}
+#sidebar .searchform p { margin: 0; padding: 0; }
+#sidebar .searchform input.textbox { 
+	width: 180px;
+	height: 18px;
+	padding: 2px;	
+	vertical-align: top;
+}
+#sidebar .searchform input.button { 
+	width: 60px;
+	height: 24px;
+	padding: 2px 4px;
+	vertical-align: top;
+}
+
+/* footer */
+#footer-wrap {
+	clear: both;
+	width: 920px;
+	text-align: left;
+	padding: 0;	margin: 0;
+	background: url(../../images/tech_junkie/footer-bottom.gif) no-repeat left bottom;		
+}
+#footer-content {
+	width: 920px;
+	background: url(../../images/tech_junkie/footer-top-sep.gif) no-repeat;	
+	padding: 30px 0 35px 0;
+}
+
+#footer-wrap p {
+	padding:10px 0;
+}
+
+#footer-wrap h3 {
+	color: #145F94; 
+	margin: 0;
+	padding: 5px 0 5px 10px; 
+	text-transform: uppercase;
+	border-bottom: 1px solid #BFD286;
+
+}
+#footer-wrap h3.no-line {
+	border-bottom: none;
+
+}
+#footer-wrap a:hover { 
+	color: #000; 
+	text-decoration: none;
+}
+
+#footer-columns {
+	color: #888;
+	margin: 0 auto; 
+	padding: 0;	
+	width: 800px;		
+}
+#footer-columns ul {
+	list-style: none;
+	margin: 0; 
+	padding: 0;
+}
+#footer-columns li {
+	border-bottom: 1px solid #CCDA9E;		
+}
+#footer-columns li a {
+	display: block;
+	font-weight: normal;
+	padding: 8px 0 8px 10px;
+	width: 96%;
+	color: #666666;	
+}
+
+#footer-columns .col3, .col3-center {
+	float: left;
+	width: 32%;
+}
+#footer-columns .col3-center { 
+	margin: 0 15px; 
+}
+
+/* bottom */
+#footer-bottom {
+	clear: both;
+	color: #555;	
+	margin: 0 auto; 
+	width: 920px;
+	padding: 15px 0 10px 0;
+	text-align: center;	
+	font-size: 0.95em;
+}
+#footer-bottom a { color: #306495; }
+
+/* postmeta */
+.post-footer {
+	padding: 8px 5px; 
+	margin: 5px 10px 10px 10px;	
+	color: #A2745D;
+	border: 1px solid #deedae; 
+	background: #F0FFD2;
+}
+.post-footer .date{ margin: 0 10px 0 5px;	}
+.post-footer a.comments { margin: 0 10px 0 5px;	}
+.post-footer a.readmore { margin: 0 10px 0 5px;	}
+
+.post-info { font-size: .95em; padding: 0 10px; margin-left: 2px; color: #A98D76; }
+.post-info a, .post-info a:visited { color: #9C652E; }
+
+/* alignment classes */
+.float-left  { float: left; }
+.float-right { float: right; }
+.align-left  { text-align: left; }
+.align-right { text-align: right; }
+
+/* clearing */
+.clearer { clear: both; }
+.clear {	display:inline-block; }
+.clear:after {
+	display:block; 
+	visibility:hidden; 
+	clear:both; 
+	height:0; 
+	content: "."; 
+}
+
+

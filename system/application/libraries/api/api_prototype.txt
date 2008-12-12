@@ -1,0 +1,22 @@
+class Xu_hooks_api
+{
+	private $store;
+	private $CI;
+	
+	function Xu_hooks_api()
+	{
+		$this->CI =& get_instance();
+		log_message('debug', "XtraUpload Hooks API Class Initialized");
+		$this->init();
+	}
+	
+	private function init()
+	{
+		$this->store = new stdClass();
+	}
+	
+	function _getStore($item)
+	{
+		return $this->store[$item];
+	}
+}

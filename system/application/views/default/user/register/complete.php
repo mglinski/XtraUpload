@@ -1,0 +1,2 @@
+<h2 style="vertical-align:middle"><img src="<?=$base_url.'img/icons/user_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('user_register_complete_header')?></h2>
+<p><?php echo $this->lang->line('user_register_complete_1')?><br /><?php echo $this->lang->line('user_register_complete_2')?></p>

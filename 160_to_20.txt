@@ -1,0 +1,61 @@
+DROP TABLE ads;
+DROP TABLE comments;
+DROP TABLE dlsessions;
+DROP TABLE faq;
+DROP TABLE faq_items;
+DROP TABLE wait;
+DROP TABLE syslog;
+DROP TABLE transactions;
+DROP TABLE lang;
+DROP TABLE news;
+DROP TABLE payment;
+DROP TABLE fitem;
+
+ALTER TABLE config
+    MODIFY id int(11) unsigned NOT NULL DEFAULT 0 auto_increment,
+    MODIFY name varchar(64) NULL DEFAULT NULL ,
+    MODIFY value varchar(255) NULL DEFAULT NULL ,
+    MODIFY description1 text NULL DEFAULT NULL ,
+    MODIFY description2 text NULL DEFAULT NULL ,
+    MODIFY `group` varchar(32) NULL DEFAULT '0' ,
+    MODIFY type varchar(12) NULL DEFAULT NULL ,
+    MODIFY invincible tinyint(1) NULL DEFAULT NULL;
+
+ALTER TABLE dlinks
+    ADD fid varchar(16) NULL DEFAULT NULL  AFTER id,
+    ADD name varchar(255) NULL DEFAULT NULL  AFTER time,
+    ADD ip varchar(15) NULL DEFAULT NULL  AFTER name,
+    MODIFY id int(11) unsigned NOT NULL DEFAULT 0 auto_increment,
+    DROP down_id,
+    DROP store_name,
+    DROP real_name,
+    MODIFY `time` varchar(22) NULL DEFAULT NULL ,
+    DROP resume,
+    DROP can_r,
+    DROP `limit`,
+    DROP INDEX downlink,
+    DROP INDEX `time`;
+
+ALTER TABLE downloads
+    ADD file_id varchar(16) NULL DEFAULT NULL  AFTER id,
+    ADD user varchar(20) NULL DEFAULT NULL  AFTER file_id,
+    ADD size varchar(50) NULL DEFAULT NULL  AFTER ip,
+    ADD sent varchar(50) NULL DEFAULT NULL  AFTER size,
+    MODIFY id int(11) unsigned NOT NULL DEFAULT 0 auto_increment,
+    DROP filesize,
+    DROP filename,
+    MODIFY `time` varchar(25) NULL DEFAULT NULL ,
+    MODIFY ip varchar(15) NULL DEFAULT NULL ,
+    DROP INDEX filename,
+    ADD INDEX file_id (file_id),
+    ADD INDEX user (user);
+
+
+ALTER TABLE skin
+    MODIFY id int(11) unsigned NOT NULL DEFAULT 0 auto_increment,
+    MODIFY active tinyint(1) unsigned NULL DEFAULT '0' COMMENT '', DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+    MODIFY `time` varchar(25) NULL DEFAULT NULL ,
+    MODIFY ip varchar(15) NULL DEFAULT NULL ,
+    DROP INDEX filename,
+    ADD INDEX file_id (file_id),
+    ADD INDEX user (user);

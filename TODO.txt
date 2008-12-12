@@ -1,0 +1,32 @@
+Design/Layout side:
+
+-> create skin for mobile devices - so script automatically detects mobile device and switchs to non-image, text based interface with one form, user can enter file ID in that form and download file in mobile phone.
+-> completly move all language strings from being hard-coded to one single language file
+-> server load information in admin panel - also how much space left on server(s) and how much files hosting currently/
+
+
+Server side:
+
+-> Small System configuration checker script, this script will allow users to pre-check their servers if they can fully suppot xtrafile script (Technical requirements)
+-> recomended PHP.ini, Apache.conf, and My.cfg settings for best perfomance
+-> it would be nifty if all uploaded files had some blacklist tool, so if some file like: good_pr0n.rar gets uploaded script automatically renames it to good_love.rar
+-> integrate to some popular forum software like - IPB, vBulleting etc.
+-> Duplicate file to mirror server - duplicate one file to second server, which will be used as mirror, when downloading user will be offered two options: download from main server, or download from mirror server, rsync is not a MUST cause in that case huge load will occur, maybe the good idea will be to allow users manually duplicate (from control panel) already uploaded files that have more than X downloads. That will make sure that only popular content gets mirrored, or it can do it automaticly
+
+
+Tools:
+-> Yabsoft's Mega file hosting script* to XTRAFILE convertor script. This will generate lots of users for xtrafile and lots of proSupport users.
+
+Functionality:
+-> Tagging uploads and tag cloud to give users ability to TAG their files with some words, than on frontpage there would be tag cloud with all the popular words + most popular words will be bigger in size. This tag cloud must have blacklist thing as well, to block/replace words such as pr0n, sex etc.etc.
+-> Last logged in IP in admin panel - a great security tool that every gr8 script should have
+-> remote upload form for websites - a simple HTML code that webmasters could post on their websites to allow people upload to your server, results must be displayed on the same site.
+-> Downloading/Uploading Happy Hours - You can set "Rules" for the hours such as the following examples:
+	-> Between 3PM and 5PM -> No Wait Time, 2X Download/speed Limit
+	-> Every Tuesday-> No Upload File size or type/speed restrictions.
+	-> every 15th of the month no limits on Uploading/Downloading
+-> Your ip is already downloading a file - users can downlad one file at once and you can set the number and the premium can download unlimited files at once
+
+-> Wait time based on file size - bigger file is, more wait time
+
+-> Wait time based on load - if lots of people are downloading then there will be wait time, more people - more wait time

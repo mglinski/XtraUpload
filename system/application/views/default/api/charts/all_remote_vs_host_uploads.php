@@ -1,0 +1,2 @@
+<?php $rand = rand();?>
+var chart<?php echo $rand?> = new FusionCharts("<?php echo $base_url?>flash/charts/Pie3D.swf", "ChartId", "<?php echo $height?>", "<?php echo $width?>", "0", "0");chart<?php echo $rand?>.setDataXML("<chart caption='Uploads >> Local vs Remote' showPercentageValues='1'><set label='Local' value='<?php echo $this->db->get_where('refrence', array('remote' => false))->num_rows()?>' /><set label='Remote' value='<?php echo $this->db->get_where('refrence', array('remote' => true))->num_rows()?>' /></chart>");chart<?php echo $rand?>.render("chart_data");
