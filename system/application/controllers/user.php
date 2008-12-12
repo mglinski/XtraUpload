@@ -592,7 +592,7 @@ class User extends Controller
 		}
 		else
 		{
-			$this->session->set_flashdata('errorMessage', '<span class="alert">'$this->lang->line('user_controller_31').' '.$result.'</span>');
+			$this->session->set_flashdata('errorMessage', '<span class="alert">'.$this->lang->line('user_controller_31').' '.$result.'</span>');
 			redirect('user/manage');
 		}
 	}
@@ -632,7 +632,7 @@ class User extends Controller
 		}
 		else
 		{
-			$this->load->vars(array('errorMessage' => '<span class="alert">'.$this->lang->line('user_controller_31')' '.$result.'</span>'));
+			$this->load->vars(array('errorMessage' => '<span class="alert">'.$this->lang->line('user_controller_31').' '.$result.'</span>'));
 			$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Change Password'));
 			$this->load->view($this->startup->skin.'/user/password');
 			$this->load->view($this->startup->skin.'/footer');
@@ -656,18 +656,18 @@ class User extends Controller
 		$this->email->to( $this->input->post('email'));
 		
 		$this->email->subject('Password Reset Request');
-		$this->email->message($this->lang->line('user_controller_32')' '.$username.',
+		$this->email->message($this->lang->line('user_controller_32').' '.$username.',
 
-'.$this->lang->line('user_controller_33')' '.$this->startup->site_config['sitename'].' '.$this->lang->line('user_controller_34')'
-'.$this->lang->line('user_controller_35')'
+'.$this->lang->line('user_controller_33').' '.$this->startup->site_config['sitename'].' '.$this->lang->line('user_controller_34').'
+'.$this->lang->line('user_controller_35').'
 
 --------------------------
-'.$this->lang->line('user_controller_3')': '.$username.'
-'.$this->lang->line('user_controller_4')': '.$newPass.'
+'.$this->lang->line('user_controller_3').': '.$username.'
+'.$this->lang->line('user_controller_4').': '.$newPass.'
 --------------------------
 
-'.$this->lang->line('user_controller_36')'
-'.$this->startup->site_config['sitename'].' '.$this->lang->line('user_controller_37')'
+'.$this->lang->line('user_controller_36').'
+'.$this->startup->site_config['sitename'].' '.$this->lang->line('user_controller_37').'
 
 ');
 		
@@ -675,14 +675,14 @@ class User extends Controller
 		
 		if($result)
 		{
-			$this->load->vars(array('errorMessage' => '<span class="info">'.$this->lang->line('user_controller_')'</span>'));
+			$this->load->vars(array('errorMessage' => '<span class="info">'.$this->lang->line('user_controller_').'</span>'));
 			$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_controller_22')));
 			$this->load->view($this->startup->skin.'/user/forgot');
 			$this->load->view($this->startup->skin.'/footer');;
 		}
 		else
 		{
-			$this->load->vars(array('errorMessage' => '<span class="alert">'.$this->lang->line('user_controller_38')' '.$result.'</span>'));
+			$this->load->vars(array('errorMessage' => '<span class="alert">'.$this->lang->line('user_controller_38').' '.$result.'</span>'));
 			$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_controller_22')));
 			$this->load->view($this->startup->skin.'/user/forgot');
 			$this->load->view($this->startup->skin.'/footer');
