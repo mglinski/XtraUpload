@@ -54,6 +54,10 @@
 				<?php 
 				}
 				?>
+				<a title="Edit Server" href="<?=site_url('admin/server/edit/'.$server->id)?>">
+					<img src="<?=base_url()?>img/icons/edit_16.png" class="nb" alt="edit" />
+				</a>
+				
 				<a title="Install Server" href="<?=site_url('admin/server/install/'.$server->id)?>">
 					<img src="<?=base_url()?>img/icons/wizard_16.png" class="nb" alt="install" />
 				</a>

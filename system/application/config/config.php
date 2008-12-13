@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config["base_url"]	= "http://localhost/xu2/";
+$config["base_url"]	= "http://localhost/xu/";
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ $config["base_url"]	= "http://localhost/xu2/";
 | variable so that it is blank.
 |
 */
-$config["index_page"] = "index.php";
+$config["index_page"] = "";
 
 /*
 |--------------------------------------------------------------------------
@@ -217,7 +217,7 @@ $config["cache_path"] = "";
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config["encryption_key"] = "c631a6fe1be34b1317f2f6c82a7df9b3491220a4eb095";
+$config["encryption_key"] = "dfc0e06fe0abe2fd3600ac03cf5f7d5f4942f8bddef9b";
 
 /*
 |--------------------------------------------------------------------------
@@ -250,7 +250,7 @@ $config["sess_time_to_update"] 	= 300;
 | "cookie_path"   =  Typically will be a forward slash
 |
 */
-$config["cookie_prefix"]	= "99352e46fe9a85cf3dcc8e949416c";
+$config["cookie_prefix"]	= "e705925aabd8b8c88cd2e53c1e650";
 $config["cookie_domain"]	= "";
 $config["cookie_path"]		= "/";
 

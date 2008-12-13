@@ -34,7 +34,7 @@
 		$is_chmod = true;
 		foreach($chmod as $file => $perm)
 		{
-			if(is_writeable($file))
+			if(!is_writeable($file))
 			{
 				$is_chmod = false;
 				$pass_fail = '<font color="#FF0000" size="4"><b>Failed</b></font>';
@@ -49,7 +49,6 @@
 				<strong>
 					File: <?=$file?><br>
 					Permissions Required: <?=$perm?><br>
-					Permissions Found: <?=$perms?>
 				</strong>
 			</td>
 			<td class='pformright'><?=$pass_fail?></td>

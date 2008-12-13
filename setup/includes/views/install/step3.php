@@ -1,7 +1,7 @@
 <?php 
 $dir = dirname(__FILE__);$dir = dirname($dir.'../');$dir = dirname($dir.'../');$dir = dirname($dir.'../');$dir = dirname($dir.'../');
 $dir = substr($dir, strlen($_SERVER['DOCUMENT_ROOT']));
-$servername = 'http://'.$_SERVER['SERVER_NAME'].'/'.$dir.'/';
+$servername = str_replace('\\', '', 'http://'.$_SERVER['SERVER_NAME'].'/'.$dir.'/');
 ?>
 <div style="margin:auto; text-align:center"><h1>Database and Config Details</h1></div>
 <div class="progressMenu">
@@ -21,14 +21,14 @@ $servername = 'http://'.$_SERVER['SERVER_NAME'].'/'.$dir.'/';
 	<div class='centerbox'>
 		<div class='tableborder'>
 			<div class='maintitle'>Website Address </div>
-			<div class='pformstrip'>This section requires you to enter the paths and URL's for the board.</div>
+			<div class='pformstrip'>Enter your website address here.</div>
 			<table width='100%' cellspacing='1'>
 				<tr>
 					<td class='pformleftw'>
 						<b>Make sure this is correct:</b>
 						<div class='description'>
 							Please make sure it starts with <b>http://</b> This is the address of all your files EG: http://www.yoursite.com/upload<br />
-<strong>Trailing s lash Required!</strong>
+<strong>Trailing slash is required!</strong>
 						</div>
 					</td>
 					<td class='pformright'>

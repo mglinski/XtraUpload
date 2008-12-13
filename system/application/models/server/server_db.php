@@ -39,23 +39,38 @@ class Server_db extends Model
 
 	public function getServers()
 	{
-		$get = $this->db->get('servers');
-		return $get;
+		return $this->db->get('servers');
 	}
 	
+	// ------------------------------------------------------------------------
+
+	public function getServer($id)
+	{
+		return $this->db->get('servers', array('id' => $id))->row();
+	}
+		
 	// ------------------------------------------------------------------------
 	
 	public function getServerForDownload($file)
 	{
 		if(!$file->mirror)
 		{
+			if(substr($file->server, -1) != '/')
+			{
+				$file->server .= '/';
+			}
 			return $file->server;
 		}
 		else
 		{
 			$server = $file->server;
 			$arr = unserialize($servers);
-			return $arr[rand(0, (count($arr)-1))];
+			$serv = $arr[rand(0, (count($arr)-1))];
+			if(substr($serv, -1) != '/')
+			{
+				$serv .= '/';
+			}
+			return $serv;
 		}
 	}
 	
@@ -82,24 +97,21 @@ class Server_db extends Model
 
 	public function getServerById($id)
 	{
-		$get = $this->db->get_where('servers', array('id' => $id), 1, 0);
-		return $get->row();
+		return $this->db->get_where('servers', array('id' => $id), 1, 0)->row();
 	}
 	
 	// ------------------------------------------------------------------------
 	
 	public function editServer($id, $data)
 	{
-		$this->db->where('id', $id);
-		$this->db->update('servers', $data);
+		$this->db->where('id', $id)->update('servers', $data);
 	}
 	
 	// ------------------------------------------------------------------------
 	
 	public function addServer($data)
 	{
-		$this->db->insert('servers', $data);
-		return $this->db->insert_id();
+		return $this->db->insert('servers', $data)->insert_id();
 	}
 	
 	// ------------------------------------------------------------------------

@@ -28,12 +28,12 @@
 				</td>
 				<td width="88%">
 					<p class="style2">
-						You must aggree to the XtraUpload EULA before installing XtraUpload.<br />
-						By Installing XtraUpload, regardless if you read the EULA, you are bound by it.
+						You must aggree to the XtraUpload License before installing XtraUpload.<br />
+						By Installing XtraUpload, regardless if you read the License, you are bound by it.
 					</p>
 					An online copy of this license can be found at <a href="http://xtrafile.com/docs/license">http://xtrafile.com/docs/license</a><br />
 					<br />
-					<textarea name="textarea" readonly="readonly" cols="70" rows="15" wrap="off" id="textarea">                                 Apache License
+					<textarea name="textarea" readonly="readonly" cols="80" rows="15" wrap="off" id="textarea">                                 Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 

@@ -13,7 +13,7 @@
 	</ul>
 </div>
 <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="index.php?c=install&m=step5">
-<input type="hidden" name="url" value="<?php echo $this->input->post('url')?>" />
+<input type="hidden" name="url" value="<?php echo $url?>" />
 <input type="hidden" name="enc" value="<?php echo $enc?>" />
 	<div class='centerbox'>
 		

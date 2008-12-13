@@ -67,7 +67,7 @@ class Install extends Controller
 			$cookie_prefix = $this->input->post('cookie_prefix');
 			$encryption_key = $this->input->post('encryption_key');
 			
-			$seo = $this->input->post('url');
+			$seo = $this->input->post('seo');
 			
 			if(!empty($seo))
 			{

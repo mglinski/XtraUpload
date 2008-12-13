@@ -86,6 +86,35 @@ class Server extends Controller
 		$this->load->view($this->startup->skin.'/footer');
 	}
 	
+	function edit($id)
+	{
+		if($this->input->post('valid'))
+		{
+			unset($_POST['valid']);
+			
+			if(!isset($_POST['status']))
+			{
+				$_POST['status'] = 0;
+			}
+			
+			if(substr($_POST['url'], -1) != '/')
+			{
+				$_POST['url'] .= '/';
+			}
+			
+			$this->server_db->editServer($id, $_POST);
+			
+			$this->session->set_flashdata('msg', 'Server Edited');
+			redirect('admin/server/view');
+		}
+		
+		$data['server'] = $this->server_db->getServer($id);
+		$data['id'] = $id;
+		
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Edit Server'));
+		$this->load->view($this->startup->skin.'/admin/servers/edit', $data);
+		$this->load->view($this->startup->skin.'/footer');
+	}
 	
 	function install($id='')
 	{
