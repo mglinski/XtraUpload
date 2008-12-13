@@ -36,8 +36,8 @@ class Simple_blog extends Model
         // Call the Model constructor
         parent::Model();
 		
-		$this->xu_api->addAdminMenuLink('/admin/blog/manage', 'Blog', 'img/icons/comments_16.png');
-		$this->xu_api->addMainMenuLink('blog', 'Blog', 'img/icons/comments_16.png');
+		$this->xu_api->menus->addPluginMenuLink('/admin/blog/manage', 'Simple Blog', 'img/icons/comments_16.png');
+		$this->xu_api->menus->addMainMenuLink('blog', 'Blog', 'img/icons/comments_16.png');
     }
 	
 	public function install()

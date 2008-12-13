@@ -75,7 +75,7 @@
 						'm' => $this->lang->line('user_compare_23'),
 						'y' => $this->lang->line('user_compare_24'),
 						'dy' => $this->lang->line('user_compare_25'),
-					);,
+					);
 					?><td><?php echo $bs[$group->repeat_billing]?></td><?php 
 				}
 				else if($name == 'upload_size_limit')

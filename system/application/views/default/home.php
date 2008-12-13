@@ -44,9 +44,7 @@
 <div id="uploader" style="display:none">
 	<h3 style="padding-top:8px;"><?php echo $this->lang->line('home_select_files')?></h3><br />
 	<div style=" padding-left:12px;">
-		<div style="display: inline; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px; padding-top:10px; padding-left:6px;">
-			<span id="spanButtonPlaceholder"></span>
-		</div>
+		<div style="display: block; width:90px; height:22px; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px; padding-top:6px; padding-left:6px;"><span id="spanButtonPlaceholder"></span></div>
 	</div>
 	<br />
 </div>
@@ -191,7 +189,7 @@
 			button_height: 18,
 			button_text : '<'+'span class="button"><?=$this->lang->line('home_files_browse')?></'+'span>',
 			button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt;  font-weight:bold; color:#565656; } .button:hover{color: #336699} ',
-			button_text_top_padding: 4,
+			button_text_top_padding: 0,
 			button_text_left_padding: 22,
 			button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 			button_cursor: SWFUpload.CURSOR.HAND,

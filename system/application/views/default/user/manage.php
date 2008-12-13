@@ -9,6 +9,6 @@
         <label style="font-weight:bold" for="username"><?php echo $this->lang->line('user_manage_2')?></label>
         <input type="text" class="readonly" readonly="readonly" name="username" value="<?=$this->session->userdata('username')?>" size="50" /><br /><br />
         
-		<?=generateSubmitButton($this->lang->line('user_manage_3'), base_url().'img/icons/ok_16.png', 'green')?><br />
+		<? //generateSubmitButton($this->lang->line('user_manage_3'), base_url().'img/icons/ok_16.png', 'green').'<br />'?>
     </p>
 </form>

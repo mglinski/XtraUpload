@@ -76,7 +76,7 @@
 		?>			
 		<tr <?=alternator('class="odd"', 'class="even"')?>>
 			<td>
-				<a href="<?php echo $plugin->link?>" rel="external"><?php echo $plugin->name?></a> v<?php echo $plugin->version?><br />
+				<a href="<?php echo $plugin->link?>" rel="external"><?php echo $plugin->name?></a> v<?php echo $this->functions->parseVersion($plugin->version->local, false)?><br />
 				By: <a href="<?php echo $plugin->author->link?>" rel="external"><?php echo $plugin->author->name?></a>
 			</td>
 			<td><?php echo str_replace("\n", '<br />', word_wrap($plugin->description, 60))?></td>

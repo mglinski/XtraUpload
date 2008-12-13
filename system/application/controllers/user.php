@@ -240,10 +240,7 @@ class User extends Controller
 			$data['errorMessage'] = $this->session->flashdata('errorMessage');
 		}
 		
-		$this->validation->set_rules($rules);
-
-		$this->validation->set_fields($fields);
-		$run = $this->validation->run();
+		$run = false;
 		
 		if ($run == FALSE and $this->input->post('username'))
 		{

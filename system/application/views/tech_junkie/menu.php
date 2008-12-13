@@ -6,12 +6,12 @@ if($this->session->userdata('id'))
 	<ul class="sidemenu">
 		<li>
 			<a href="<?=site_url('user/manage')?>">
-				<img src="<?=$base_url?>img/fam/application_form.png" class="nb" alt="" /> <?php echo $this->lang->line('global_manage')?>
+				<img src="<?=$base_url?>img/icons/options_16.png" class="nb" alt="" /> <?php echo $this->lang->line('global_manage')?>
 			</a>
 		</li>
 		<li>
 			<a href="<?=site_url('user/changePassword')?>">
-				<img src="<?=$base_url?>img/other/key_16.png" class="nb" alt="" /> <?php echo $this->lang->line('global_change')?>
+				<img src="<?=$base_url?>img/icons/security_16.png" class="nb" alt="" /> <?php echo $this->lang->line('global_change')?>
 			</a>
 		</li>
 		<li>

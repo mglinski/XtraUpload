@@ -91,10 +91,9 @@ class Cron extends Controller
 		$fh = @opendir($dir);
 		while ($file = @readdir($fh))
 		{
-			//echo $file.'<br />\n';
 			if (($file != '..' && $file != '.' && $file != 'index.php' && $file != 'index.html' && $file != '.DS_Store' && $file != '.htaccess'))
 			{
-				if(is_dir($dir . '/' . $file))
+				if(is_dir($dir . '/' . $file) and $file != '.svn')
 				{
 					$this->_pruneFolderFiles($dir.'/'.$file);
 				}
@@ -102,7 +101,7 @@ class Cron extends Controller
 				{
 					$q = $this->db->join('files', 'refrence.link_id = files.id')->get_where('refrence', array("filename" => $file, 'server' => $this->server), 1, 0);
 					$num = $q->num_rows();
-					if($num == '0')
+					if($num == '0' and $file != '.svn')
 					{
 						$file_obj = $q->row();						
 						if(!empty($file_obj->thumb))
@@ -115,7 +114,6 @@ class Cron extends Controller
 			}
 		}
 		closedir ($fh);
-		//prune_folder_expire($dir);
 	}
 	
 	function _pruneDatabaseFiles()
