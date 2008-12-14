@@ -609,7 +609,7 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		$data = array('id' =>  NULL, 'name' => 'home_info_msg', 'value' => NULL, 'description1' => 'Home Page Message', 'description2' => 'Message to display to all your users on the home page. Like an announcement', 'group' => 0, 'type' => 'box', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
-		$data = array('id' =>  NULL, 'name' => 'show_preview', 'value' => '1', 'description1' => 'Show File Preview', 'description2' => 'Show a preview of some file types on download(mp3, wmv, mov) and an embed code.', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
+		$data = array('id' =>  NULL, 'name' => 'show_preview', 'value' => '1', 'description1' => 'Show File Preview', 'description2' => 'Yes|-|No<br />Show a preview of some file types on download(mp3, wmv, mov) and an embed code.', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
 		// counters Table

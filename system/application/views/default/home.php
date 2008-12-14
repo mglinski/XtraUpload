@@ -188,7 +188,7 @@
 			button_width: 90,
 			button_height: 18,
 			button_text : '<'+'span class="button"><?=$this->lang->line('home_files_browse')?></'+'span>',
-			button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt;  font-weight:bold; color:#565656; } .button:hover{color: #336699} ',
+			button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt;  font-weight:bold; color:#565656; }',
 			button_text_top_padding: 0,
 			button_text_left_padding: 22,
 			button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,

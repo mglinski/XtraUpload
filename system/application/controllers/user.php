@@ -506,7 +506,7 @@ class User extends Controller
 			}
 			else
 			{
-				redirect(substr($_SERVER['HTTP_REFERER'], strlen(base_url())));
+				redirect(substr($_SERVER['HTTP_REFERER'], strlen(site_url())));
 			}
 			//redirect(substr($_SERVER['HTTP_REFERER'],24));
 		}

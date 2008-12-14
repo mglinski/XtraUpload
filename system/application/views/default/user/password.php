@@ -18,6 +18,6 @@
         <label style="font-weight:bold" for="passconf"><?php echo $this->lang->line('user_password_4')?></label>
         <input type="password" name="newpassconf" size="50" /><br /><br />
         
-        <?=generateSubmitButton(''$this->lang->line('user_password_5'), base_url().'img/icons/ok_16.png', 'green')?><br />
+        <?=generateSubmitButton($this->lang->line('user_password_5'), base_url().'img/icons/ok_16.png', 'green')?><br />
 	</p>
 </form>
