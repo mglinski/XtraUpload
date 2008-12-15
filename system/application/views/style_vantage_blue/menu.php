@@ -54,6 +54,7 @@ else
 
 <?php echo $this->xu_api->menus->getSubMenu();?>
 
+<? if($this->startup->site_config['show_recent_uploads']){?>
 <h3><?php echo $this->lang->line('global_recently_uploaded_files')?></h3>
 <ul class="sidemenu">
 <?php 
@@ -71,6 +72,7 @@ foreach($query->result() as $file)
 }
 ?>
 </ul>
+<? }?>
 
 <h3><?php echo $this->lang->line('global_footer_about')?></h3>		
 <p>

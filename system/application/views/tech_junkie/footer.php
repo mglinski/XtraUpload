@@ -27,9 +27,9 @@
 	
 			<div id="footer-columns">	
 				<div class="col3">
-					<h3><?php echo $this->lang->line('global_recently_uploaded_files')?></h3>
-					
-					<ul>
+					<? if($this->startup->site_config['show_recent_uploads']){?>
+						<h3><?php echo $this->lang->line('global_recently_uploaded_files')?></h3>
+						<ul class="col-list">
 						<?php 
 						$query = $this->files_db->getRecentFiles(5);
 						foreach($query->result() as $file)
@@ -44,7 +44,8 @@
 							<?php
 						}
 						?>
-					</ul>
+						</ul>
+					<? }?>
 				</div>
 		
 				<div class="col3-center">
