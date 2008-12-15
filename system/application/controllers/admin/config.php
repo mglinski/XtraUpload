@@ -49,7 +49,7 @@ class Config extends Controller
 	public function index()
 	{
 		// Get the DB config object
-		$data['configs'] = $this->db->get_where('config', array('name !=' => 'version'));
+		$data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version'));
 		
 		// Load a message
 		$data['flashMessage'] = '';
@@ -113,7 +113,7 @@ class Config extends Controller
 		// Iterate over the submited values and update each config entry in the DB
 		foreach($_POST as $key => $value)
 		{
-			if($key != 'valid' and $key != 'Submit')
+			if($key != 'valid' and $key != 'Submit' and $key != '_db_version')
 			{
 				// Save the name and value for caching later
 				$configData[$key] = $this->input->post($key);

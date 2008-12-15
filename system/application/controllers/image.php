@@ -172,7 +172,7 @@ class Image extends Controller
 			$this->db->insert('g_items', array('gid' => $gid, 'thumb' => $image['thumb_url'], 'direct' => $image['direct_url'], 'view' => $image['img_url'], 'fid' => $fileObj->file_id));
 		}
 		
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('image_controller_4').' '.$this->startup->site_config['title_separator'].' '.$this->lang->line('image_controller_4')));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('image_controller_4').' '.$this->startup->site_config['title_separator'].' '.$this->lang->line('image_controller_5')));
 		$this->load->view($this->startup->skin.'/image/gallery/done', $data);
 		$this->load->view($this->startup->skin.'/footer');
 	}

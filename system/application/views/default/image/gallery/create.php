@@ -1,5 +1,12 @@
-<h2 style="vertical-align:middle"><img src="<?=base_url().'img/other/images_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('image_gallys_create_header')?></h2>
-
+<h2><img src="<?=base_url().'img/other/images_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('image_gallys_create_header')?></h2>
+<?
+if($files->num_rows() == 0)
+{
+	?><span class="alert"><?php echo $this->lang->line('image_gallys_create_8')?><a style="background:none;" href="<?=site_url('home')?>"><?php echo $this->lang->line('image_gallys_create_9')?></a></span><?
+}
+else
+{
+?>
 <form action="<?=site_url('image/processNewGallery')?>" method="post">
 	<p>
 	<label for="name"><?php echo $this->lang->line('image_gallys_create_1') ?></label>
@@ -56,3 +63,6 @@ function switchCheckboxes()
 	}
 }
 </script>
+<? 
+}
+?>

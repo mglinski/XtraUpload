@@ -50,65 +50,6 @@ else
 	</ul>
 <?php
 }	
-?>
 
-<?php echo $this->xu_api->menus->getSubMenu();?>
-
-<?php
-/*
-if(stristr($this->uri->uri_string(),'/blog'))
-{
-?>
-	<h3>Blog Navigation</h3>
-	<ul class="sidemenu">
-		<li><a class="home" href="<?=site_url('/blog/index')?>"><img src="<?=$base_url?>img/other/home2_16.png" class="nb" alt="" />Home</a></li>
-		
-		<li><h4>Recent Entries</h4></li>
-		<? foreach($this->blog_db->getRecentEntries(5) as $ent):?>
-		<li>
-			<a class="note" href="<?=site_url('/blog/view/'.$ent['id'].'/'.url_title($ent['title']))?>">
-				<img src="<?=$base_url?>img/icons/comments_16.png" class="nb" alt="" /><?=$ent['title']?>
-			</a>
-		</li>
-		<? endforeach;?>
-
-		<li><h4>Categories</h4></li>
-		<? foreach($this->blog_db->getCategories() as $cat):?>
-		<li><a class="record" href="<?=site_url('/blog/category/'.$cat['name'])?>">
-		<img src="<?=$base_url?>img/icons/tags_16.png" class="nb" alt="" /><?=ucwords($cat['name'])?>
-		</a></li>
-		<? endforeach;?>
-	</ul>
-<?php
-}
-?>
-
-
-<?php 
-if(stristr($this->uri->uri_string(),'/news'))
-{
-?>
-	<h3>News Navigation</h3>
-	<ul class="sidemenu">
-		<li><a class="home" href="<?=site_url('/news/index')?>"><img src="<?=$base_url?>img/other/home2_16.png" class="nb" alt="" />Home</a></li>
-		
-		<li><h4>Recent Entries</h4></li>
-		<? foreach($this->news_db->getRecentEntries(5) as $ent):?>
-		<li>
-			<a class="note" href="<?=site_url('/news/view/'.$ent['id'].'/'.url_title($ent['title']))?>">
-				<img src="<?=$base_url?>img/icons/comments_16.png" class="nb" alt="" /><?=$ent['title']?>
-			</a>
-		</li>
-		<? endforeach;?>
-
-		<li><h4>Categories</h4></li>
-		<? foreach($this->news_db->getCategories() as $cat):?>
-		<li><a class="record" href="<?=site_url('/news/category/'.$cat['name'])?>">
-		<img src="<?=$base_url?>img/icons/tags_16.png" class="nb" alt="" /><?=ucwords($cat['name'])?>
-		</a></li>
-		<? endforeach;?>
-	</ul>
-<?php
-}
-*/
-?>
+// Get action submenus
+echo $this->xu_api->menus->getSubMenu();

@@ -35,6 +35,8 @@ $lang['folder_create_4'] = "File Name";
 $lang['folder_create_5'] = "Size";
 $lang['folder_create_6'] = "Add?";
 $lang['folder_create_7'] = "Create Folder";
+$lang['folder_create_8'] = "You do not have any uploaded files, ";
+$lang['folder_create_9'] = "please upload some first.";
 
 $lang['folder_view_header'] = "File Folder";
 $lang['folder_view_1'] = "Name: ";

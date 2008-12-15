@@ -23,6 +23,7 @@
 	<div id="footer-wrap"><div id="footer-content">
 	
 		<div class="col float-left space-sep">
+			<? if($this->startup->site_config['show_recent_uploads']){?>
 			<h3><?php echo $this->lang->line('global_recently_uploaded_files')?></h3>
 			<ul class="col-list">
 			<?php 
@@ -40,6 +41,7 @@
 			}
 			?>
 			</ul>
+			<? }?>
 		</div>
 		
 		<div class="col float-left">

@@ -29,6 +29,7 @@
 
 class Install extends Controller 
 {
+	private $_db_version = '2.0.0,0.2.0.0';
 	function Install()
 	{
 		parent::Controller();
@@ -609,7 +610,13 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		$data = array('id' =>  NULL, 'name' => 'home_info_msg', 'value' => NULL, 'description1' => 'Home Page Message', 'description2' => 'Message to display to all your users on the home page. Like an announcement', 'group' => 0, 'type' => 'box', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
-		$data = array('id' =>  NULL, 'name' => 'show_preview', 'value' => '1', 'description1' => 'Show File Preview', 'description2' => 'Yes|-|No<br />Show a preview of some file types on download(mp3, wmv, mov) and an embed code.', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
+		$data = array('id' =>  NULL, 'name' => 'show_preview', 'value' => '1', 'description1' => 'Show File Preview', 'description2' => 'Yes|-|No<br /><br />Show a preview of some file types on download(mp3, wmv, mov) and an embed code.', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
+		$this->db->insert('config', $data);
+		
+		$data = array('id' =>  NULL, 'name' => 'show_recent_uploads', 'value' => '1', 'description1' => 'Show Recent Uploads', 'description2' => 'Yes|-|No<br /><br />Show a list of the 5 most recently uploaded files?', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
+		$this->db->insert('config', $data);
+		
+		$data = array('id' =>  NULL, 'name' => '_db_version', 'value' => $this->_db_version, 'description1' => '', 'description2' => '', 'group' => 0, 'type' => 'text', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
 		// counters Table

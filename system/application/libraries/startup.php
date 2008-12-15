@@ -48,15 +48,8 @@ class Startup
 		define('CACHEPATH', BASEPATH.'cache/');
 		
 		// Define Hard Coded Script Version
-		$version = '2.0.0,0.0.0.4'; // 2.0.0 Alpha 4
+		$version = '2.0.0,0.0.2.0'; // 2.0.0 Beta 2
 		define('XU_VERSION', $version);
-		
-		// Send user to setup folder to configure script, if exists
-		if(file_exists('./setup') and ($_SERVER['HTTP_HOST'] != 'localhost' and substr($_SERVER['HTTP_HOST'], 0, 7) != '192.168'))
-		{
-			header('Location: ./setup/');
-			exit();
-		}
 		
 		$this->CI =& get_instance();
 		

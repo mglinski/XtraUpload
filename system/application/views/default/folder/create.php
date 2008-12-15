@@ -1,8 +1,8 @@
-<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/folder_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('folder_create_header')?></h2>
+<h2><img src="<?=base_url().'img/icons/folder_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('folder_create_header')?></h2>
 <?
 if($files->num_rows() == 0)
 {
-?><span class="alert">You do not have any uploaded files, please upload some files first.</span><?
+	?><span class="alert"><?php echo $this->lang->line('folder_create_8')?><a style="background:none;" href="<?=site_url('home')?>"><?php echo $this->lang->line('folder_create_9')?></a></span><?
 }
 else
 {

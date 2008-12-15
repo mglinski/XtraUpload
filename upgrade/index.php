@@ -1,17 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-
-// Check for setup/upgrade folders and stop running if found
-$setup_exists = file_exists('./setup');
-$upgrade_exists = file_exists('./upgrade');
-
-// Send user to setup folder to configure script, if exists
-if(($setup_exists or $upgrade_exists) and ($_SERVER['HTTP_HOST'] != 'localhost' and substr($_SERVER['HTTP_HOST'], 0, 7) != '192.168'))
-{
-	echo "<html><head><title>XtraUpload: Fatal Error</title></head><body><h2 style='color:#F00'>WARNING!!!</h2><h3 style='text-decoration:underline'>The <a href='setup/' target='_blank'>Setup</a> and/or <a href='upgrade/' target='_blank'>Upgrade</a> folders exist!</h3><p>This is a BIG security risk and as such XtraUpload will not continue loading until these folders are deleted from your server. If you have just uploaded XtraUpload or are upgrading from a previous version use the above links to either: <ul><li><a href='setup/' target='_blank'>Setup XtraUpload for the first time</a></li><li><a href='upgrade/' target='_blank'>Upgrade XtraUpload from a previous version.</a></li></ul>Once complete please delete the 2 folders and reload this page.</p></body></html>";
-	exit();
-}
-
 /*
 |---------------------------------------------------------------
 | PHP ERROR REPORTING LEVEL
@@ -36,7 +23,7 @@ if(($setup_exists or $upgrade_exists) and ($_SERVER['HTTP_HOST'] != 'localhost' 
 | NO TRAILING SLASH!
 |
 */
-	$system_folder = "system";
+	$system_folder = "../system";
 
 /*
 |---------------------------------------------------------------
@@ -53,7 +40,7 @@ if(($setup_exists or $upgrade_exists) and ($_SERVER['HTTP_HOST'] != 'localhost' 
 | NO TRAILING SLASH!
 |
 */
-	$application_folder = "application";
+	$application_folder = "includes";
 
 /*
 |===============================================================
@@ -126,4 +113,6 @@ else
 |
 */
 require_once BASEPATH.'codeigniter/CodeIgniter'.EXT;
-?>
+
+/* End of file index.php */
+/* Location: ./index.php */

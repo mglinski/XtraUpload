@@ -26,8 +26,6 @@
  */
 
 // ------------------------------------------------------------------------
-// <?php echo $this->lang->line('image_') ?>
-<?
 
 $lang['image_home_header'] = "Image Info";
 $lang['image_head_1'] = "Name: ";
@@ -55,6 +53,8 @@ $lang['image_gallys_create_4'] = "File Name";
 $lang['image_gallys_create_5'] = "Size";
 $lang['image_gallys_create_6'] = "Add?";
 $lang['image_gallys_create_7'] = "Create Gallery";
+$lang['image_gallys_create_8'] = "You do not have any uploaded images, ";
+$lang['image_gallys_create_9'] = "please upload some first.";
 
 $lang['image_gallys_done_header'] = "Image Gallery - Created";
 $lang['image_gallys_done_'] = "Link:";
@@ -67,4 +67,4 @@ $lang['image_controller_1'] = "View Image";
 $lang['image_controller_2'] = "Forum/BBCode Image Links";
 $lang['image_controller_3'] = "View Image Gallery";
 $lang['image_controller_4'] = "Create Image Gallery";
-$lang['image_controller_4'] = "Done!";
+$lang['image_controller_5'] = "Done!";

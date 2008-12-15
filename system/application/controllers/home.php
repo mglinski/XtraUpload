@@ -42,10 +42,9 @@ class Home extends Controller
 		parent::Controller();
 		
 		// If the user just typed in the domain name add /home to the end of the url
-		if(!stristr($this->uri->uri_string(), '/home'))
+		if(!stristr($this->uri->uri_string(), 'home'))
 		{
-			redirect('/home');
-			return;
+			redirect('home');
 		}
 		$this->load->model('server/server_db');
 		$this->lang->load('home');
