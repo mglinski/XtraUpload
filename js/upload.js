@@ -160,6 +160,11 @@ function addFileQueue(file)
 		}
 		
 	}
+    
+    filePropsObj[file.id] = new Array();
+    filePropsObj[file.id]['feat'] = ''; 
+    filePropsObj[file.id]['desc'] = ''; 
+    filePropsObj[file.id]['pass'] = '';
 	
 	fileObj[file.id] = file.name;
 	$('#filesHidden').append(""+
@@ -179,10 +184,15 @@ function addFileQueue(file)
 		"<tr id='"+file.id+"-details' class='details' style='display:none'>"+
 			"<td id='"+file.id+"-details-inner' colspan='3'>"+
 				'<span class="float-right"><label for="'+file.id+'_desc">'+___upLang('desc')+'</label>'+
-				'<textarea name="'+file.id+'_desc" id="'+file.id+'_desc" cols="30" style="height:100px" rows="4"></textarea></span><br />'+
+				'<textarea name="'+file.id+'_desc" id="'+file.id+'_desc" cols="30" style="height:100px" rows="4"></textarea></span>'+
+                
 				'<label for="'+file.id+'_pass">'+___upLang('fp')+'</label>'+
-				'<input name="'+file.id+'_pass" id="'+file.id+'_pass" size="35" maxlength="32" type="text" /><br /><br />'+
-				'<input value="'+___upLang('sc')+'" type="button" onclick=\'$("#'+file.id+'-details").hide();$("#'+file.id+'-edit_img").fadeIn("fast");\' /><br /><br />'+
+				'<input name="'+file.id+'_pass" id="'+file.id+'_pass" size="35" maxlength="32" type="text" /><br />'+
+                
+                '<label for="'+file.id+'_feat">'+___upLang('ff1')+'</label>'+
+				'<input name="'+file.id+'_feat" id="'+file.id+'_feat" type="checkbox" /> '+___upLang('ff2')+'<br /><br />'+
+                
+				'<input value="'+___upLang('sc')+'" type="button" onclick=\'saveFilePropChanges("'+file.id+'");$("#'+file.id+'-details").hide();$("#'+file.id+'-edit_img").fadeIn("fast");\' /><br /><br />'+
 			"</td>"+
 		"</tr>"
 	);
@@ -270,76 +280,6 @@ function genRandId(length)
 	pass += chars.charAt(i);
   }
   return pass;
-}
-
-function beforeUploadStart(file)
-{
-	var fid = genRandId(32);
-	curFileId = fid;
-	var stats = swfu.getStats();
-	var flashFeatured;
-	var url;
-	if($('#'+file.id+'_feature').attr('checked') && $('#'+file.id+'_feature').attr('value'))
-	{
-		fFeatured = "1";
-	}
-	else
-	{
-		fFeatured = "0";
-	}
-	
-	var fDesc = $('#'+file.id+'_desc').val();
-	if(fDesc == '')
-	{
-		fDesc = '_';
-	}
-	else
-	{
-		fDesc = escape(fDesc);
-	}
-	
-	var fPass = $('#'+file.id+'_pass').val();
-	if(fPass == '')
-	{
-		fPass = '_';
-	}
-	else
-	{
-		fPass = escape(fPass);
-	}
-	
-	var user = $('#uid').val();
-	
-	var url = ___serverUrl()+"upload/process/"+fid+"/"+fPass+"/"+fDesc+"/"+fFeatured+"/"+user;
-	swfu.setUploadURL(url);
-	placeProgressBar(file.id);
-	flashUploadStartTime = Math.round(new Date().getTime()/1000.0);
-	
-	$("#"+file.id+"-details").css('borderTop', 'none').show();
-	$("#"+file.id).addClass('details').css('borderBottom', 'none');
-	$.scrollTo( $("#"+file.id), 300);
-	
-	return true;
-}
-
-function uploadDone(file)
-{
-	$("#"+file.id+"-details-inner").empty();
-	$("#"+file.id+"-details-inner").attr('colspan', 3);
-	$("#"+file.id+"-details-inner").attr('colspan', 3);
-	$("#"+file.id+"-details-inner").load(___siteUrl()+'upload/getLinks/'+curFileId);
-	$('#'+file.id+"-del").empty().html("<strong>Done!</strong>");
-	$("#"+file.id+"-details").css('borderTop', 'none').show();
-	var stats = swfu.getStats();
-
-	if(stats.files_queued > 0)
-	{
-		swfu.startUpload();
-	}
-	else
-	{
-		$.scrollTo( $("#uploader"), 800);
-	}
 }
 
 function debug_function(message)
