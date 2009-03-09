@@ -186,6 +186,95 @@ class CI_Loader {
 		
 		$this->_ci_models[] = $name;	
 	}
+	
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Extention Loader
+	 *
+	 * This function lets users load and instantiate extentions.
+	 *
+	 * @access	public
+	 * @param	string	the name of the class
+	 * @param	string	name for the extention
+	 * @param	bool	database connection
+	 * @return	void
+	 */	
+	function extention($extention, $name = '', $db_conn = FALSE)
+	{		
+		if (is_array($extention))
+		{
+			foreach($extention as $babe)
+			{
+				$this->extention($babe);	
+			}
+			return;
+		}
+
+		if ($extention == '')
+		{
+			return;
+		}
+	
+		// Is the model in a sub-folder? If so, parse out the filename and path.
+		if (strpos($extention, '/') === FALSE)
+		{
+			$path = '';
+		}
+		else
+		{
+			$x = explode('/', $extention);
+			$extention = end($x);			
+			unset($x[count($x)-1]);
+			$path = implode('/', $x).'/';
+		}
+	
+		if ($name == '')
+		{
+			$name = $extention;
+		}
+		
+		if (in_array($name, $this->_ci_models, TRUE))
+		{
+			return;
+		}
+		
+		$CI =& get_instance();
+		if (isset($CI->$name))
+		{
+			show_error('The extention name you are loading is the name of a resource that is already being used: '.$name);
+		}
+	
+		$extention = strtolower($extention);
+		
+		if ( ! file_exists(APPPATH.'extend/'.$path.$extention.'/'.$extention.EXT))
+		{
+			show_error('Unable to locate the extention you have specified: '.$extention);
+		}
+				
+		if ($db_conn !== FALSE AND ! class_exists('CI_DB'))
+		{
+			if ($db_conn === TRUE)
+				$db_conn = '';
+		
+			$CI->load->database($db_conn, FALSE, TRUE);
+		}
+	
+		if ( ! class_exists('Model'))
+		{
+			load_class('Model', FALSE);
+		}
+
+		require_once(APPPATH.'extend/'.$path.$extention.'/'.$extention.EXT);
+
+		$extention = ucfirst($extention);
+				
+		$CI->$name = new $extention();
+		$CI->$name->_assign_libraries();
+		
+		$this->_ci_models[] = $name;	
+	}
 		
 	// --------------------------------------------------------------------
 	
@@ -614,33 +703,6 @@ class CI_Loader {
 			$_ci_x = explode('/', $_ci_path);
 			$_ci_file = end($_ci_x);
 		}
-		
-		
-		// XU Skin Overloading System Code
-		// v1 on top of CI v1.7
-		//{START}
-		if ( ! file_exists($_ci_path) and $_ci_view != '')
-		{
-			$ov = explode('/', $_ci_view);
-			$i=0;$c=count($ov);
-			while($i < $c)
-			{
-				if($i == 0)
-				{
-					$_ci_view = 'default/';
-				}
-				else
-				{
-					$_ci_view .= '/'.$ov[$i];
-				}
-				$i++;
-			}
-			$_ci_ext = pathinfo($_ci_view, PATHINFO_EXTENSION);
-			$_ci_file = ($_ci_ext == '') ? $_ci_view.EXT : $_ci_view;
-			$_ci_path = $this->_ci_view_path.$_ci_file;
-		}
-		//{END}
-		
 		
 		if ( ! file_exists($_ci_path))
 		{

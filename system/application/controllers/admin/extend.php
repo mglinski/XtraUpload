@@ -61,12 +61,12 @@ class Extend extends Controller
 		
 		foreach($this->installed as $name)
 		{
-			$data['installed'][$name] = simplexml_load_file(APPPATH."models/extend/info/".$name.'.xml');
+			$data['installed'][$name] = simplexml_load_file(APPPATH."extend/".$name."/".$name.'.xml');
 		}
 		
 		foreach($this->not_installed as $name)
 		{
-			$data['not_installed'][$name] = simplexml_load_file(APPPATH."models/extend/info/".$name.'.xml');
+			$data['not_installed'][$name] = simplexml_load_file(APPPATH."extend/".$name."/".$name.'.xml');
 		}
 		
 		$data['flashMessage'] = '';
@@ -86,9 +86,9 @@ class Extend extends Controller
 	{
 		$name = str_replace(array('../', '..'), '', $name);
 		$num_rows = $this->db->get_where('extend', array('file_name' => $name))->num_rows();
-		if(file_exists(APPPATH."models/extend/".$name.'.php') and file_exists(APPPATH."models/extend/info/".$name.'.xml') and $num_rows == 0)
+		if(file_exists(APPPATH."extend/".$name.'/'.$name.'.php') and file_exists(APPPATH."extend/".$name."/".$name.'.xml') and $num_rows == 0)
 		{
-			$xml = simplexml_load_file(APPPATH."models/extend/info/".$name.'.xml');
+			$xml = simplexml_load_file(APPPATH."extend/".$name."/".$name.'.xml');
 			$data = array(
 				'data' => serialize($xml),
 				'file_name' => $name,
@@ -99,7 +99,7 @@ class Extend extends Controller
 			
 			$this->db->insert('extend', $data);
 			
-			$this->load->model('extend/'.$name);			
+			$this->load->extention($name);			
 			$this->$name->install();
 			
 			$this->session->set_flashdata('msg', 'Plugin "'.ucwords(str_replace('_', ' ', $name)).'" Installed');
@@ -112,7 +112,7 @@ class Extend extends Controller
 	
 	public function remove($name)
 	{
-		$this->load->model('/extend/'.$name);
+		$this->load->extention($name);
 		$this->$name->uninstall();
 		
 		$this->db->delete('extend', array('file_name' => $name));
@@ -196,7 +196,7 @@ class Extend extends Controller
 		}
 		
 		$this->not_installed = array();
-		$dir = APPPATH."models/extend/";
+		$dir = APPPATH."extend/";
 
 		// Open a known directory, and proceed to read its contents
 		if (is_dir($dir)) 
@@ -205,11 +205,9 @@ class Extend extends Controller
 			{
 				while (($file = readdir($dh)) !== false) 
 				{
-					$app = explode('.php', $file);
-					$app = $app[0];
-					if(!is_dir($dir . $file) and substr($file, -4) == '.php' and !in_array($app, $this->installed) )
+					if(is_dir($dir . $file) and $file != '.' and $file != '..' and !in_array($file, $this->installed) )
 					{
-						$this->not_installed[] = $app;
+						$this->not_installed[] = $file;
 					}
 				}
 				closedir($dh);

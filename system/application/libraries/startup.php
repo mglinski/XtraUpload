@@ -48,7 +48,7 @@ class Startup
 		define('CACHEPATH', BASEPATH.'cache/');
 		
 		// Define Hard Coded Script Version
-		$version = '2.0.0,0.0.2.0'; // 2.0.0 Beta 2
+		$version = '2.0.0,0.0.3.0'; // 2.0.0 Beta 2
 		define('XU_VERSION', $version);
 		
 		$this->CI =& get_instance();
@@ -80,7 +80,7 @@ class Startup
 		));
 		
 		// Load General Functions and XU API
-		$this->CI->load->library(array('functions', 'xu_api'));
+		$this->CI->load->library(array('functions', 'xu_api', 'xu_hooks'));
 		
 		// Readable XtraUpload Version String
 		define('XU_VERSION_READ', $this->CI->functions->parseVersion(XU_VERSION));
@@ -96,9 +96,6 @@ class Startup
 		
 		// load all custom startup files
 		$this->runStartup();
-		
-		// save some memory
-		unset($this->CI);
     }
 	
 	// ------------------------------------------------------------------------
@@ -185,11 +182,9 @@ class Startup
 		if($gid != '')
 		{
 			$group = $gid;
-			$this->CI =& get_instance();
 		}
 		else
 		{
-			$this->CI =& get_instance();
 			if($this->CI->session->userdata('group'))
 			{
 				$group = $this->CI->session->userdata('group');
@@ -239,7 +234,7 @@ class Startup
 			// Open a known directory, and proceed to read its contents
 			foreach($extend as $app)
 			{
-				$this->CI->load->model('extend/'.$app);
+				$this->CI->load->extention($app);
 			}
 		}
 	}
@@ -249,7 +244,7 @@ class Startup
 	/**
 	 * Startup->setupMenu()
 	 *
-	 * Loads the site menus
+	 * Loads the default site menus
 	 *
 	 * @access	public
 	 * @return	none
@@ -280,6 +275,11 @@ class Startup
 			$this->CI->xu_api->menus->addSubMenuLink('Files', 'files/manage', 'Manage', 'img/other/manage-files_16.png', true);
 			$this->CI->xu_api->menus->addSubMenuLink('Create-login', 'folder/create', 'File Folder', 'img/icons/folder_16.png');
 			$this->CI->xu_api->menus->addSubMenuLink('Create-login', 'image/createGallery', 'Image Gallery', 'img/other/images_16.png');
+		}
+		
+		if($this->group_config->can_search)
+		{
+			$this->CI->xu_api->menus->addMainMenuLink('files/search', 'Search', 'img/icons/search_16.png');
 		}
 	}
 }
