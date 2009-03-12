@@ -1,4 +1,6 @@
 ALTER TABLE `xu2_groups` 
-ADD `can_search` TINYINT( 1 ) NOT NULL DEFAULT '0' 
+
+ADD `can_search` TINYINT( 1 ) NOT NULL DEFAULT '0',
 ADD `can_flash_upload` TINYINT( 1 ) NOT NULL DEFAULT '1',
+
 ADD `can_url_upload` TINYINT( 1 ) NOT NULL DEFAULT '1';

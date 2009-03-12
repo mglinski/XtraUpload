@@ -294,7 +294,7 @@ class Files extends Controller
 	 * @access	public
 	 * @return	none
 	 */
-	public function stream($fid, $enc='', $time='', $name='')
+	public function stream($fid='', $enc='')
 	{
 		$file = $this->files_db->getFileObject($fid);
 		if(!$file)
@@ -330,9 +330,9 @@ class Files extends Controller
 	// ------------------------------------------------------------------------
 	
 	/**
-	 * Files->download()
+	 * Files->embed()
 	 *
-	 * Download file if a download link was generated
+	 * Embed File HTML
 	 *
 	 * @access	public
 	 * @return	none
@@ -341,9 +341,13 @@ class Files extends Controller
 	{		
 		$file = $this->files_db->getFileObject($fid);
 		
-		if($type == 'mp3')
+		if(file_exists(APPPATH.'views/'.$this->startup->skin.'/files/embed/'.$type.'.php'))
 		{
-			$this->load->view($this->startup->skin.'/files/embed/mp3', array('file' => $file));	
+			$this->load->view($this->startup->skin.'/files/embed/'.$type, array('file' => $file));	
+		}
+		else
+		{
+			show_404();
 		}
 	}
 		
