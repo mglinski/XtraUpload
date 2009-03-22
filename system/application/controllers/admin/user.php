@@ -172,15 +172,19 @@ class User extends Controller
 		}
 	}
 	
+	// ------------------------------------------------------------------------
+
 	public function edit($id)
 	{
 		$this->load->library('validation');
 		
 		$rules['email'] = "trim|valid_email";
+		$rules['username'] = "trim|_checkUser";
 		$rules['password'] = "trim|min_length[5]|max_length[70]";
 		$this->validation->set_rules($rules);
 		
 		$fields['email'] = "Email";
+		$fields['username'] = "Username";
 		$fields['password'] = "Password";
 		$this->validation->set_fields($fields);		
 			
@@ -198,7 +202,7 @@ class User extends Controller
 		}
 		else
 		{
-			$this->users_db->editUser($id, $this->input->post('password'), $this->input->post('email'), $this->input->post('group'));
+			$this->users_db->editUser($id, $this->input->post('username'),  $this->input->post('password'), $this->input->post('email'), $this->input->post('group'));
 			$this->session->set_flashdata('msg', 'User Edited!');
 			redirect('/admin/user/view');
 			return true;
@@ -276,5 +280,20 @@ class User extends Controller
 			redirect('admin/user/view');
 		}
 	}
+	
+	private function _checkUser()
+	{		
+		$query = $this->db->getwhere('users', array('username' => $this->input->post('username')));
+		$num = $query->num_rows();
+		if($num != 1)
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	
 }
 ?>

@@ -16,7 +16,7 @@
 		<textarea name="descr" cols="60" rows="6"><?=$file->descr?></textarea>
 		
 		<label for="featured">Featured?</label>
-		<input type="checkbox" <? if($file->featured){?> checked="checked"<? }?> name="featured" value="1"  />
+		<input type="checkbox" <? if($file->feature){?> checked="checked"<? }?> name="feature" value="1"  />
 		<br /><br />
 		
 		<?=generateSubmitButton('Edit', base_url().'img/icons/edit_16.png')?>

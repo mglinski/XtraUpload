@@ -41,6 +41,11 @@ function addToQueue()
 			name: basename(file)
 		};
 		
+		filePropsObj[fileObj.id] = new Array();
+		filePropsObj[fileObj.id]['feat'] = ''; 
+		filePropsObj[fileObj.id]['desc'] = ''; 
+		filePropsObj[fileObj.id]['pass'] = '';
+		
 		filesToUpload[file_count] = fileObj;
 		addFileQueue(fileObj);
 		file_count++;
@@ -94,13 +99,16 @@ function addFileQueue(file)
 				"<img onclick=\"rm_file('" + file.id + "');\" src='"+___baseUrl()+"img/icons/close_16.png' style='cursor:pointer' class='nb'>"+
 			"</td>"+
 		"</tr>"+
+		
 		"<tr id='"+file.id+"-details' class='details' style='display:none'>"+
-			"<td id='"+file.id+"-details-inner' colspan='2'>"+
-				'<span class="float-right"><label for="'+file.id+'_desc">Description</label>'+
-				'<textarea name="'+file.id+'_desc" id="'+file.id+'_desc" cols="30" style="height:100px" rows="4"></textarea></span><br />'+
-				'<label for="'+file.id+'_pass">File Password</label>'+
-				'<input name="'+file.id+'_pass" id="'+file.id+'_pass" size="35" maxlength="32" type="text" /><br /><br />'+
-				'<input value="Save Changes" type="button" onclick=\'$("#'+file.id+'-details").hide();$("#'+file.id+'-edit_img").fadeIn("fast");\' /><br /><br />'+
+			"<td id='"+file.id+"-details-inner' colspan='3'>"+
+				'<span class="float-right"><label for="'+file.id+'_desc">'+___upLang('desc')+'</label>'+
+				'<textarea name="'+file.id+'_desc" id="'+file.id+'_desc" cols="30" style="height:100px" rows="4"></textarea></span>'+
+				'<label for="'+file.id+'_pass">'+___upLang('fp')+'</label>'+
+				'<input name="'+file.id+'_pass" id="'+file.id+'_pass" size="35" maxlength="32" type="text" /><br />'+
+                '<label for="'+file.id+'_feat">'+___upLang('ff1')+'</label>'+
+				'<input name="'+file.id+'_feat" id="'+file.id+'_feat" type="checkbox" /> '+___upLang('ff2')+'<br /><br />'+
+				'<input value="'+___upLang('sc')+'" type="button" onclick=\'saveFilePropChanges("'+file.id+'");$("#'+file.id+'-details").hide();$("#'+file.id+'-edit_img").fadeIn("fast");\' /><br /><br />'+
 			"</td>"+
 		"</tr>"
 	);
@@ -144,45 +152,6 @@ function endProgress(id)
 {
 	allowCheckProgress = false;
 	pushUpdate(null, 0, null, 100);
-	getFileInfo(id);
-}
-
-function getFileInfo(id)
-{
-	var fid = $('#fid').val();
-	$("#up_"+id+"-details-inner").load(___siteUrl()+'upload/getLinks/'+currentFileId);
-}
-
-function startUpload(id)
-{
-	var idO = id.split('up_')[1];
-	var file = filesToUpload[idO];
-	var jForm = $("#urlUp");
-	
-	currentFileId = genRandId(16);
-	$('#fid').attr('value', currentFileId);
-	$('#pass').val($('#'+file.id+'_pass').val());
-	$('#descr').val($('#'+file.id+'_desc').val());
-	$('#link').val(file.link);
-	
-	var strName = ("uploader" + (new Date()).getTime());
-	var jFrame = $("<iframe name=\"" + strName + "\" src=\"about:blank\" />");
-	jForm.attr("target", strName);
-	jFrame.css("display", "none");
-	jFrame.load( function(objEvent)
-	{
-		endProgress(idO);
-		$("iframe").remove();
-		$('#'+idO+"-del").empty().html("<strong>Done!</strong>");
-		filesToUpload[idO].uploaded = true;
-		startUploadQueue();
-	});
-	$("body:first").append(jFrame);
-
-	
-	jForm.submit();
-	placeProgressBar(idO);
-	startProgress();
 }
 
 function pushUpdate(total, remain, speed, per)

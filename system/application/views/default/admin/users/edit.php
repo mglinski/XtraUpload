@@ -5,7 +5,7 @@
 	<h3>Edit User: <?=$user->username?></h3>
     <p>
         <label style="font-weight:bold" for="username">Username</label>
-        <span><?=$user->username?></span><br />
+		<input type="text" name="username" value="<?=($this->validation->username ? $this->validation->username : $user->username)?>" size="50" /><br />
     
         <label style="font-weight:bold" for="realname">Email</label>
         <input type="text" name="email" value="<?=($this->validation->email ? $this->validation->email : $user->email)?>" size="50" /><br />

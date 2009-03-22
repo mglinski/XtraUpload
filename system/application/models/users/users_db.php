@@ -91,9 +91,14 @@ class Users_db extends Model
 		$this->db->update('users', $data);
 	}
 	
-	public function editUser($id, $pass, $email, $group)
+	public function editUser($id, $user, $pass, $email, $group)
 	{
 		$data = array();
+		if(!empty($user))
+		{
+			$data['username'] = $user;
+		}
+		
 		if(!empty($email))
 		{
 			$data['email'] = $email;
