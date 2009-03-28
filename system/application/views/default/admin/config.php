@@ -1,13 +1,14 @@
 <h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/icons/options_32.png'?>" class="nb" alt="" /> Config Settings</h2>
 <?php echo $flashMessage?>
 <form method="post" action="<?php echo site_url('admin/config/update')?>">
-	<label>General Config</label>
+	<h3>General Config</h3>
 	<table width="500" border="0">
 		<?php
+		$this->load->helper('string');
 		foreach($configs->result() as $config)
 		{
 			?>
-			<tr>
+			<tr <?=alternator('class="odd"', 'class="even"')?>>
 				<td width="150"><?php echo $config->description1?></td>
 				<td width="350">
 					<?php

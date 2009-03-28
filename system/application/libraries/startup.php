@@ -282,6 +282,10 @@ class Startup
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/email/view', 'Mass Emailer', 'img/icons/mail_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/extend/view', 'Plugins', 'img/icons/component_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/skin/view', 'Skins', 'img/icons/colors_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink('/admin/gateways/view', 'Payment Gateways', 'img/icons/credit_card_16.png');
+			
+			$this->CI->xu_api->menus->addAdminMenuLink('/admin/transactions/view', 'Transactions', 'img/icons/transaction_16.png');
+			
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/server/view', 'Servers', 'img/other/server_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/stats/view', 'Site Stats', 'img/icons/reports_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/translator', 'Translation', 'img/icons/spelling_16.png');
