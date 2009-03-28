@@ -6,7 +6,8 @@ $ini_list = array(
 	'post_max_size'  => 'The maximum size of all allowed POST data is <em>{$}B</em>',
 	'max_execution_time'  => 'The longest ammount of time your server can execute PHP files is <em>{$} second(s)</em>',
 	'max_input_time'  => 'The longest request your server will process is <em>{$} second(s</em>)',
-	'memory_limit' => 'The maximum amount of memory a PHP script can use is <em>{$}B</em>'
+	'memory_limit' => 'The maximum amount of memory a PHP script can use is <em>{$}B</em>',
+	'short_open_tag' => 'Enable the use of PHP short opening tags "&lt;?": {$}'
 );
 
 $ini_name = array(
@@ -14,7 +15,8 @@ $ini_name = array(
 	'post_max_size'  => 'Max POST-Request Size',
 	'max_execution_time'  => 'Execution Timeout',
 	'max_input_time'  => 'Request Input Timeout',
-	'memory_limit' => 'Memory Limit'
+	'memory_limit' => 'Memory Limit',
+	'short_open_tag' => 'Allow PHP Short Tags'
 );
 
 $ini_rec = array(
@@ -22,47 +24,85 @@ $ini_rec = array(
 	'post_max_size'  => '1000M',
 	'max_execution_time'  => '600',
 	'max_input_time'  => '600',
-	'memory_limit' => '320M'
+	'memory_limit' => '320M',
+	'short_open_tag' => '1'
 );
 
+function renameINIResult($r, $n)
+{
+	if($n == 'short_open_tag')
+	{
+		if($r == 1)
+		{
+			return 'On';
+		}
+		else
+		{
+			return 'Off';
+		}
+	}
+	return $r;
+}
+
 ?>
-<ul>
+<ul style="font-size:1.2em;">
 	<?
+	$is_not_good = false;
 	foreach($ini_list as $k => $v)
 	{
 		?>
 		<li>
 			<a href="javascript:;" onclick="$('#php_<?=$k?>').slideToggle('normal')">
 				<strong><?=$ini_name[$k]?></strong> - <?
-				echo ini_get($k); 
 				if($k == 'upload_max_filesize' or $k == 'post_max_size' or $k == 'memory_limit')
 				{
-					echo 'B';
+					echo ini_get($k).'B';
+				}
+				elseif($k == 'short_open_tag')
+				{
+					if(ini_get($k) == 1)
+					{
+						echo 'On';
+					}
+					else
+					{
+						echo 'Off';
+					}
 				}
 				else
 				{
-					echo ' second(s)';
+					echo ini_get($k).' second(s)';
 				}
 				?>
 			</a>
-			<? 
-			$is_not_good = false;
+			<?
 			if(ini_get($k) != $ini_rec[$k])
 			{
 				$is_not_good = true;
-				echo ' - <span style="color:#F00">Reccomended: '.$ini_rec[$k]; 
+				echo ' - <img src="'.$base_url.'img/icons/cancel_16.png" alt="Error!" title="Error!" class="nb" /><span style="color:#F00">Reccomended: '; 
 				if($k == 'upload_max_filesize' or $k == 'post_max_size' or $k == 'memory_limit')
 				{
-					echo 'B';
+					echo $ini_rec[$k].'B';
+				}
+				elseif($k == 'short_open_tag')
+				{
+					echo 'On';
 				}
 				else
 				{
-					echo ' second(s)';
-				} 
+					echo $ini_rec[$k].' second(s)';
+				}
 				echo '</span>';
 			}
+			else
+			{
+				echo '<img src="'.$base_url.'img/icons/ok_16.png" alt="Ok!" title="Ok!" class="nb" />';
+			}
 			?>
-			<span id="php_<?=$k?>" style="display:none"><strong><ul><?=str_replace('{$}', ini_get($k),$v )?></ul></strong></span></li>
+			<span id="php_<?=$k?>" style="display:none">
+				<strong style="padding-left:12px; text-decoration:underline"><?=str_replace('{$}', renameINIResult(ini_get($k), $k),$v )?></strong>
+			</span>
+		</li>
 		<?
 	}
 	?>
