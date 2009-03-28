@@ -81,6 +81,16 @@ class Skin extends Controller
 		redirect('admin/skin/view');
 	}
 	
+	public function delete($file='')
+	{
+		if($file != '' and $file != 'default')
+		{
+			$this->skin_db->deleteSkin($file);
+			$this->session->set_flashdata('msg', 'The Skin "<strong>'.ucwords(str_replace('_',' ',$file)).'</strong>" has been Uninstalled.');
+		}
+		redirect('admin/skin/view');
+	}
+	
 	
 	public function setActive($name)
 	{

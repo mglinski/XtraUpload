@@ -53,5 +53,10 @@ class Skin_db extends Model
 	{
 		$this->db->insert('skin', array('name' => $file, 'active' => '0'));
 	}
+	
+	public function deleteSkin($file)
+	{
+		$this->db->delete('skin', array('name' => $file));
+	}
 }
 ?>
