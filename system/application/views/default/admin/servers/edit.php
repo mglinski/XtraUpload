@@ -4,6 +4,7 @@
 		<?=generateLinkButton('Manage Servers', site_url('admin/server/view'), base_url().'img/icons/back_16.png')?>
 	</div>
 </div>
+<div style="clear:both"></div>
 <form action="<?php echo site_url('/admin/server/edit/'.$id)?>" method="post"> 
 	<input type="hidden" name="valid" value="true" size="50" />
 	<h3>Server Details</h3>

@@ -53,11 +53,31 @@ class Actions extends Controller
 		$this->load->view($this->startup->skin.'/footer');
 	}
 	
+	public function php_info()
+	{
+		phpinfo();
+	}
+	
 	public function run_cron()
 	{
 		define('IN_CRON', TRUE);
 		
-		$dir = APPPATH."cron";		$files = opendir($dir);				// Look in the folder for cron files		while ($file = readdir($files))		{			$code = substr($file, 0, 2);			if ((substr($file, -4, 4) == '.php') and !is_dir($dir .'/'. $file) and !stristr($file, '_no_load'))			{				$name = str_replace('.php', '', $file);				include_once($dir .'/'. $file);				$cron_extend = new $name(base_url());				unset($cron_extend);			}		}		closedir ($files);
+		$dir = APPPATH."cron";
+		$files = opendir($dir);
+		
+		// Look in the folder for cron files
+		while ($file = readdir($files))
+		{
+			$code = substr($file, 0, 2);
+			if ((substr($file, -4, 4) == '.php') and !is_dir($dir .'/'. $file) and !stristr($file, '_no_load'))
+			{
+				$name = str_replace('.php', '', $file);
+				include_once($dir .'/'. $file);
+				$cron_extend = new $name(base_url());
+				unset($cron_extend);
+			}
+		}
+		closedir ($files);
 		
 		$this->session->set_flashdata('msg', 'Cron Actions Completed!');
 		redirect('admin/actions/view');
