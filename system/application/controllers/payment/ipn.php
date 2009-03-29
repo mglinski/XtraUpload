@@ -145,7 +145,7 @@ class Ipn extends Controller
 		// $my2CO->ipnLog = TRUE;
 		
 		// Specify your authorize login and secret
-		$my2CO->addField('sid', $gate_conf['vendor_id']);
+		$my2CO->setSecret($gate_conf['secret_id']);
 		
 		// Enable test mode if needed
 		$my2CO->enableTestMode();
