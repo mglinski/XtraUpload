@@ -207,10 +207,18 @@
       defend, and hold each Contributor harmless for any liability
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
+
+      ---------------------------------------------------------------------
+
+  10. Additional Terms. This license revokes all rights to sell or otherwise 
+      make money from the reselling of this Work. You are hearby given 
+      the right to sell, royalty free, and distribute, in Source or Object form, 
+      seperate Works which make use of functionality contained in/made available 
+      by this Work.
 </textarea>
 					<p>
 						<strong>
-							By clicking the &quot;Continue&quot; button below and/or installing XtraUpload you are bound by the above license aggrement! 
+							By clicking the &quot;Continue&quot; button below and/or installing/upgrading/using XtraUpload you hearby agree to and are bound by the above license aggrement, including Section 10: ammendments to the Apache License v2.0. 
 						</strong>
 					</p>
 				</td>

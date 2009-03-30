@@ -1,4 +1,4 @@
-<?php
+4<?php
 /**
  * XtraUpload
  *
@@ -91,6 +91,60 @@ class Files extends Controller
 		
 		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Files'));
 		$this->load->view($this->startup->skin.'/admin/files/view',$data);
+		$this->load->view($this->startup->skin.'/footer');
+	}
+	
+	public function folder($folder_id)
+	{
+		$this->load->library('pagination');
+		$this->load->helper('admin/sort');
+		$this->load->helper('string');
+		$this->load->helper('date');
+	
+		$sort = $this->session->userdata('fileSort');
+		$direction = $this->session->userdata('fileDirection');
+		$perPage = $this->session->userdata('fileCount');
+		
+		if(!$perPage)
+		{
+			$perPage = 50;
+			$this->session->set_userdata('fileCount', $perPage);
+		}
+		
+		if(!$sort)
+		{
+			$sort = 'time';
+			$this->session->set_userdata('fileSort', $sort);
+		}
+		
+		if(!$direction)
+		{
+			$direction = 'desc';
+			$this->session->set_userdata('fileDirection', $direction);
+		}
+		
+		$data['sort'] = $sort;
+		$data['direction'] = $direction;
+		$data['flashMessage'] = '';
+		$data['perPage'] = $perPage;
+		
+		$config['base_url'] = base_url().'admin/files/view';
+		$config['total_rows'] = $this->files_db->getAdminNumFilesInFolder($folder_id);
+		$config['per_page'] = $perPage;	
+		$config['uri_segment'] = 4;	
+		
+		$this->pagination->initialize($config);
+		
+		if($this->session->flashdata('msg'))
+		{
+			$data['flashMessage'] = '<span class="info"><b>'.$this->session->flashdata('msg').'</b></span>';
+		}
+		
+		$data['files'] = $this->files_db->getAdminFilesInFolder($folder_id, $sort, $direction, $perPage, $this->uri->segment(4));
+		$data['pagination'] = $this->pagination->create_links();
+		
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Files in Folder'));
+		$this->load->view($this->startup->skin.'/admin/files/folder',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
 	

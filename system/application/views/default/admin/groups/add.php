@@ -1,4 +1,4 @@
-<h2 style="vertical-align:middle"><img src="<?=site_url('img/icons/user_group_32.png')?>" class="nb" alt="" /> Group - Add</h2><br />
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/user_group_32.png'?>" class="nb" alt="" /> Group - Add</h2><br />
 <?=generateLinkButton('Manage Groups', site_url('admin/group/view'), base_url().'img/icons/back_16.png')?><br />
 <form action='<?php echo site_url('admin/group/add')?>' id="user_group" method="post">
 	<h3>Add New Group</h3>

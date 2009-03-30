@@ -1,4 +1,4 @@
-<h2 style="vertical-align:middle"><img src="<?=site_url('img/icons/user_group_32.png')?>" class="nb" alt="" /> Groups - Manage</h2>
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/user_group_32.png'?>" class="nb" alt="" /> Groups - Manage</h2>
 <div class="users">
 	<?=$flashMessage?>
 	<div id="massActions" style="clear:both; padding-top:4px;">
