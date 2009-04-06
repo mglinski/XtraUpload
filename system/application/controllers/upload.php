@@ -114,7 +114,7 @@ class Upload extends Controller
 	
 	// ------------------------------------------------------------------------
 
-	public function process($uid='',$user)
+	public function process($uid='', $user=0)
 	{
 		$config['upload_path'] = './temp/';
 		$config['allowed_types'] = $this->startup->group_config->files_types;
