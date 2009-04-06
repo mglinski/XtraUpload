@@ -139,7 +139,14 @@ class CI_Upload {
 		// Is $_FILES[$field] set? If not, no reason to continue.
 		if ( ! isset($_FILES[$field]))
 		{
-			$this->set_error('upload_no_file_selected');
+			$this->set_error('upload_no_file_selected_1');
+			$debug = '$_REQUEST = '.var_export($_REQUEST, true)."\n\n";
+			$debug .= '$_FILES = '.var_export($_FILES, true)."\n\n";
+			$debug .= '$_COOKIE = '.var_export($_COOKIE, true)."\n\n";
+			$debug .= '$_SERVER = '.var_export($_SERVER, true)."\n\n";
+			
+			file_put_contents('debug.txt', $debug);
+			
 			return FALSE;
 		}
 		
@@ -167,7 +174,7 @@ class CI_Upload {
 				   $this->set_error('upload_file_partial');
 					break;
 				case 4: // UPLOAD_ERR_NO_FILE
-				   $this->set_error('upload_no_file_selected');
+				   $this->set_error('upload_no_file_selected_2');
 					break;
 				case 6: // UPLOAD_ERR_NO_TMP_DIR
 					$this->set_error('upload_no_temp_directory');
@@ -178,7 +185,7 @@ class CI_Upload {
 				case 8: // UPLOAD_ERR_EXTENSION
 					$this->set_error('upload_stopped_by_extension');
 					break;
-				default :   $this->set_error('upload_no_file_selected');
+				default :   $this->set_error('upload_no_file_selected_3');
 					break;
 			}
 
