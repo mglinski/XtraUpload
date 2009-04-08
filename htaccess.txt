@@ -5,3 +5,11 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteCond $1 !^(index\.php|images|img|css|js|robots\.txt)
 RewriteRule (.*) index.php/$1 [L] 
+
+#php_flag register_globals off
+#php_flag magic_quotes_gpc off
+#php_value post_max_size "1000M"
+#php_value upload_max_filesize "250M"
+#php_value max_execution_time "600"
+#php_value max_input_time "600"
+#php_value memory_limit "320M"
