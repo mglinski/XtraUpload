@@ -65,7 +65,7 @@ class Skin extends Controller
 			$i = 0;
 			while (false !== ($file = readdir($handle))) 
 			{				
-				if (($file != "." && $file != ".." && $file != ".svn") && is_dir('system/application/views/'.$file)) 
+				if (($file != "." && $file != ".." && $file != ".svn" && $file != "_protected") && is_dir('system/application/views/'.$file)) 
 				{
 					$skin = $this->db->get_where('skin', array('name' => $file));
 					if($skin->num_rows() == '0')
