@@ -494,9 +494,9 @@ class Files_db extends Model
 	// File Delete 
 	//------------------------
 	
-	public function deleteFile($id, $secid, $name)
+	public function deleteFile($id, $secid)
 	{
-		$fid = $this->db->select('link_id')->get_where('refrence', array('file_id' => $id, 'secid' => $secid, 'link_name' => $name));
+		$fid = $this->db->select('link_id')->get_where('refrence', array('file_id' => $id, 'secid' => $secid));
 		$file = $fid->row();
 		
 		$files = $this->db->get_where('refrence', array('link_id' => $file->link_id))->num_rows();
@@ -610,4 +610,3 @@ class Files_db extends Model
 		}
 	}
 }
-?>

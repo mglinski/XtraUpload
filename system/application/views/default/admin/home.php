@@ -76,7 +76,7 @@ function renameINIResult($r, $n)
 				?>
 			</a>
 			<?
-			if(ini_get($k) != $ini_rec[$k])
+			if(intval(ini_get($k)) < intval($ini_rec[$k]))
 			{
 				$is_not_good = true;
 				echo ' - <img src="'.$base_url.'img/icons/cancel_16.png" alt="Error!" title="Error!" class="nb" /><span style="color:#F00">Reccomended: '; 
@@ -114,22 +114,44 @@ if($is_not_good)
 }
 ?>
 
+<?php
+if($this->startup->site_config['allow_version_check'])
+{
+	$latest_version = @file_get_contents('http://xtrafile.com/xu_version.txt');
+	if(XU_VERSION < $latest_version)
+	{
+		?>
+		<h3>Upgrade Available</h3>
+		<span class="alert">Important Upgrade Available: <a href="http://xtrafile.com/files/">Update to <strong><?php echo $this->functions->parseVersion($latest_version)?></strong></a></span>
+		<?php
+	}
+}
+?>
+
 <h3>XtraUpload v2 Stats</h3>
-<table border="0">
+<table border="0" style="width:98%">
 <tr>
 	<td>
-		Number of Uploads: <?php echo $this->db->count_all('refrence');?>
+		<strong>Number of Uploads:</strong> <em><?php echo $this->db->count_all('refrence');?></em>
 	</td>
 	<td>
-		Total Disk Space Used: <?php echo $this->functions->getFilesizePrefix($this->db->select_sum('size')->get('files')->row()->size)?>
+		<strong>Total Disk Space Used:</strong> <em><?php echo $this->functions->getFilesizePrefix($this->db->select_sum('size')->get('files')->row()->size)?></em>
 	</td>
 </tr>
 <tr>
 	<td>
-		Number of Registered Users: <?php echo $this->db->count_all('users');?>
+		<strong>Number of Registered Users:</strong> <em><?php echo $this->db->count_all('users');?></em>
 	</td>
 	<td>
-		Total Bandwth Used: <?php echo $this->functions->getFilesizePrefix($this->db->select_sum('sent')->get('downloads')->row()->sent)?>
+		<strong>Total Bandwth Used:</strong> <em><?php echo $this->functions->getFilesizePrefix($this->db->select_sum('sent')->get('downloads')->row()->sent)?></em>
+	</td>
+</tr>
+<tr>
+	<td>
+		<strong>Number of Admins:</strong> <em><?php echo $this->db->select_sum('id', 'count')->get_where('users', array('group' => '2'))->row()->count;?></em>
+	</td>
+	<td>
+		<strong>Number of Active Servers:</strong> <em><?php echo $this->db->select_sum('id', 'count')->get_where('servers', array('status' => '1'))->row()->count?></em>
 	</td>
 </tr>
 </table>
@@ -138,16 +160,4 @@ if($is_not_good)
 <p> 
 	You are using the <a href="<?php echo site_url('admin/skin/view')?>"><strong><?php echo ucwords(str_replace('_', ' ', $this->startup->skin))?></strong> skin</a> with <a href="<?php echo site_url('admin/extend/view')?>"><?php echo $this->db->get_where('extend', array('active' => 1))->num_rows()?> plugins</a>.<br />
 	This is XtraUpload version <strong><?php echo XU_VERSION_READ?></strong>. 
-	<?php
-	if($this->startup->site_config['allow_version_check'])
-	{
-		$latest_version = @file_get_contents('http://xtrafile.com/xu_version.txt');
-		if(XU_VERSION < $latest_version)
-		{
-			?>
-			<a href="http://xtrafile.com/files/">Update to <strong><?php echo $this->functions->parseVersion($latest_version)?></strong></a>
-			<?php
-		}
-	}
-	?>
 </p>

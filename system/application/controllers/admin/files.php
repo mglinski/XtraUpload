@@ -1,4 +1,4 @@
-4<?php
+<?php
 /**
  * XtraUpload
  *

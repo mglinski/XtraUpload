@@ -1,4 +1,4 @@
-aa<h2 style="vertical-align:middle"><img src="<?=base_url().'img/other/manage-files_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('files_manage_title') ?></h2>
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/other/manage-files_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('files_manage_title') ?></h2>
 <div id="massActions" style="clear:both; padding-top:4px;">
 	<div class="float-left">
 		<?=generateLinkButton('Delete', 'javascript:;', base_url().'img/icons/close_16.png', 'red', array('onclick' => 'deleteSubmit()'))?>

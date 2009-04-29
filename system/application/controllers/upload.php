@@ -54,7 +54,7 @@ class Upload extends Controller
 			'file_icons' => $this->functions->getJSONFileTypeList()
 		);
 		
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('upload_controller_1')));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('upload_controller_1'), 'include_url_upload_js' => true));
 		$this->load->view($this->startup->skin.'/upload/url', $data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
