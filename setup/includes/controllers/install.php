@@ -29,10 +29,12 @@
 
 class Install extends Controller 
 {
-	private $_db_version = '2.0.0,0.0.4.0';
+	private $_db_version = '';// filled on construct
 	function Install()
 	{
 		parent::Controller();
+		include('../xu_ver.php');
+		$this->_db_version = $version;
 	}
 	
 	function index()

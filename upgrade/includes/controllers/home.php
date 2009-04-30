@@ -10,4 +10,5 @@
     	    $data = array('value' => '2.0.0,0.0.2.0');        	$this->db->where('name', '_db_version')->update('config', $data);
 	    }
 	}
-		function _runUpgradeProcess()	{		$ver = $this->_getDbVersion();		if($ver != $this->_getFileVersion())		{			include(APPPATH.'sql/sql_'.$ver.'.php');			return true;		}		else		{			return false;		}	}		function _getDbVersion()	{		if($this->db->get_where('config', array('name' => '_db_version'))->num_rows() == 0)		{			// return original upgrade path			return '2.0.0,0.0.1.0';		}		return @$this->db->get_where('config', array('name' => '_db_version'))->row()->value;	}		function _getFileVersion()	{		return '2.0.0,0.0.4.0';	}}
+		function _runUpgradeProcess()	{		$ver = $this->_getDbVersion();		if($ver != $this->_getFileVersion())		{			include(APPPATH.'sql/sql_'.$ver.'.php');			return true;		}		else		{			return false;		}	}		function _getDbVersion()	{		if($this->db->get_where('config', array('name' => '_db_version'))->num_rows() == 0)		{			// return original upgrade path			return '2.0.0,0.0.1.0';		}		return @$this->db->get_where('config', array('name' => '_db_version'))->row()->value;	}		function _getFileVersion()	{
+	    include('../xu_ver.php');		return $version;	}}
