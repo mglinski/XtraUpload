@@ -39,6 +39,10 @@ class Server extends Controller
 	function index()
 	{
 		redirect('admin/server/view');
+		$hello = <<<OHSHIP
+		
+		
+		OHSHIP;
 	}
 	
 	function view()
@@ -151,6 +155,10 @@ class Server extends Controller
 			if(substr($this->input->post('ftp_path'), -1, 1) != '/')
 			{
 				$path .= '/';
+			}
+			else
+			{
+			
 			}
 			
 			$i = 0;
