@@ -611,20 +611,21 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('config');
 		
+		// Main Settings => 0
 		// INSERT initnal data
-		$data = array('id' => NULL,'name' => 'sitename','value' => 'XtraUpload v2','description1' => 'Site Name:','description2' => '(Site Name)','group' => 'Main Settings','type' => 'text','invincible' => 1);
+		$data = array('id' => NULL,'name' => 'sitename','value' => 'XtraUpload v2','description1' => 'Site Name:','description2' => '(Site Name)','group' => 0,'type' => 'text','invincible' => 1);
 		$this->db->insert('config', $data);
 		
-		$data = array('id' => NULL,'name' => 'slogan','value' => 'Preview','description1' => 'Your Site Slogan','description2' => '','group' => 'Main Settings','type' => 'text','invincible' => 1);
+		$data = array('id' => NULL,'name' => 'slogan','value' => 'Preview','description1' => 'Your Site Slogan','description2' => '','group' => 0,'type' => 'text','invincible' => 1);
 		$this->db->insert('config', $data);
 		
-		$data = array( 'id' =>  NULL, 'name' => 'site_email', 'value' => 'admin@localhost', 'description1' => 'Site EMail', 'description2' => 'Email address used to send emails', 'group' => 'Main Settings', 'type' => 'text', 'invincible' => 1);
+		$data = array( 'id' =>  NULL, 'name' => 'site_email', 'value' => 'admin@localhost', 'description1' => 'Site EMail', 'description2' => 'Email address used to send emails', 'group' => 0, 'type' => 'text', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
-		$data = array( 'id' =>  NULL, 'name' => 'title_separator', 'value' => '-', 'description1' => 'Title Separator', 'description2' => '', 'group' => 'Main Settings', 'type' => 'text', 'invincible' => 1);
+		$data = array( 'id' =>  NULL, 'name' => 'title_separator', 'value' => '-', 'description1' => 'Title Separator', 'description2' => '', 'group' => 0, 'type' => 'text', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
-		$data = array('id' =>  NULL, 'name' => 'no_php_images', 'value' => '0', 'description1' => 'Use Static Image Links', 'description2' => 'Yes|-|No<br /><br />Use actual filesystem URLs to serve image thumbnails and direct images. Will save memory and server cycles on large sites.', 'group' => 'Main Settings', 'type' => 'yesno', 'invincible' => 1);
+		$data = array('id' =>  NULL, 'name' => 'no_php_images', 'value' => '0', 'description1' => 'Use Static Image Links', 'description2' => 'Yes|-|No<br /><br />Use actual filesystem URLs to serve image thumbnails and direct images. Will save memory and server cycles on large sites.', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
 		$this->db->insert('config', $data);
 		
 		$data = array('id' =>  NULL, 'name' => 'allow_version_check', 'value' => '1', 'description1' => 'Allow Version Check', 'description2' => 'Yes|-|No<br /><br />Allow XtraUpload to call home to check for new versions and security updates?', 'group' => 0, 'type' => 'yesno', 'invincible' => 1);
