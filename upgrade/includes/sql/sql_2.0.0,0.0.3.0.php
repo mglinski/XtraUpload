@@ -95,6 +95,9 @@ $this->dbforge->add_field($fields);
 $this->dbforge->add_key('id', true);
 $this->dbforge->create_table('transactions');
 
+// Update config for new Settings Crap
+$this->db->where('group', 'Main Settings')->update('config', array(group => 0));
+
 // required command, DO NOT CHANGE
 $data = array('value' => '2.0.0,0.0.4.0');
 $this->db->where('name', '_db_version')->update('config', $data);

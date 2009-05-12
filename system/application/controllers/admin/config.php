@@ -49,7 +49,7 @@ class Config extends Controller
 	public function index()
 	{
 		// Get the DB config object
-		$data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version'));
+		$data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version', 'group' => 0));
 		
 		// Load a message
 		$data['flashMessage'] = '';
@@ -61,6 +61,24 @@ class Config extends Controller
 		// Send the files to the user
 		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Site Config'));
 		$this->load->view($this->startup->skin.'/admin/config',$data);
+		$this->load->view($this->startup->skin.'/footer');
+	}
+	
+	public function plugins()
+	{
+		// Get the DB config object
+		$data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version', 'group !=' => 0));
+		
+		// Load a message
+		$data['flashMessage'] = '';
+		if($this->session->flashdata('msg'))
+		{
+			$data['flashMessage'] = '<span class="info"><b>'.$this->session->flashdata('msg').'</b></span>';
+		}
+		
+		// Send the files to the user
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Plugin Config'));
+		$this->load->view($this->startup->skin.'/admin/config/plugin',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
 	

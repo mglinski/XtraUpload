@@ -131,6 +131,8 @@
 }
 ?>
 
+<? $this->xu_api->hooks->runHooks('files::get::add_section::before_download', null); ?>
+
 <h3 id="dlhere"><img src="<?php echo $base_url?>img/other/download_16.png" class="nb" alt="" /> <?php echo $this->lang->line('files_get_16')?></h3>
 <form action="<?php echo site_url('files/gen/'.$file->file_id.'/'.$file->link_name)?>" method="post" onsubmit="return checkTimer()">
 <div>
@@ -158,6 +160,9 @@
 	</span>
 </div>
 </form>
+
+<? $this->xu_api->hooks->runHooks('files::get::add_section::after_download', null); ?>
+
 <script type="text/javascript">
 <? 
 $rand = 'x'.str_replace('-', '', $this->functions->getRandId());

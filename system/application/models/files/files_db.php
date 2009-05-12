@@ -468,6 +468,13 @@ class Files_db extends Model
 			@unlink($file);
 		}
 		
+		$link_name = basename($file);
+		if(substr($link_name, -2) == '._')
+		{
+		    $link_name = substr($link_name, 0, (strlen($link_name)-2));
+		}
+		$link_name = url_title($link_name);
+		
 		// Create an entry in the refrence table to this new upload
 		$data = array(
 			'o_filename' => basename($file), 
@@ -479,7 +486,7 @@ class Files_db extends Model
 			'ip' => $_SERVER['REMOTE_ADDR'],
 			'secid' => $uid,
 			'user' => $user,
-			'link_name' => url_title(basename($file)),
+			'link_name' => $link_name,
 			'downloads' => 0,
 			'last_download' => time(),
 			'direct_bw' => 0,
