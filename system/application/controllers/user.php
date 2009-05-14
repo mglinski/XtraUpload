@@ -709,6 +709,7 @@ class User extends Controller
 		if($group > 0.00)
 		{
 			$data['status'] = 0;
+			$data['gateway'] = $this->input->post('gate');
 			$forward_pay = TRUE;
 		}
 		else

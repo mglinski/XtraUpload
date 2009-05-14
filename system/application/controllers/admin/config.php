@@ -60,14 +60,23 @@ class Config extends Controller
 		
 		// Send the files to the user
 		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Site Config'));
-		$this->load->view($this->startup->skin.'/admin/config',$data);
+		$this->load->view($this->startup->skin.'/admin/config/main',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
 	
-	public function plugins()
+	public function plugin($name='')
 	{
 		// Get the DB config object
-		$data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version', 'group !=' => 0));
+		if($name != '')
+		{
+		    $data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version', 'group' => $name ));
+		}
+		else
+		{
+		    $data['configs'] = $this->db->get_where('config', array('name !=' => '_db_version', '`group` !=' => 0));
+		}
+		$data['num_rows'] = intval($data['configs']->num_rows());
+		$data['name'] = $name;
 		
 		// Load a message
 		$data['flashMessage'] = '';
@@ -77,7 +86,7 @@ class Config extends Controller
 		}
 		
 		// Send the files to the user
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Plugin Config'));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage '.ucwords(str_replace('_',' ', $name)).' Plugin Config'));
 		$this->load->view($this->startup->skin.'/admin/config/plugin',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}

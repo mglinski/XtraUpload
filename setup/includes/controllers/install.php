@@ -1401,6 +1401,12 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 				'type' => 'TINYINT',
 				'constraint' => 4
 			),
+			'gateway' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => TRUE.
+				'default' => '0'
+			),
 			'public' => array(
 				'type' => 'TINYINT',
 				'default' => 0,
@@ -1422,6 +1428,7 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 			'lastLogin' => 0,
 			'status' => 1,
 			'public' => 0,
+			'gateway' => '0',
 			'ip' => $this->input->ip_address(),
 			'email' => $this->input->post('email'),
 			'group' => 2

@@ -222,6 +222,20 @@ class User extends Controller
 		redirect('admin/user/view');
 	}
 	
+	public function turn_off($id)
+	{
+		$this->users_db->setUserStatus(0, $id);
+		$this->session->set_flashdata('msg', 'User has been Deactivated');
+		redirect('admin/user/view');
+	}
+	
+	public function turn_on($id)
+	{
+		$this->users_db->setUserStatus(1, $id);
+		$this->session->set_flashdata('msg', 'User has been Activated');
+		redirect('admin/user/view');
+	}
+	
 	public function sort()
 	{
 		if($this->input->post('sort'))

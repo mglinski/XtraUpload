@@ -1,10 +1,16 @@
-<h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/icons/options_32.png'?>" class="nb" alt="" /> Config Settings</h2>
+<h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/icons/options_32.png'?>" class="nb" alt="" /> Plugin Config Settings</h2>
 <?php echo $flashMessage?>
 <form method="post" action="<?php echo site_url('admin/config/update')?>">
-	<h3>General Config</h3>
+	<h3><?=ucwords(str_replace('_',' ', $name))?> Config</h3>
 	<table width="500" border="0">
 		<?php
 		$this->load->helper('string');
+		
+		if($num_rows <= 0)
+		{
+		    ?><span class="alert">No Config Settings for this plugin.</span><?
+		}
+		else
 		foreach($configs->result() as $config)
 		{
 			?>
@@ -60,5 +66,14 @@
 		?>
 	</table>
 	<input type="hidden" name="valid" value="yes" />
-	<?php echo generateSubmitButton('Update', base_url().'img/icons/ok_16.png', 'green')?><br />
+	<?
+	if($num_rows > 0)
+	{
+	    echo generateSubmitButton('Update', base_url().'img/icons/ok_16.png', 'green');
+	}
+	else
+	{
+	    echo generateLinkButton('Go Back', 'javascript:history.go(-1)', base_url().'img/icons/back_16.png');
+	}
+	?><br />
 </form>

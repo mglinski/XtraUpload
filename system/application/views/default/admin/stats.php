@@ -6,7 +6,7 @@ Here you can view a graphical representation of many site stats including weekly
 </p>
 
 <div>
-	<select onchange="getChart('<?php echo $base_url?>api/charts/'+this.value+'/600/300')">
+	<select onchange="getChart('<?php echo site_url('api/charts/')?>/'+this.value+'/600/300')">
 		<option value="null" selected="selected">Select a Chart</option>
 		<optgroup label="Uploads">
 			<option value="all_uploads">All Uploads</option>

@@ -114,7 +114,7 @@ class Upload extends Controller
 	
 	// ------------------------------------------------------------------------
 
-	public function process($uid='', $user=0)
+	public function process($secid='', $user=0)
 	{
 		$config['upload_path'] = './temp/';
 		$config['allowed_types'] = $this->startup->group_config->files_types;
@@ -123,7 +123,7 @@ class Upload extends Controller
 
 		if(intval($user) != 0)
 		{
-			$userobj = $this->users->getUserById($user);
+			$userobj = $this->users->getUserById(intval($user));
 			$this->startup->getGroup($userobj->group);
 			unset($userobj);
 		}
@@ -133,7 +133,7 @@ class Upload extends Controller
 			$data = $this->upload->data();
 			$file = $data['full_path'];
 						
-			$this->files_db->newFile($file, $uid, $user, (bool)$data['is_image'], base_url(), false);
+			$this->files_db->newFile($file, $secid, $user, (bool)$data['is_image'], base_url(), false);
 			echo "WIN";
 		}
 		else

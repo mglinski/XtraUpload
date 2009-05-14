@@ -184,6 +184,8 @@ class Startup
 		if($gid != '')
 		{
 			$group = $gid;
+			$this->group_config = $this->CI->db->get_where('groups', array('id' => $group))->row();
+			return;
 		}
 		else
 		{
@@ -292,6 +294,8 @@ class Startup
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/actions/view', 'Tools/Maintenance', 'img/icons/tools_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/user/view', 'Users', 'img/icons/user_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/group/view', 'User Groups', 'img/icons/user_group_16.png');
+			
+			$this->CI->xu_api->menus->addPluginMenuLink('/admin/config/plugin', 'Plugin Config', 'img/icons/options_16.png');
 		}
 		else
 		{

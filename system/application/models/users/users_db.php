@@ -81,6 +81,16 @@ class Users_db extends Model
 		$this->db->update('users', $data);
 	}
 	
+	public function setUserStatus($status, $id)
+	{
+	    $data = array(  	
+			'status' => $status
+		);
+		
+		$this->db->where('id', $id);
+		$this->db->update('users', $data);
+	}
+	
 	public function takeAdminRights($id)
 	{
 		$data = array(  	

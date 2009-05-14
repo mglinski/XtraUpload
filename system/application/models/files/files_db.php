@@ -378,7 +378,7 @@ class Files_db extends Model
 		{
 			// YES!!!  KILL IT WITH FIRE!!!
 			@unlink($file);
-			log_message('debug', 'File Uploaded is banned');
+			log_message('debug', 'File Uploaded is banned: '.basename($file));
 			return false;
 		}
 		
@@ -396,10 +396,13 @@ class Files_db extends Model
 			}
 		}
 		
+		log_message('debug', "File uploaded to User Group: ".$this->startup->group_config->name);
+		
+		
 		// Generate an awesome file_id for our new friend
 		$file_id = $this->functions->getRandId();
 		
-		if(!$user)
+		if($user == false or intval($user) == 0)
 		{
 			$user = '';
 		}
