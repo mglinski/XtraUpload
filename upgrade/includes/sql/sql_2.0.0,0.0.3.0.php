@@ -109,6 +109,33 @@ $this->dbforge->add_column('users', $fields);
 // Update config for new Settings Crap
 $this->db->where('group', 'Main Settings')->update('config', array(group => 0));
 
+// upload_failures Table
+$fields = array(
+	'id' => array(
+		'type' => 'INT',
+		'constraint' => 11,
+		'unsigned' => TRUE,
+		'auto_increment' => TRUE
+	),
+	'secid' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 32
+	),
+	'date' => array(
+		'type' => 'INT',
+		'constraint' => 16,
+	),
+	'reason' => array(
+		'type' => 'VARCHAR',
+		'constraint' => 50,
+	)
+);
+$this->dbforge->add_field($fields);
+$this->dbforge->add_key('id', true);
+$this->dbforge->add_key('date', false);
+$this->dbforge->add_key('secid', false);
+$this->dbforge->create_table('upload_failures');
+
 // required command, DO NOT CHANGE
 $data = array('value' => '2.0.0,0.0.4.0');
 $this->db->where('name', '_db_version')->update('config', $data);

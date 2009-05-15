@@ -891,7 +891,7 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		
 		
 		
-		// Folder Table
+		// Galleries Table
 		$fields = array(
 			'id' => array(
 				'type' => 'INT',
@@ -1527,5 +1527,32 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('transactions');
+		
+		// upload_failures Table
+		$fields = array(
+        	'id' => array(
+        		'type' => 'INT',
+        		'constraint' => 11,
+        		'unsigned' => TRUE,
+        		'auto_increment' => TRUE
+        	),
+        	'secid' => array(
+        		'type' => 'VARCHAR',
+        		'constraint' => 32
+        	),
+        	'date' => array(
+        		'type' => 'INT',
+        		'constraint' => 16,
+        	),
+        	'reason' => array(
+        		'type' => 'VARCHAR',
+        		'constraint' => 50,
+        	)
+        );
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', true);
+		$this->dbforge->add_key('date', false);
+		$this->dbforge->add_key('secid', false);
+		$this->dbforge->create_table('upload_failures');
 	}
 }

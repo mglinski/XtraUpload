@@ -1,17 +1,20 @@
 <?php
-$r1 = rand();
-$r2 = rand();
-if($link)
+
+if(isset($link['failed']) and $link['failed'] == true)
+{
+    echo $this->lang->line('upload_links_4').'<br /> Reason: '.$link['reason'];
+}
+elseif($link)
 {
 	?>
-	<?php echo $this->lang->line('upload_links_1')?><input readonly="readonly" type="text" id="dl_<?php echo $r1?>" size="50" value="<?php echo $link['down']?>" onfocus="this.select()" onclick="this.select()" />
+	<?php echo $this->lang->line('upload_links_1')?><input readonly="readonly" type="text" id="dl_<?php echo rand()?>" size="50" value="<?php echo $link['down']?>" onfocus="this.select()" onclick="this.select()" />
 	<?php
 	
 	if(!$this->session->userdata('id'))
 	{
 	?>
 	<br />
-	<?php echo $this->lang->line('upload_links_2')?><input readonly="readonly" type="text" id="del_<?php echo $r2?>" size="50" value="<?php echo $link['del']?>" onfocus="this.select()" onclick="this.select()" />
+	<?php echo $this->lang->line('upload_links_2')?><input readonly="readonly" type="text" id="del_<?php echo rand()?>" size="50" value="<?php echo $link['del']?>" onfocus="this.select()" onclick="this.select()" />
 	<?php
 	}
 	

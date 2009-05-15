@@ -46,6 +46,7 @@ class CI_Upload {
 	var $image_type		= '';
 	var $image_size_str	= '';
 	var $error_msg		= array();
+	var $error_num      = array();
 	var $mimes			= array();
 	var $remove_spaces	= TRUE;
 	var $xss_clean		= FALSE;
@@ -773,6 +774,7 @@ class CI_Upload {
 		{
 			foreach ($msg as $val)
 			{
+				$this->error_num[] = $val;
 				$msg = ($CI->lang->line($val) == FALSE) ? $val : $CI->lang->line($val);				
 				$this->error_msg[] = $msg;
 				log_message('error', $msg);
@@ -780,6 +782,7 @@ class CI_Upload {
 		}
 		else
 		{
+		    $this->error_num[] = $msg;
 			$msg = ($CI->lang->line($msg) == FALSE) ? $msg : $CI->lang->line($msg);
 			$this->error_msg[] = $msg;
 			log_message('error', $msg);

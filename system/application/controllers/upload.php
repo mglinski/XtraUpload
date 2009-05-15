@@ -116,10 +116,6 @@ class Upload extends Controller
 
 	public function process($secid='', $user=0)
 	{
-		$config['upload_path'] = './temp/';
-		$config['allowed_types'] = $this->startup->group_config->files_types;
-		$config['max_size']	= (1024 * intval($this->startup->group_config->upload_size_limit));
-		$this->load->library('upload', $config);	
 
 		if(intval($user) != 0)
 		{
@@ -127,6 +123,11 @@ class Upload extends Controller
 			$this->startup->getGroup($userobj->group);
 			unset($userobj);
 		}
+		
+		$config['upload_path'] = './temp/';
+		$config['allowed_types'] = $this->startup->group_config->files_types;
+		$config['max_size']	= (1024 * intval($this->startup->group_config->upload_size_limit));
+		$this->load->library('upload', $config);	
 				
 		if($this->upload->do_upload('Filedata'))
 		{
@@ -138,15 +139,16 @@ class Upload extends Controller
 		}
 		else
 		{
+		    $this->files_db->setUploadFailed($secid, str_replace('upload_', '', $this->upload->error_num[0]));
 			echo "FAIL";	
 		}
 	}
 	
 	// ------------------------------------------------------------------------
 
-	public function getLinks($id)
+	public function getLinks($secid)
 	{
-		$data['link'] = $this->files_db->getLinks($id);
+		$data['link'] = $this->files_db->getLinks($secid);
 		$this->load->view($this->startup->skin.'/upload/links', $data);
 	}
 	

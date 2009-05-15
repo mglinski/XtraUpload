@@ -249,8 +249,39 @@ class Files_db extends Model
 		}
 		else
 		{
-			return false;
+		    $reason = $this->getReasonUploadFailed($secid);
+		    if(!$reason)
+		    {
+		        return false;
+		    }
+		    else
+		    {
+		        return array('reason' => $reason, 'failed' => true);
+		    }
 		}
+	}
+	
+	public function getReasonUploadFailed($secid)
+	{
+	    $d = $this->db->get_where('upload_failures', array('secid' => $secid));
+	    if($d->num_rows() > 0)
+	    {
+	        $this->lang->load('etc/upload_failure');
+	        
+	        $reason = $this->lang->line('upload_fail_'.($d->row()->reason));
+	        //$this->db->delete('upload_failures', array('secid' => $secid));
+	        
+	        return $reason;
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}
+	
+	public function setUploadFailed($secid, $reason=1)
+	{
+	    $this->db->insert('upload_failures', array('secid' => $secid, 'reason' => $reason, 'date' => time()));
 	}
 	
 	public function fileExists($id, $secid='')
@@ -338,7 +369,7 @@ class Files_db extends Model
 		}
 		
 		$dimensions = getimagesize($file);
-		if($dimensions[0] < 150 and $dimensions[1] < 150)
+		if($dimensions[0] < 200 and $dimensions[1] < 200)
 		{
 			copy($file, $new);
 			return;
@@ -379,6 +410,7 @@ class Files_db extends Model
 			// YES!!!  KILL IT WITH FIRE!!!
 			@unlink($file);
 			log_message('debug', 'File Uploaded is banned: '.basename($file));
+			$this->setUploadFailed($uid, 'banned');
 			return false;
 		}
 		
@@ -392,6 +424,7 @@ class Files_db extends Model
 				@unlink($file);
 				
 				log_message('debug', 'File Uploaded excedes allowed storage space for user');
+				$this->setUploadFailed($uid, 'storage');
 				return false;
 			}
 		}

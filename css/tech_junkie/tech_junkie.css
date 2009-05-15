@@ -24,12 +24,10 @@ body {
 /* links */
 a, a:visited {	
 	color: #306495;
-	background: inherit;
 	text-decoration: none;
 }
 a:hover {
 	color: #73471B;
-	background: inherit;
 	text-decoration: underline;
 }
 
