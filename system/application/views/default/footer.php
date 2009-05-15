@@ -100,5 +100,6 @@ $(document).ready(function()
 	}
 });
 </script>
+<? $this->load->view('_protected/global_footer');?>
 </body>
 </html>
