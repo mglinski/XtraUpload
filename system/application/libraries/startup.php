@@ -289,7 +289,7 @@ class Startup
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/transactions/view', 'Transactions', 'img/icons/transaction_16.png');
 			
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/server/view', 'Servers', 'img/other/server_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/stats/view', 'Site Stats', 'img/icons/reports_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink('/admin/stats/view', 'Site Stats', 'img/icons/chart_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/translator', 'Translation', 'img/icons/spelling_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/actions/view', 'Tools/Maintenance', 'img/icons/tools_16.png');
 			$this->CI->xu_api->menus->addAdminMenuLink('/admin/user/view', 'Users', 'img/icons/user_16.png');

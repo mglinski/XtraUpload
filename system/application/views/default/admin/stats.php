@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?php echo $base_url?>/js/charts.js"></script>
-<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/reports_32.png'?>" class="nb" alt="" /> Site Stats</h2>
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/chart_32.png'?>" class="nb" alt="" /> Site Stats</h2>
 <h3>Information</h3>
 <p>
 Here you can view a graphical representation of many site stats including weekly upload count, new users, total used space by server, etc. Please select a chart to view the corresponding data.
