@@ -107,7 +107,7 @@ $fields = array(
 $this->dbforge->add_column('users', $fields);
 
 // Update config for new Settings Crap
-$this->db->where('group', 'Main Settings')->update('config', array(group => 0));
+$this->db->where('group', 'Main Settings')->update('config', array('group' => 0));
 
 // upload_failures Table
 $fields = array(
