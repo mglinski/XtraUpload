@@ -19,34 +19,79 @@
  * XtraUpload Home Page Controller
  *
  * @package		XtraUpload
- * @subpackage	Controllers - Admin
+ * @subpackage	Controllers
  * @category	Controllers
  * @author		Matthew Glinski
- * @link		http://xtrafile.com/docs/pages/files
+ * @link		http://xtrafile.com/docs/pages/home
  */
 
 // ------------------------------------------------------------------------
 
 class Home extends Controller 
 {
+	/**
+	 * Home()
+	 *
+	 * The home page controller constructor
+	 *
+	 * @access	public
+	 * @return	none
+	 */	
 	public function Home()
 	{
-		parent::Controller();		
-		$this->load->model('admin_access');
+		parent::Controller();
+		
+		// If the user just typed in the domain name add /home to the end of the url
+//		if(!stristr($this->uri->uri_string(), 'home'))
+//		{
+//			redirect('home');
+//		}
 		$this->load->model('server/server_db');
+		$this->lang->load('home');
 	}
 	
+	// ------------------------------------------------------------------------
+
+	
+	/**
+	 * Home->index()
+	 *
+	 * The home page for XtraUpload, containing the flash uploader
+	 *
+	 * @access	public
+	 * @return	none
+	 */	
 	public function index()
 	{
-		if(!stristr($this->uri->uri_string(), '/admin/home'))
-		{
-			redirect('/admin/home');
-		}
-		$this->load->vars(array('servers' => $this->server_db->getServers()));
+		// Get some vars
+		$data = array(
+			'server' => $this->server_db->getRandomServer()->url,
+			'upload_limit' => $this->startup->group_config->upload_size_limit,
+			'upload_num_limit' => $this->startup->group_config->upload_num_limit,
+			'files_types' => $this->startup->group_config->files_types,
+			'file_icons' => $this->functions->getJSONFileTypeList(),
+			'file_types_allow_deny' => $this->startup->group_config->file_types_allow_deny,
+			'storage_limit' => $this->startup->group_config->storage_limit
+		);
 		
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Admin Home'));
-		$this->load->view($this->startup->skin.'/admin/home');
+		if(intval($this->startup->group_config->storage_limit) > 0)
+		{
+			$data['storage_used'] = $this->functions->getFilesizePrefix(($this->startup->group_config->storage_limit * 1024 * 1024) - $this->files_db->getFilesUseageSpace());
+		}
+		
+		$data['flashMessage'] = '';
+		
+		if($this->session->flashdata('msg'))
+		{
+			$data['flashMessage'] = '<span class="info"><b>'.$this->session->flashdata('msg').'</b></span>';
+		}
+		
+		// There is no processing functionality here, just static pages to send the user
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('home_controller_1'), 'include_flash_upload_js' => true));
+		$this->load->view($this->startup->skin.'/home', $data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
 }
-?>
+
+/* End of file home.php */
+/* Location: ./system/applicaton/controllers/home.php */

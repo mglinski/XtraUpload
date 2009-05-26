@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 <table border="0" style="width:95%" id="file_list_table">
 	<tr>
-		<th class="align-left" style="width:95%">Skin name</th>
+		<th class="align-left" style="width:90%">Skin name</th>
 		<th style="text-align:center">Active?</th>
 	</tr>
 	<? foreach($skins->result() as $skin)

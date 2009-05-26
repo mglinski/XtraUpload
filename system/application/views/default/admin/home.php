@@ -1,6 +1,7 @@
 <h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/other/admin_32.png'?>" class="nb" alt="" /> Admin Home</h2>
 <h3>Important Server Settings</h3>
 <?
+
 $ini_list = array(
 	'upload_max_filesize' => 'The largest uploaded file size this server is configured to process is <em>{$}B</em>. <br />This overrides your group settings.',
 	'post_max_size'  => 'The maximum size of all allowed POST data is <em>{$}B</em>',
@@ -9,7 +10,6 @@ $ini_list = array(
 	'memory_limit' => 'The maximum amount of memory a PHP script can use is <em>{$}B</em>',
 	'short_open_tag' => 'Enable the use of PHP short opening tags "&lt;?": {$}'
 );
-
 $ini_name = array(
 	'upload_max_filesize' => 'Max File Size',
 	'post_max_size'  => 'Max POST-Request Size',
@@ -18,7 +18,6 @@ $ini_name = array(
 	'memory_limit' => 'Memory Limit',
 	'short_open_tag' => 'Allow PHP Short Tags'
 );
-
 $ini_rec = array(
 	'upload_max_filesize' => '250M',
 	'post_max_size'  => '1000M',
@@ -154,6 +153,41 @@ if($this->startup->site_config['allow_version_check'])
 		<strong>Number of Active Servers:</strong> <em><?php echo $this->db->select_sum('id', 'count')->get_where('servers', array('status' => '1'))->row()->count?></em>
 	</td>
 </tr>
+</table>
+
+<h3>Server Stats</h3>
+<? 
+$load = $this->functions->getServerLoad(0);
+if($load > 100)
+{
+    $load = 100;
+}
+
+$free_space = disk_free_space('filestore/');
+$total_space = disk_total_space('filestore/');
+$space_p = (($free_space / $total_space) * 100);
+$free_space = $this->functions->getFilesizePrefix($free_space);
+$total_space = $this->functions->getFilesizePrefix($total_space);
+?>
+<table border="0" style="width:98%">
+    <tr>
+        <td>
+            <h4 style="padding:4px;margin-top:4px;">Server Load: <?=$load?>%</h4>
+            <div class="progress_border" style="margin-left:2px; width:99%;">
+                <div class="progress_img_sliver" style="width:<?=round($load)?>%"></div>
+            </div><br />
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <h4 style="padding:4px;margin-top:4px;">Total Disk Space: <?=$total_space?></h4>
+            <div class="progress_border" style="margin-left:2px; width:99%;">
+                <div class="progress_img_sliver" style="width:<?=round($space_p)?>%;"><?=$free_space?></div>
+            </div>
+            <br />
+        </td>
+    </tr>
 </table>
 
 <h3>Useful Information</h3>

@@ -1404,7 +1404,7 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 			'gateway' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE.
+				'unsigned' => TRUE,
 				'default' => '0'
 			),
 			'public' => array(

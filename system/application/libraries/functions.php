@@ -48,6 +48,12 @@ class Functions
 		return $password;
 	}
 	
+	function getServerLoad($movingAverage=0) 
+    { 
+        $stats = explode(' ', substr(exec('uptime'), -14));
+        return str_replace(',', '', $stats[$movingAverage]);
+    }
+	
 	public function genPass($length, $caps=true)
 	{
 		$password = "";
