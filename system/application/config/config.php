@@ -217,7 +217,7 @@ $config["cache_path"] = "";
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config["encryption_key"] = "5a6de554d285332b8ea852f9ecd91f2949ef618653947";
+$config["encryption_key"] = "13b315eb321757af14a4acc540e39aee4a1ee23c63734";
 
 /*
 |--------------------------------------------------------------------------
@@ -250,7 +250,7 @@ $config["sess_time_to_update"] 	= 300;
 | "cookie_path"   =  Typically will be a forward slash
 |
 */
-$config["cookie_prefix"]	= "3fb0f09dc0cf50eccc973de26ff7c";
+$config["cookie_prefix"]	= "a2baaa7de5b0496afd1cf3d29920b";
 $config["cookie_domain"]	= "";
 $config["cookie_path"]		= "/";
 

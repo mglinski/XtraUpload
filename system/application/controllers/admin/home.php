@@ -88,7 +88,7 @@ class Home extends Controller
 		
 		// There is no processing functionality here, just static pages to send the user
 		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('home_controller_1'), 'include_flash_upload_js' => true));
-		$this->load->view($this->startup->skin.'/home', $data);
+		$this->load->view($this->startup->skin.'/admin/home', $data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
 }
