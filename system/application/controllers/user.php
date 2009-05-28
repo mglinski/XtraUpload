@@ -62,7 +62,7 @@ class User extends Controller
 	public function compare()
 	{		
 		$data['group1'] = $this->db->get_where('groups', array('id' => 1))->row();
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_controller_1')));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_compare_header')));
 		$this->load->view($this->startup->skin.'/user/compare', $data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
@@ -840,7 +840,7 @@ class User extends Controller
 		
 		if($result)
 		{
-			$this->load->vars(array('errorMessage' => '<span class="info">'.$this->lang->line('user_controller_').'</span>'));
+			$this->load->vars(array('errorMessage' => '<span class="info">'.$this->lang->line('user_controller_38').'</span>'));
 			$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_controller_22')));
 			$this->load->view($this->startup->skin.'/user/forgot');
 			$this->load->view($this->startup->skin.'/footer');;
