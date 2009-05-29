@@ -142,7 +142,7 @@ if($this->startup->site_config['allow_version_check'])
 		<strong>Number of Registered Users:</strong> <em><?php echo $this->db->count_all('users');?></em>
 	</td>
 	<td>
-		<strong>Total Bandwth Used:</strong> <em><?php echo $this->functions->getFilesizePrefix($this->db->select_sum('sent')->get('downloads')->row()->sent)?></em>
+		<strong>Total Bandwidth Used:</strong> <em><?php echo $this->functions->getFilesizePrefix($this->db->select_sum('sent')->get('downloads')->row()->sent)?></em>
 	</td>
 </tr>
 <tr>
@@ -163,13 +163,18 @@ if($load > 100)
     $load = 100;
 }
 
-$free_space = disk_free_space('filestore/');
-$total_space = disk_total_space('filestore/');
+$free_space = disk_free_space(dirname('filestore/'));
+$total_space = disk_total_space(dirname('filestore/'));
+$used_space = $total_space - $free_space;
 $space_p = (($free_space / $total_space) * 100);
+$space_n = ($space_p - 99) * (-1);
 $free_space = $this->functions->getFilesizePrefix($free_space);
 $total_space = $this->functions->getFilesizePrefix($total_space);
+$used_space = $this->functions->getFilesizePrefix($used_space);
 ?>
 <table border="0" style="width:98%">
+	<? 
+	if(!isset($_SERVER['WINDIR'])){?>
     <tr>
         <td>
             <h4 style="padding:4px;margin-top:4px;">Server Load: <?=$load?>%</h4>
@@ -178,12 +183,13 @@ $total_space = $this->functions->getFilesizePrefix($total_space);
             </div><br />
         </td>
     </tr>
-    
+    <? }?>
     <tr>
         <td>
             <h4 style="padding:4px;margin-top:4px;">Total Disk Space: <?=$total_space?></h4>
             <div class="progress_border" style="margin-left:2px; width:99%;">
-                <div class="progress_img_sliver" style="width:<?=round($space_p)?>%;"><?=$free_space?></div>
+                <div class="progress_img_sliver" style="width:<?=round($space_p)?>%;"><?=$used_space?> Used</div>
+				<div class="progress_img_blank" style="width:<?=round($space_n)?>%;"><?=$free_space?> Free</div>
             </div>
             <br />
         </td>

@@ -22,7 +22,7 @@
  * @subpackage	Controllers
  * @category	Controllers
  * @author		Matthew Glinski
- * @link		http://xtrafile.com/docs/pages/files
+ * @link		http://xtrafile.com/docs/pages/user
  */
 
 // ------------------------------------------------------------------------
@@ -101,7 +101,7 @@ class User extends Controller
 		$rules['password'] = "trim|required|min_length[4]|matches[passconf]";
 		$rules['passconf'] = "trim|required";
 		$rules['email'] = "trim|required|valid_email|max_length[255]|matches[emailConf]|callback__email_check";
-		$rules['emailConf'] = "trim|required|valid_email|max_length[255]|callback__email_check";
+		$rules['emailConf'] = "trim|required";
 		
 		//echo serialize(array('email' => 'text'));
 		
