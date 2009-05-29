@@ -39,10 +39,6 @@ class Server extends Controller
 	function index()
 	{
 		redirect('admin/server/view');
-		$hello = <<<OHSHIP
-		
-		
-		OHSHIP;
 	}
 	
 	function view()
@@ -132,8 +128,6 @@ class Server extends Controller
 		
 		if(!file_exists(realpath('./server_package')) or !file_exists(realpath('./server_package/index.php')))
 		{
-			echo (string)file_exists(realpath('./server_package')).'<br />';
-			echo (string)file_exists(realpath('./server_package/index.php'));
 			$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Install Server Software'));
 			$this->load->view($this->startup->skin.'/admin/servers/install_error');
 			$this->load->view($this->startup->skin.'/footer');
