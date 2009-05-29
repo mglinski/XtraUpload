@@ -52,7 +52,7 @@ class Folderss extends Controller
 		$this->load->library('pagination');
 		$perPage = 50;
 		
-		$config['base_url'] = base_url().'admin/folders/view';
+		$config['base_url'] = site_url('admin/folders/view');
 		$config['total_rows'] = $this->folders_db->getNumFolders();
 		$config['per_page'] = $perPage;	
 		$config['uri_segment'] = 4;	
@@ -85,7 +85,7 @@ class Folderss extends Controller
 		$this->load->library('pagination');
 		$perPage = 50;
 		
-		$config['base_url'] = base_url().'admin/folders/view';
+		$config['base_url'] = site_url('admin/folders/view');
 		$config['total_rows'] = $this->folders_db->getNumSearchFolders($query);
 		$config['per_page'] = $perPage;	
 		$config['uri_segment'] = 4;	

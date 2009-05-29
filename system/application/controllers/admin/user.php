@@ -84,7 +84,7 @@ class User extends Controller
 		$data['direction'] = $direction;
 		$data['perPage'] = $perPage;
 				
-		$config['base_url'] = base_url().'admin/user/view';
+		$config['base_url'] = site_url('admin/user/view');
 		$config['total_rows'] = $this->users_db->getNumUsers();
 		$config['per_page'] = $perPage;	
 		$config['uri_segment'] = 4;	
@@ -145,7 +145,7 @@ class User extends Controller
 			$data['query'] = $query;
 			$data['perPage'] = $perPage;
 			
-			$config['base_url'] = base_url().'admin/user/view';
+			$config['base_url'] = site_url('admin/user/view');
 			$config['total_rows'] = $results_num;
 			$config['per_page'] = $perPage;	
 			$config['uri_segment'] = 4;	

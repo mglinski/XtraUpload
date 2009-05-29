@@ -47,6 +47,7 @@ class Home extends Controller
 //			redirect('home');
 //		}
 		$this->load->model('server/server_db');
+		$this->load->model('admin_access');
 		$this->lang->load('home');
 	}
 	

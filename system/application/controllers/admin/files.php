@@ -74,7 +74,7 @@ class Files extends Controller
 		$data['flashMessage'] = '';
 		$data['perPage'] = $perPage;
 		
-		$config['base_url'] = base_url().'admin/files/view';
+		$config['base_url'] = site_url('admin/files/view');
 		$config['total_rows'] = $this->files_db->getAdminNumFiles();
 		$config['per_page'] = $perPage;	
 		$config['uri_segment'] = 4;	
@@ -128,7 +128,7 @@ class Files extends Controller
 		$data['flashMessage'] = '';
 		$data['perPage'] = $perPage;
 		
-		$config['base_url'] = base_url().'admin/files/view';
+		$config['base_url'] = site_url('admin/files/view');
 		$config['total_rows'] = $this->files_db->getAdminNumFilesInFolder($folder_id);
 		$config['per_page'] = $perPage;	
 		$config['uri_segment'] = 4;	
@@ -188,7 +188,7 @@ class Files extends Controller
 			$data['query'] = $query;
 			$data['perPage'] = $perPage;
 			
-			$config['base_url'] = base_url().'admin/files/search/'.urlencode($query);
+			$config['base_url'] = site_url('admin/files/search/'.urlencode($query));
 			$config['total_rows'] = $data['res_num'];
 			$config['per_page'] = $perPage;	
 			$config['uri_segment'] = 5;	

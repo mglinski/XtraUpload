@@ -62,7 +62,7 @@ class Transactions extends Controller
 		$data['flashMessage'] = '';
 		$data['perPage'] = $perPage;
 				
-		$config['base_url'] = base_url().'admin/user/view';
+		$config['base_url'] = site_url('admin/user/view');
 		$config['total_rows'] = $this->transactions_db->getNumTransactions();
 		$config['per_page'] = $perPage;	
 		$config['uri_segment'] = 4;	
