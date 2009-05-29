@@ -166,7 +166,7 @@ if($load > 100)
 $free_space = disk_free_space(dirname('filestore/'));
 $total_space = disk_total_space(dirname('filestore/'));
 $used_space = $total_space - $free_space;
-$used_space_percent = (($free_space / $total_space) * 100);
+$used_space_percent = (($used_space / $total_space) * 100);
 $free_space_percent = ($used_space_percent - 100) * (-1);
 $free_space = $this->functions->getFilesizePrefix($free_space);
 $total_space = $this->functions->getFilesizePrefix($total_space);
