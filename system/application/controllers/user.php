@@ -702,11 +702,11 @@ class User extends Controller
 			'ip' => $this->input->ip_address(),
 		);
 		
-		$group = $this->db->select('price')->get_where('groups', array('id' => $this->input->post('group')))->row()->price;
+		$group = $this->db->select('price')->get_where('groups', array('id' => $this->input->post('group')))->row();
 		
 		$forward_pay = false;
 		
-		if($group > 0.00)
+		if($group->price > 0.00)
 		{
 			$data['status'] = 0;
 			$data['gateway'] = $this->input->post('gate');
@@ -720,7 +720,7 @@ class User extends Controller
 		
 		$id = $this->users->newUser($data, $forward_pay);
 		
-		if(!$forward_pay)
+		if($forward_pay == FALSE)
 		{
 			$this->users->processLogin($this->input->post('username'), $this->input->post('password'));
 			$this->load->view($this->startup->skin.'/header', array('headerTitle' =>$this->lang->line('user_controller_10')));

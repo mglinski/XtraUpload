@@ -166,14 +166,15 @@ if($load > 100)
 $free_space = disk_free_space(dirname('filestore/'));
 $total_space = disk_total_space(dirname('filestore/'));
 $used_space = $total_space - $free_space;
-$space_p = (($free_space / $total_space) * 100);
-$space_n = ($space_p - 99) * (-1);
+$used_space_percent = (($free_space / $total_space) * 100);
+$free_space_percent = ($used_space_percent - 100) * (-1);
 $free_space = $this->functions->getFilesizePrefix($free_space);
 $total_space = $this->functions->getFilesizePrefix($total_space);
 $used_space = $this->functions->getFilesizePrefix($used_space);
 ?>
 <table border="0" style="width:98%">
 	<? 
+	// I hate the COM, so if on a windows box dont show the CPU load
 	if(!isset($_SERVER['WINDIR'])){?>
     <tr>
         <td>
@@ -188,8 +189,8 @@ $used_space = $this->functions->getFilesizePrefix($used_space);
         <td>
             <h4 style="padding:4px;margin-top:4px;">Total Disk Space: <?=$total_space?></h4>
             <div class="progress_border" style="margin-left:2px; width:99%;">
-                <div class="progress_img_sliver" style="width:<?=round($space_p)?>%;"><?=$used_space?> Used</div>
-				<div class="progress_img_blank" style="width:<?=round($space_n)?>%;"><?=$free_space?> Free</div>
+                <div class="progress_img_sliver" style="width:<?=round($used_space_percent)?>%;"><?=$used_space?> Used</div>
+				<div class="progress_img_blank" style="width:<?=round($free_space_percent)?>%;"><?=$free_space?> Free</div>
             </div>
             <br />
         </td>
