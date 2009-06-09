@@ -10,7 +10,7 @@
 		<td>
 			<?php if($image){?>
 				<div class="float-right" style="margin-left:8px;">
-					<label for="image">Image Preview: <?php echo $this->lang->line('files_get_2')?></label>
+					<label for="image"><?php echo $this->lang->line('files_get_2')?></label>
 					<span id="image"><img src="<?php echo $image['thumb_url']?>" alt="" class="nb" /></span> 
 				</div>
 			<?php }?>
