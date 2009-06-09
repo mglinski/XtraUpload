@@ -139,99 +139,15 @@ class Functions
 		return '"3gp", "7z", "aca", "ai", "api", "app", "as", "ascx", "asmx", "asp", "aspx", "avi", "avs", "axt", "bash", "bat", "bmp", "c", "cab", "cal", "cat", "cda", "cf", "chm", "cnf", "conf", "config", "cpl", "cpp", "crt", "cs", "csproj", "css", "csv", "cue", "dar", "db", "dbp", "dem", "disco", "dll", "dng", "doc", "dot", "dpk", "dpr", "dps", "dtq", "dun", "etp", "exe", "fdb", "fhf", "fla", "flv", "fnd", "fon", "gif", "gz", "h", "hlp", "hol", "htm", "html", "htt", "hxc", "hxi", "hxk", "hxs", "hxt", "icm", "ini", "ins", "iqy", "iso", "its", "jar", "java", "jbf", "job", "jpeg", "jpf", "jpg", "js", "lnk", "m3u", "m3v", "m4a", "m4p", "m4v", "mad", "map", "mapup", "mat", "mdb", "mdf", "mht", "mml", "mov", "mp3", "mp4", "mpeg", "mpg", "msc", "msg", "msi", "ncd", "nfo", "none", "nrg", "ogg", "ost", "otf", "pas", "pdf", "pdi", "pet", "pfm", "php", "pif", "plg", "pmc", "", "pot", "ppk", "pps", "ppt", "prf", "psd", "psp", "pub", "qbb", "rar", "rb", "rc", "rct", "rdp", "refresh", "reg", "res", "resx", "rmvb", "rss", "rtf", "sdl", "sea", "sh", "shs", "sln", "sql", "suo", "swf", "tar", "tdf", "tdl", "theme", "tiff", "ttf", "txt", "url", "vb", "vbproj", "vbs", "vcard", "vcf", "vob", "vsmacros", "wab", "wma", "wmv", "wpl", "wri", "wsc", "xhtml", "xla", "xls", "xml", "xpi", "xsd", "xsl", "xslt", "xsn", "zip"';
 	}
 	
-	function getFilesizePrefix($size, $mode = 0)
+	// Depreciated - USE >> byte_format()
+	function getFilesizePrefix($size)
 	{
-		$times = 0;
-		$comma = '.';
-		while (1024 < $size)
-		{
-		  ++$times;
-		  $size = $size / 1024;
-		}
-	
-		$size2 = floor ($size);
-		$rest = $size - $size2;
-		$rest = $rest * 100;
-		$decimal = floor ($rest);
-		$addsize = $decimal;
-		if ($decimal < 10)
-		{
-		  $addsize .= '0';
-		}
-	
-		if ($times == 0)
-		{
-		  $addsize = $size2;
-		}
-		else
-		{
-		  $addsize = $size2 . $comma . substr ($addsize, 0, 2);
-		}
-	
-		switch ($times)
-		{
-		  case 0:
-		  {
-			$mega = ' Byte';
-			break;
-		  }
-	
-		  case 1:
-		  {
-			$mega = ' KB';
-			break;
-		  }
-	
-		  case 2:
-		  {
-			$mega = ' MB';
-			break;
-		  }
-	
-		  case 3:
-		  {
-			$mega = ' GB';
-			break;
-		  }
-	
-		  case 4:
-		  {
-			$mega = ' TB';
-			break;
-		  }
-		  
-		  case 5:
-		  {
-			$mega = ' PB';
-			break;
-		  }
-		  
-		  case 6:
-		  {
-			$mega = ' EB';
-			break;
-		  }
-		  
-		  case 7:
-		  {
-			$mega = ' ZB';
-			break;
-		  }
-		  
-		  case 8:
-		  {
-			$mega = ' YB';
-			break;
-		  }
-		}
-	
-		if (($mode == 1 AND $pos = strrpos ($addsize, '.') !== false))
-		{
-		  $addsize = substr ($addsize, 0, $pos);
-		}
-	
-		$addsize .= $mega;
-		return $addsize;
+	    if(!function_exists('byte_format'))
+	    {
+	        $ci =& get_instance();
+	        $ci->load->helper('number');
+	    }
+	    return byte_format($size);
 	}
 	
 	public function parseVersion($v, $details=true)

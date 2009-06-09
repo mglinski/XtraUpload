@@ -1,4 +1,4 @@
-<h2 style="vertical-align:middle"><img src="<?=site_url('img/icons/user_32.png')?>" class="nb" alt="" /> User - Edit</h2><br />
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/user_32.png'?>" class="nb" alt="" /> User - Edit</h2><br />
 <?=$error?>
 <?=generateLinkButton('Manage Users', site_url('admin/user/home'), base_url().'img/icons/back_16.png')?><br />
 <form action='<?php echo site_url('admin/user/edit/'.$user->id)?>' method="post">

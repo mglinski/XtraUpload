@@ -1,4 +1,4 @@
-<h2 style="vertical-align:middle"><img src="<?=site_url('img/icons/user_32.png')?>" class="nb" alt="" /> Manage Users - Search</h2>
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/user_32.png'?>" class="nb" alt="" /> Manage Users - Search</h2>
 <div class="users">
 	<?=$flashMessage?>
 	<form action="<?=site_url('admin/user/')?>" id="userAdmin" method="post" style="padding:0; margin:0; border:0;">

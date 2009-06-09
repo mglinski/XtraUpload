@@ -26,6 +26,7 @@ $this->load->helper('string');
 		<th style="width:20px"><div style="text-align:center"><input type="checkbox" onchange="switchCheckboxes(this.checked)" /></div></th>
 		<th><?php echo $this->lang->line('files_manage_table_1') ?></th>
 		<th><?php echo $this->lang->line('files_manage_table_2') ?></th>
+		<th><?php //echo $this->lang->line('files_manage_table_') ?>Downloads</th>
 		<th style="width:80px"><?php echo $this->lang->line('files_manage_table_3') ?></th>
 	</tr>
 	<?php 
@@ -49,6 +50,9 @@ $this->load->helper('string');
 		</td>
 		<td>
 			<?=$this->functions->getFilesizePrefix($file->size)?>
+		</td>
+		<td>
+			<?=intval($file->downloads)?>
 		</td>
 		<td>
 			<a href='javascript:;' onclick='$("#<?=$file->file_id?>-details").toggle()'><img src="<?=$base_url.'/img/icons/link_16.png'?>"  title="<?php echo $this->lang->line('files_manage_table_4') ?>" class="nb" /></a>

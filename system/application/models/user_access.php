@@ -31,12 +31,12 @@ class user_access extends Model
 {
 	// ------------------------------------------------------------------------
 
-    public function Admin_access()
+    public function User_access()
     {
         // Call the Model constructor
         parent::Model();
 		
-		// Determine of the user has Admin privliges
+		// Determine if the users is Logged into the system
 		$is_user = $this->session->userdata('login');
 		if(!$is_user)
 		{

@@ -17,7 +17,7 @@
 			<code>
 				<label for="name" style="display:inline;padding-bottom:2px">
 					<img class="nb" src="<?php echo base_url()?>img/icons/about_16.png" alt="" />
-					Name:<?php echo $this->lang->line('files_get_3')?>
+					<?php echo $this->lang->line('files_get_3')?>
 				</label>
 				<span id="name">
 					<nobr><?php echo $file->o_filename?> <img class="nb" src="<?php echo base_url()?>img/files/<?php echo $file->type?>.png" alt="" /></nobr>
@@ -131,7 +131,7 @@
 }
 ?>
 
-<? $this->xu_api->hooks->runHooks('files::get::add_section::before_download', null); ?>
+<? /*File Page Hooks*/ $this->xu_api->hooks->runHooks('files::get::add_section::before_download', null); ?>
 
 <h3 id="dlhere"><img src="<?php echo $base_url?>img/other/download_16.png" class="nb" alt="" /> <?php echo $this->lang->line('files_get_16')?></h3>
 <form action="<?php echo site_url('files/gen/'.$file->file_id.'/'.$file->link_name)?>" method="post" onsubmit="return checkTimer()">
@@ -156,12 +156,16 @@
 		<?php 
 	}
 	echo generateSubmitButton($this->lang->line('files_get_21'), base_url().'img/icons/backup_16.png', 'green');
+	if($image)
+	{
+	    echo generateLinkButton('View This Image', $image['direct_url'], base_url().'img/icons/pictures_16.png', null, array('target' => '_blank'));
+	}
 	?><br />
 	</span>
 </div>
 </form>
 
-<? $this->xu_api->hooks->runHooks('files::get::add_section::after_download', null); ?>
+<? /*File Page Hooks*/ $this->xu_api->hooks->runHooks('files::get::add_section::after_download', null); ?>
 
 <script type="text/javascript">
 <? 
