@@ -171,7 +171,7 @@ class Ipn extends Controller
 	
 	private function _newUserPayment($id, $amount)
 	{
-		$this->db->where('id', $id)->update('users,' array('status' => 1));
+		$this->db->where('id', $id)->update('users', array('status' => 1));
 		
 		$user = $this->db->get_where('users', array('id' => $id))->row();
 		$group = $this->db->get_where('groups', array('id' => $user->group))->row();
