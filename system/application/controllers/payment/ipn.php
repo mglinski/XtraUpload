@@ -81,13 +81,17 @@ class Ipn extends Controller
 				if($settings['type'] == 'reg')
 				{
 					$this->_newUserPayment($settings['user_id'], $myPaypal->ipnData['amount']);
+					redirect('/user/pay_complete');
 				}
+				redirect('/user/pay_cancel');
 			}
 			else
 			{
 				 $this->_logError($myPaypal->ipnData);
+				 redirect('/user/pay_cancel');
 			}
 		}
+		redirect('/user/pay_cancel');
 	}
 	
 	function authorize()
@@ -121,11 +125,14 @@ class Ipn extends Controller
 			if($settings['type'] == 'reg')
 			{
 				$this->_newUserPayment($settings['user_id'], $myAuthorize->ipnData['x_Amount']);
+				redirect('/user/pay_complete');
 			}
+			redirect('/user/pay_cancel');
 		}
 		else
 		{
 			$this->_logError($myAuthorize->ipnData);
+			redirect('/user/pay_cancel');
 		}
 	}
 	
@@ -159,6 +166,7 @@ class Ipn extends Controller
 				$this->_newUserPayment($settings['user_id'], $my2CO->ipnData['total']);
 				redirect('/user/pay_complete');
 			}
+			redirect('/user/pay_cancel');
 		}
 		else
 		{
