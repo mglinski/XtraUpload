@@ -117,10 +117,10 @@ class Ipn extends Controller
 		// Check validity and write down it
 		if ($myAuthorize->validateIpn())
 		{
-			$settings = unserialize(base64_decode($myPaypal->ipnData['x_Cust_ID']));
+			$settings = unserialize(base64_decode($myAuthorize->ipnData['x_Cust_ID']));
 			if($settings['type'] == 'reg')
 			{
-				$this->_newUserPayment($settings['user_id'], $myPaypal->ipnData['x_Amount']);
+				$this->_newUserPayment($settings['user_id'], $myAuthorize->ipnData['x_Amount']);
 			}
 		}
 		else
@@ -153,15 +153,17 @@ class Ipn extends Controller
 		// Check validity and write down it
 		if ($my2CO->validateIpn())
 		{
-			$settings = unserialize(base64_decode($myPaypal->ipnData['custom']));
+			$settings = unserialize(base64_decode($my2CO->ipnData['custom']));
 			if($settings['type'] == 'reg')
 			{
-				$this->_newUserPayment($settings['user_id'], $myPaypal->ipnData['total']);
+				$this->_newUserPayment($settings['user_id'], $my2CO->ipnData['total']);
+				redirect('/user/pay_complete');
 			}
 		}
 		else
 		{
 			$this->_logError($my2CO->ipnData);
+			redirect('/user/pay_cancel');
 		}
 	}
 	
@@ -169,7 +171,7 @@ class Ipn extends Controller
 	
 	private function _newUserPayment($id, $amount)
 	{
-		$this->db->where('id', $id)->update('users' array('status' => 1));
+		$this->db->where('id', $id)->update('users,' array('status' => 1));
 		
 		$user = $this->db->get_where('users', array('id' => $id))->row();
 		$group = $this->db->get_where('groups', array('id' => $user->group))->row();
@@ -224,7 +226,7 @@ class Ipn extends Controller
 			'status' => '0',
 			'ammount' => $amount,
 			'config' => serialize(array('type' => 'text', 'activated' => 'text', 'duration' => 'text', 'group' => 'text', 'email' => 'text' )),
-			'settings' => serialize(array('type' => 'New Registration', 'activated' => 'yes', 'duration' => $group->repeat_billing, 'group' => $group->id, 'email' => $user->email ))
+			'settings' => serialize(array('type' => 'New Registration', 'activated' => 'no', 'duration' => $group->repeat_billing, 'group' => $group->id, 'email' => $user->email ))
 		);
 		
 		$this->transactions_db->insert($id);
