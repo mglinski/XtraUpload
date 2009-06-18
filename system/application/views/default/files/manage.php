@@ -61,7 +61,7 @@ $this->load->helper('string');
 		</td>
 	</tr>
 	<tr class="details" style="display:none; border-top:none;" id="<?=$file->file_id?>-details">
-		<td colspan="4" id="<?=$file->file_id?>-details-inner">
+		<td colspan="5" id="<?=$file->file_id?>-details-inner">
 		<?php echo $this->lang->line('files_manage_table_7') ?>: <input class="down_link" readonly="readonly" type="text" size="65" value="<?=$link['down']?>" onfocus="this.select()" onclick="this.select()" ondblclick="this.select()" /><br />
 		<?php echo $this->lang->line('files_manage_table_8')?>: <a href="<?=$link['del']?>"><?=$link['del']?></a>
 		<?
@@ -73,7 +73,7 @@ $this->load->helper('string');
 		</td>
 	</tr>
 	<tr class="details" style="display:none; border-top:none;" id="<?=$file->id?>-edit">
-		<td colspan="4" id="<?=$file->file_id?>-edit-inner">
+		<td colspan="5" id="<?=$file->file_id?>-edit-inner">
 			<input name="<?=$file->id?>_fid" id="<?=$file->id?>_fid" value="<?=$file->secid?>" type="hidden" />
 		
 			<span class="float-right"><label for="<?=$file->id?>_desc"><?php echo $this->lang->line('files_manage_11') ?></label>

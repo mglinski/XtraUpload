@@ -32,7 +32,7 @@ class Upload extends Controller
 	public function Upload()
 	{
 		parent::Controller();	
-		$this->lang->load('upload');
+		$this->lang->load('uploads');
 	}
 	
 	// ------------------------------------------------------------------------
@@ -139,7 +139,7 @@ class Upload extends Controller
 		}
 		else
 		{
-		    $this->files_db->setUploadFailed($secid, str_replace('upload_', '', $this->upload->error_num[0]));
+		    $this->files_db->setUploadFailed($secid, str_replace('upload_fail_', '', $this->upload->error_num[0]));
 			echo "FAIL";	
 		}
 	}

@@ -367,7 +367,7 @@ span.cssButton a.buttonRed:active
 	width: 350px;
 	height: 18px;
 	overflow: hidden; 
-	text-align: center; 
+	text-align: left; 
 	color: #333; 
 	font-weight: bold; 
 	padding-top: 0pt; 
@@ -379,6 +379,7 @@ span.cssButton a.buttonRed:active
 	background:url(../images/p_bar_n.gif) left top repeat-x;
 	height: 18px;
 	width: 30px;
+	
 }
 
 .progress_img_sliver

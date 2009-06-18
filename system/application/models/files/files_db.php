@@ -252,7 +252,7 @@ class Files_db extends Model
 		    $reason = $this->getReasonUploadFailed($secid);
 		    if(!$reason)
 		    {
-		        return false;
+		        return array('reason' => 'unknown', 'failed' => true);
 		    }
 		    else
 		    {
@@ -266,8 +266,7 @@ class Files_db extends Model
 	    $d = $this->db->get_where('upload_failures', array('secid' => $secid));
 	    if($d->num_rows() > 0)
 	    {
-	        $this->lang->load('etc/upload_failure');
-	        
+	        $this->lang->load('upload_failure');
 	        $reason = $this->lang->line('upload_fail_'.($d->row()->reason));
 	        //$this->db->delete('upload_failures', array('secid' => $secid));
 	        

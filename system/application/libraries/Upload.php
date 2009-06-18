@@ -140,21 +140,14 @@ class CI_Upload {
 		// Is $_FILES[$field] set? If not, no reason to continue.
 		if ( ! isset($_FILES[$field]))
 		{
-			$this->set_error('upload_no_file_selected_1');
-			$debug = '$_REQUEST = '.var_export($_REQUEST, true)."\n\n";
-			$debug .= '$_FILES = '.var_export($_FILES, true)."\n\n";
-			$debug .= '$_COOKIE = '.var_export($_COOKIE, true)."\n\n";
-			$debug .= '$_SERVER = '.var_export($_SERVER, true)."\n\n";
-			
-			file_put_contents('debug.txt', $debug);
-			
+			$this->set_error('upload_fail_no_file_selected');
 			return FALSE;
 		}
 		
 		// Is the upload path valid?
 		if ( ! $this->validate_upload_path())
 		{
-			$this->set_error('upload_no_filepath');
+			$this->set_error('upload_fail_no_filepath');
 			return FALSE;
 		}
 						
@@ -166,27 +159,27 @@ class CI_Upload {
 			switch($error)
 			{
 				case 1:	// UPLOAD_ERR_INI_SIZE
-					$this->set_error('upload_file_exceeds_limit');
+					$this->set_error('upload_fail_file_exceeds_limit');
 					break;
 				case 2: // UPLOAD_ERR_FORM_SIZE
-					$this->set_error('upload_file_exceeds_form_limit');
+					$this->set_error('upload_fail_file_exceeds_form_limit');
 					break;
 				case 3: // UPLOAD_ERR_PARTIAL
-				   $this->set_error('upload_file_partial');
+				   $this->set_error('upload_fail_file_partial');
 					break;
 				case 4: // UPLOAD_ERR_NO_FILE
-				   $this->set_error('upload_no_file_selected_2');
+				   $this->set_error('upload_fail_no_file_selected_2');
 					break;
 				case 6: // UPLOAD_ERR_NO_TMP_DIR
-					$this->set_error('upload_no_temp_directory');
+					$this->set_error('upload_fail_no_temp_directory');
 					break;
 				case 7: // UPLOAD_ERR_CANT_WRITE
-					$this->set_error('upload_unable_to_write_file');
+					$this->set_error('upload_fail_unable_to_write_file');
 					break;
 				case 8: // UPLOAD_ERR_EXTENSION
-					$this->set_error('upload_stopped_by_extension');
+					$this->set_error('upload_fail_stopped_by_extension');
 					break;
-				default :   $this->set_error('upload_no_file_selected_3');
+				default :   $this->set_error('upload_fail_no_file_selected_3');
 					break;
 			}
 
@@ -210,14 +203,14 @@ class CI_Upload {
 		// Is the file type allowed to be uploaded?
 		if ( ! $this->is_allowed_filetype())
 		{
-			$this->set_error('upload_invalid_filetype');
+			$this->set_error('upload_fail_invalid_filetype');
 			return FALSE;
 		}
 
 		// Is the file size within the allowed maximum?
 		if ( ! $this->is_allowed_filesize())
 		{
-			$this->set_error('upload_invalid_filesize');
+			$this->set_error('upload_fail_invalid_filesize');
 			return FALSE;
 		}
 
@@ -225,7 +218,7 @@ class CI_Upload {
 		// Note: This can fail if the server has an open_basdir restriction.
 		if ( ! $this->is_allowed_dimensions())
 		{
-			$this->set_error('upload_invalid_dimensions');
+			$this->set_error('upload_fail_invalid_dimensions');
 			return FALSE;
 		}
 
@@ -267,7 +260,7 @@ class CI_Upload {
 		{
 			if ( ! @rename($this->file_temp, $this->upload_path.$this->file_name))
 			{
-				 $this->set_error('upload_destination_error');
+				 $this->set_error('upload_fail_destination_error');
 				 return FALSE;
 			}
 		}
@@ -380,7 +373,7 @@ class CI_Upload {
 
 		if ($new_filename == '')
 		{
-			$this->set_error('upload_bad_filename');
+			$this->set_error('upload_fail_bad_filename');
 			return FALSE;
 		}
 		else
@@ -628,7 +621,7 @@ class CI_Upload {
 	{
 		if ($this->upload_path == '')
 		{
-			$this->set_error('upload_no_filepath');
+			$this->set_error('upload_fail_no_filepath');
 			return FALSE;
 		}
 		
@@ -639,13 +632,13 @@ class CI_Upload {
 
 		if ( ! @is_dir($this->upload_path))
 		{
-			$this->set_error('upload_no_filepath');
+			$this->set_error('upload_fail_no_filepath');
 			return FALSE;
 		}
 
 		if ( ! is_really_writable($this->upload_path))
 		{
-			$this->set_error('upload_not_writable');
+			$this->set_error('upload_fail_not_writable');
 			return FALSE;
 		}
 
@@ -768,14 +761,14 @@ class CI_Upload {
 	function set_error($msg)
 	{
 		$CI =& get_instance();	
-		$CI->lang->load('upload');
+		$CI->lang->load('upload_failure');
 		
 		if (is_array($msg))
 		{
 			foreach ($msg as $val)
 			{
 				$this->error_num[] = $val;
-				$msg = ($CI->lang->line($val) == FALSE) ? $val : $CI->lang->line($val);				
+				$msg = ($CI->lang->line($val) == FALSE) ? $val : $CI->lang->line('upload_fail_'.$val);				
 				$this->error_msg[] = $msg;
 				log_message('error', $msg);
 			}		
@@ -783,7 +776,7 @@ class CI_Upload {
 		else
 		{
 		    $this->error_num[] = $msg;
-			$msg = ($CI->lang->line($msg) == FALSE) ? $msg : $CI->lang->line($msg);
+			$msg = ($CI->lang->line($msg) == FALSE) ? $msg : $CI->lang->line('upload_fail_'.$msg);
 			$this->error_msg[] = $msg;
 			log_message('error', $msg);
 		}
