@@ -16,7 +16,9 @@ p.action span.desc
 	display: block;
 	padding-bottom: 4px;
 }
-
+h2 {
+	vertical-align:middle;
+}
 /* Notice Styles */
 
 span.alert, span.info, span.download, span.note
