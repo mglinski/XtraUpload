@@ -38,6 +38,7 @@ $lang['files_manage_storage_limit_4'] = " MB";
 $lang['files_manage_storage_limit_5'] = " remaining.";
 $lang['files_manage_table_1'] = "File name";
 $lang['files_manage_table_2'] = "Size";
+$lang['files_manage_table_2_1'] = "Downloads";
 $lang['files_manage_table_3'] = "Actions";
 $lang['files_manage_table_4'] = "Show/Hide Links";
 $lang['files_manage_table_5'] = "Are you SURE you want to do this?";
@@ -84,6 +85,22 @@ $lang['files_get_18'] = " more second(s) to download.";
 $lang['files_get_19'] = "Captcha Test - Type the three(3) letters you see below:";
 $lang['files_get_20'] = "Get New Captcha";
 $lang['files_get_21'] = "Download"; 
+
+$lang['files_search_new_search_heading'] = 'Search Files';
+$lang['files_search_new_search_1'] = 'You are currently not allowed to search files. Please ';
+$lang['files_search_new_search_1_1'] = 'login';
+$lang['files_search_new_search_1_2'] = ' to gain access.';
+$lang['files_search_new_files_heading'] = 'Search Files';
+$lang['files_search_new_files_1'] = 'Search Text(can be file id, part of a file name, or part of a file description)';
+
+$lang['files_search_query_files_heading'] = 'Search Files';
+$lang['files_search_query_files_1'] = 'You are currently not allowed to search files. Please ';
+$lang['files_search_query_files_1_1'] = 'login';
+$lang['files_search_query_files_1_2'] = ' to gain access.';
+$lang['files_search_query_1'] = 'Your query \'';
+$lang['files_search_query_2'] = '\' returned ';
+$lang['files_search_query_3'] = ' result(s)';
+
 
 $lang['files_controller_1'] = "Download File "; 
 $lang['files_controller_2'] = "The Captcha you submited was incorrect."; 

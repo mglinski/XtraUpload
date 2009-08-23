@@ -3,7 +3,7 @@ if(!$this->startup->group_config->can_url_upload)
 {
 	?>
 	<h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/icons/connect_32.png'?>" class="nb" alt="" /><?php echo $this->lang->line('upload_url_header')?></h2>
-	<span class="alert">You are currently not allowed to use URL Upload. Please <a href="<?=site_url('user/login')?>">login</a> to gain access.</span>
+	<span class="alert"><?php echo $this->lang->line('upload_url_error_1'); ?><a href="<?=site_url('user/login')?>"><?php echo $this->lang->line('upload_url_error_1_1'); ?></a><?php echo $this->lang->line('upload_url_error_1_2'); ?></span>
 	<?
 }
 else

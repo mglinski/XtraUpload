@@ -65,7 +65,7 @@
 	</script>
 	
 	<div style="display:none" id="payment_gate">
-		<label style="font-weight:bold" for="group">Select Payment Method</label>
+		<label style="font-weight:bold" for="group"><?php echo $this->lang->line('user_register_being_payment_method'); ?></label>
 		<select name="gate">
 			<?php
 			foreach($gates->result() as $gate)

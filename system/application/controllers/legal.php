@@ -35,6 +35,7 @@ class Legal extends Controller
 	{
 		parent::Controller();
 		
+		$this->lang->load('legal');
 	}
 	
 	function index()

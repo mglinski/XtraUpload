@@ -40,6 +40,9 @@ $lang['upload_url_9'] = "Begin Upload!";
 $lang['upload_url_10'] = "File Name";
 $lang['upload_url_11'] = "Actions";
 $lang['upload_url_12'] = "Remove All?";
+$lang['upload_url_error_1'] = 'You are currently not allowed to use URL Upload. Please ';
+$lang['upload_url_error_1_1'] = 'login';
+$lang['upload_url_error_1_2'] = ' to gain access.';
 
 $lang['upload_links_1'] = "Download Link: ";
 $lang['upload_links_2'] = "Delete Link: ";

@@ -65,6 +65,10 @@ $lang['user_compare_26'] = "MB";
 $lang['user_compare_27'] = "Unlimited ";
 $lang['user_compare_28'] = " Files";
 
+$lang['user_files_1'] = ' User Files: ';
+$lang['user_files_2'] = 'This user does not allow public viewing of their files.';
+$lang['user_files_3'] = ' User Files: ';
+
 $lang['user_forgot_header'] = " Forgot Password";
 $lang['user_forgot_1'] = "Restore Your Password";
 $lang['user_forgot_2'] = "Username";
@@ -84,6 +88,7 @@ $lang['user_password_4'] = "Confirm New Password";
 $lang['user_password_5'] = "Submit Changes";
 
 $lang['user_register_begin_header'] = "Register New User";
+$lang['user_register_being_payment_method'] = 'Select Payment Method';
 $lang['user_register_begin_1'] = "Username";
 $lang['user_register_begin_2'] = "User Group";
 $lang['user_register_begin_3'] = "Click here for a comparision";
@@ -119,6 +124,14 @@ $lang['user_register_closed_1'] = "Registrations Closed";
 $lang['user_register_closed_2'] = "We are sorry but we are not currently allowing new registrations.";
 $lang['user_register_closed_3'] = "Please check back later, as we may open up more spots in the future.";
 
+$lang['user_view_header'] = ' User Profile:  ';
+$lang['user_view_1'] = ' This is your user profile! ';
+$lang['user_view_2'] = 'You can update these values ';
+$lang['user_view_3'] = 'here!';
+$lang['user_view_header_1'] = ' User Info';
+$lang['user_view_4'] = 'Username: ';
+$lang['user_view_header_2'] = ' User Stats';
+$lang['user_view_5'] = 'Uploaded Files: ';
 
 $lang['user_controller_1'] = "User Group Comparision";
 $lang['user_controller_2'] = "Register";

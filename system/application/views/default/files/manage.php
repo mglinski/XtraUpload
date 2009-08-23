@@ -26,7 +26,7 @@ $this->load->helper('string');
 		<th style="width:20px"><div style="text-align:center"><input type="checkbox" onchange="switchCheckboxes(this.checked)" /></div></th>
 		<th><?php echo $this->lang->line('files_manage_table_1') ?></th>
 		<th><?php echo $this->lang->line('files_manage_table_2') ?></th>
-		<th><?php //echo $this->lang->line('files_manage_table_') ?>Downloads</th>
+		<th><?php echo $this->lang->line('files_manage_table_2_1'); ?></th>
 		<th style="width:80px"><?php echo $this->lang->line('files_manage_table_3') ?></th>
 	</tr>
 	<?php 
