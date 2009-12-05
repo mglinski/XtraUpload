@@ -850,9 +850,6 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 			'mirror' => array(
 				'type' => 'TINYINT',
 				'constraint' => 1
-			),
-			'server' => array(
-				'type' => 'TEXT'
 			)
 		);
 		$this->dbforge->add_field($fields);

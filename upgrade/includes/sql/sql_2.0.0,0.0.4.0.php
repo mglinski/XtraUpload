@@ -150,6 +150,7 @@ $this->dbforge->add_column('refrence', $fields);
 
 $fields = array(
 	'server' => array(
+		'name' => 'server',
 		'type' => 'VARCHAR',
 		'constraint' => 250
 	),
