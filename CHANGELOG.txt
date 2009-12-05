@@ -13,3 +13,5 @@ Unified the file Editing widget in userspace
 Added admin panel login logger, now logs IP address and username of all admin logins.
 
 Fixed a few unreported bugs 
+
+----------------

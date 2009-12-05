@@ -845,7 +845,7 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 			),
 			'server' => array(
 				'type' => 'VARCHAR',
-				'constraint' => 255
+				'constraint' => 250
 			),
 			'mirror' => array(
 				'type' => 'TINYINT',
@@ -859,6 +859,7 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->add_key('prefix');
 		$this->dbforge->add_key('md5');
+		$this->dbforge->add_key('server');
 		$this->dbforge->create_table('files');
 		
 		// Folder Table
@@ -1274,6 +1275,10 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 				'type' => 'TINYINT',
 				'constraint' => '1',
 				'default' => '0'
+			),
+			'tags' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 200
 			)
 		);
 		
@@ -1300,6 +1305,24 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 				'type' => 'VARCHAR',
 				'constraint' => 255
 			),
+			
+			'num_files' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true
+			),
+			'free_space' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50
+			),
+			'used_space' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50
+			),
+			'total_space' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 50
+			),
 			'status' => array(
 				'type' => 'INT',
 				'default' => '0',
@@ -1308,11 +1331,125 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		);
 		$this->dbforge->add_field($fields);
 		$this->dbforge->add_key('id', true);
+		$this->dbforge->add_key('url');
 		$this->dbforge->create_table('servers');
 		
 		$data = array('id' => NULL, 'name' => 'main', 'url' => $this->input->post('url'), 'status' => 1);
 		$this->db->insert('servers', $data);
 		
+		// Sessions Table
+		$fields = array(
+			'session_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'auto_increment' => true
+			),
+			'ip_address' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'default' => 0,
+				'null' => false
+			),
+			'active' => array(
+				'type' => 'TINYINT',
+				'unsigned' => TRUE,
+				'default' => '0',
+				'constraint' => 1
+			),
+			'user_agent' => array(
+				'type' => 'VARCHAR',
+				'null' => false,
+				'constraint' => 50
+			),
+			'last_activity' => array(
+				'type' => 'INT',
+				'unsigned' => TRUE,
+				'default' => '0',
+				'constraint' => 10
+			),
+			'user_data' => array(
+				'type' => 'TEXT',
+				'null' => false
+			)
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('session_id', true);
+		$this->dbforge->create_table('sessions');
+
+		// Admin Menu Shortcuts Table
+		$fields = array(
+			'id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'auto_increment' => true
+			),
+			'title' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 255,
+				'null' => false
+			),
+			'link' => array(
+				'type' => 'TEXT',
+				'null' => false
+			),
+			'order' => array(
+				'type' => 'VARCHAR',
+				'null' => false,
+				'constraint' => 4
+			),
+			'status' => array(
+				'type' => 'TINYINT',
+				'null' => false,
+				'default' => '0',
+				'constraint' => 1
+			)
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', true);
+		$this->dbforge->create_table('admin_menu_shortcuts');
+		
+		// Login Refrence Table
+		$fields = array(
+			'id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+				'auto_increment' => true
+			),
+			'date' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true
+			),
+			'ip' => array(
+				'type' => 'VARCHAR',
+				'null' => false,
+				'constraint' => 15
+			),
+			'user' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => true,
+			),
+			'user_name' => array(
+				'type' => 'VARCHAR',
+				'null' => false,
+				'default' => '0',
+				'constraint' => 200
+			),
+			'valid' => array(
+				'type' => 'TINYINT',
+				'null' => false,
+				'default' => '0',
+				'constraint' => 1
+			)
+		);
+		$this->dbforge->add_field($fields);
+		$this->dbforge->add_key('id', true);
+		$this->dbforge->create_table('login_refrence');
 		
 		// Skins Table
 		$fields = array(
