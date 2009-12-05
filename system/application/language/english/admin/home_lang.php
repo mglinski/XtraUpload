@@ -71,6 +71,13 @@ $lang['admin_free'] = 'Free';
 $lang['admin_useful_information'] = 'Useful Information';
 $lang['admin_you_are_using_the'] = 'You are using the';
 
+$lang['admin_login_logger'] = "Last 5 Admin Logins";
+$lang['admin_ip'] = "IP Address";
+$lang['admin_date'] = "Date";
+$lang['admin_user'] = "Username";
+$lang['admin_valid'] = "Valid";
+
+
 $lang['admin_this_is_xu_version'] = 'This is XtraUpload version';
 $lang['admin_skin'] = 'skin';
 $lang['admin_with'] = 'with';

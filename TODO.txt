@@ -2,7 +2,6 @@ Design/Layout side:
 
 -> create skin for mobile devices - so script automatically detects mobile device and switchs to non-image, text based interface with one form, user can enter file ID in that form and download file in mobile phone.
 -> completly move all language strings from being hard-coded to multiple language files
--> server load information in admin panel - also how much space left on server(s) and how much files hosting currently/
 
 
 Server side:
@@ -17,8 +16,7 @@ Tools:
 
 Functionality:
 -> Tagging uploads and tag cloud to give users ability to TAG their files with some words, than on frontpage there would be tag cloud with all the popular words + most popular words will be bigger in size. This tag cloud must have blacklist thing as well, to block/replace words such as pr0n, sex etc.etc.
--> Last logged in IP in admin panel - a great security tool that every gr8 script should have
--> remote upload form for websites - a simple HTML code that webmasters could post on their websites to allow people upload to your server, results must be displayed on the same site.
+-> Remote upload form for websites - a simple HTML code that webmasters could post on their websites to allow people upload to your server, results must be displayed on the same site.
 -> Downloading/Uploading Happy Hours - You can set "Rules" for the hours such as the following examples:
 	-> Between 3PM and 5PM -> No Wait Time, 2X Download/speed Limit
 	-> Every Tuesday-> No Upload File size or type/speed restrictions.

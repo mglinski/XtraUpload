@@ -1,0 +1,15 @@
+Changed xu_menu API to allow multiple admin sidebar menus for better organization.
+
+Changed Plugin system to use standard file names, main.(php|xml) for the setup/info files instead of using the plugin name. 
+
+Added New admin menu shortcut feature, you can now save any page in the admin panel as a shortcut in your sidebar!
+
+Fixed featured file flag on uploading files.
+
+Added tagging to files, expect a visual refresh in the near future.
+
+Unified the file Editing widget in userspace
+
+Added admin panel login logger, now logs IP address and username of all admin logins.
+
+Fixed a few unreported bugs 

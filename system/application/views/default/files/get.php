@@ -55,6 +55,12 @@
 						<?php echo $this->lang->line('files_get_8')?>
 					</label>
 					<span id="user"><?php echo $this->users->getUsernameById($file->user)?></span><br />
+					
+					<label for="tags" style="display:inline;padding-bottom:2px">
+						<img class="nb" src="<?php echo $base_url?>img/icons/tags_16.png" alt="" />
+						Tags:
+					</label>
+					<span id="tags"><?php $tags = explode(',', $file->tags); $tags = array_map('ucwords', $tags); echo implode(', ', $tags);?></span><br />
 	
 					<label for="dls" style="display:inline;padding-bottom:2px">
 						<img class="nb" src="<?php echo $base_url?>img/icons/save_16.png" alt="" />

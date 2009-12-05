@@ -18,11 +18,28 @@
 	</li>
 </ul>
 
-<?php /* Config Links */ ?>
-<h3>Manage...</h3>
+<? 
+// I hate the COM, so if on a windows box dont show the CPU load
+$load = $this->functions->getServerLoad(0);
+if($load > 100)
+{
+    $load = 100;
+}
+
+if(!isset($_SERVER['WINDIR'])){?>
+<h3>Server Load</h3>
 <ul class="sidemenu">
-	<?php echo $this->xu_api->menus->getAdminMenu();?>
+	<li>
+        <div class="progress_border" style="margin-left:2px; width:99%;">
+            <div class="progress_img_sliver" style="width:<?=round($load)?>%"></div>
+        </div>
+		<span><?=$load?>%</span>
+	</li>
 </ul>
+<? }?>
+
+<?php /* Config Links */ ?>
+<?php echo $this->xu_api->menus->getAdminMenu();?>
 
 <h3>Plugins...</h3>
 <ul class="sidemenu">

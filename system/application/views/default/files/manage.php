@@ -23,7 +23,7 @@ $this->load->helper('string');
 <form action="<?=site_url('files/manage')?>" id="userAdmin" method="post" style="padding:0; margin:0; border:0;">
 <table border="0" style="width:95%" id="file_list_table">
 	<tr>
-		<th style="width:20px"><div style="text-align:center"><input type="checkbox" onchange="switchCheckboxes(this.checked)" /></div></th>
+		<th style="width:20px"><div style="text-align:center"><input type="checkbox" id="switch_box" onchange="switchCheckboxes(this.checked)" /></div></th>
 		<th><?php echo $this->lang->line('files_manage_table_1') ?></th>
 		<th><?php echo $this->lang->line('files_manage_table_2') ?></th>
 		<th><?php echo $this->lang->line('files_manage_table_2_1'); ?></th>
@@ -39,7 +39,7 @@ $this->load->helper('string');
 	<tr id="<?=$file->file_id?>" <?=alternator('class="odd"', 'class="even"')?>>
 		<td>
 			<div align="center">
-				<input type="checkbox" id="check-<?php echo $file->id?>" name="files[]" value="<?=$file->file_id?>" />
+				<input type="checkbox" id="check-<?php echo $file->id?>" onchange="manageCheckboxes()" name="files[]" value="<?=$file->file_id?>" />
 			</div>
 		</td>
 		<td>
@@ -76,11 +76,16 @@ $this->load->helper('string');
 		<td colspan="5" id="<?=$file->file_id?>-edit-inner">
 			<input name="<?=$file->id?>_fid" id="<?=$file->id?>_fid" value="<?=$file->secid?>" type="hidden" />
 		
-			<span class="float-right"><label for="<?=$file->id?>_desc"><?php echo $this->lang->line('files_manage_11') ?></label>
-			<textarea name="<?=$file->id?>_desc" id="<?=$file->id?>_desc" cols="30" style="height:100px" rows="4"><?=$file->descr?></textarea></span>
+			<span class="float-right">
+				<label for="<?=$file->id?>_desc"><?php echo $this->lang->line('files_manage_11') ?></label>
+				<textarea name="<?=$file->id?>_desc" id="<?=$file->id?>_desc" cols="30" style="height:180px" rows="2"><?=$file->descr?></textarea>
+			</span>
             
 			<label for="<?=$file->id?>_pass"><?php echo $this->lang->line('files_manage_12') ?></label>
 			<input name="<?=$file->id?>_pass" id="<?=$file->id?>_pass" value="<?=$file->password?>" size="35" maxlength="32" type="text" /><br />
+			
+			<label for="<?=$file->id?>_tags">Tags (seperated by commas)</label>
+			<input name="<?=$file->id?>_tags" id="<?=$file->id?>_tags" value="<?=$file->tags?>" size="35" maxlength="200" type="text" /><br />
             
             <label for="<?=$file->id?>_feat"><?php echo $this->lang->line('files_manage_13') ?></label>
 			<input name="<?=$file->id?>_feat" id="<?=$file->id?>_feat" <?php if($file->feature){?> checked="checked"<? }?> type="checkbox" value="1" /> <?php echo $this->lang->line('files_manage_14') ?><br /><br />
@@ -97,6 +102,8 @@ $this->load->helper('string');
 </table>
 </form>
 
+<?=$pagination?>
+
 <script type="text/javascript">
 	function editFileProps(id)
 	{
@@ -110,6 +117,7 @@ $this->load->helper('string');
 		}
 		var fDesc = $('#'+id+'_desc').val();
 		var fPass = $('#'+id+'_pass').val();
+		var fTags = $('#'+id+'_tags').val();
 		var curFileId = $('#'+id+'_fid').val();
 		$.post(
 			'<?=site_url('upload/fileUploadProps')?>', 
@@ -117,6 +125,7 @@ $this->load->helper('string');
 				fid: curFileId, 
 				password: fPass, 
 				desc: fDesc, 
+				tags: fTags, 
 				featured: fFeatured
 			}
 		);
@@ -134,19 +143,64 @@ $this->load->helper('string');
 		}
 	}
 	
-	function switchCheckboxes()
+	function switchCheckboxes(checked)
 	{
-		$('input[@type=checkbox]').each( function() 
+		var the_id = this.id;
+		if(checked == false)
 		{
-			this.checked = !this.checked;
+			$("input:checkbox").each( function() 
+			{
+				if(this.id != the_id)
+				{
+					this.checked = false;
+				}
+			});
+		}
+		else
+		{
+			$("input:checkbox").each( function() 
+			{
+				if(this.id != the_id)
+				{
+					this.checked = true;
+				}
+			});
+		}
+	}
+	
+	function manageCheckboxes()
+	{
+		var boxes = [];
+		var is_all_checked = true;
+		var i = 0;
+		
+		// get all main checkboxes and manage them muwahhahh!!!!
+		$("input[id^='check-']:checkbox").each( function() 
+		{
+			if(this.id != 'switch_box' && is_all_checked == true)
+			{
+				if(this.checked === false)
+				{
+					is_all_checked = false;
+				}
+			}
 		});
+		
+		if(is_all_checked)
+		{
+			$('#switch_box').get(0).checked = true;
+		}
+		else
+		{
+			$('#switch_box').get(0).checked = false;
+		}
 	}
 	
 	function switchCheckbox(id)
 	{
 		$('#'+id).each( function() 
 		{
-			this.checked = !this.checked;
+			$(this).get(0).checked = !$(this).get(0).checked;
 		});
 	}
 	
@@ -157,5 +211,3 @@ $this->load->helper('string');
 		$('#sortForm').get(0).submit();
 	}
 </script>
-
-<?=$pagination?>

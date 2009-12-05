@@ -40,7 +40,16 @@ class Admin_access extends Model
 		$is_admin = $this->startup->group_config->admin;
 		if(!$is_admin)
 		{
+			$this->admin_logger->addLog(0);
 			redirect('user/login');
+		}
+		else
+		{
+			if($this->session->userdata('ip_logged') == false)
+			{
+				$this->session->set_userdata('ip_logged', true);
+				$this->admin_logger->addLog(1);
+			}
 		}
     }
 }

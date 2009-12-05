@@ -215,6 +215,46 @@ class User extends Controller
 		$this->load->view($this->startup->skin.'/footer');
 	}
 	
+	public function add()
+	{
+		$this->load->library('validation');
+		
+		$rules['email'] = "trim|valid_email";
+		$rules['username'] = "trim|_checkUser";
+		$rules['password'] = "trim|min_length[5]|max_length[70]";
+		$this->validation->set_rules($rules);
+		
+		$fields['email'] = "Email";
+		$fields['username'] = "Username";
+		$fields['password'] = "Password";
+		$this->validation->set_fields($fields);		
+			
+		if ($this->validation->run() == FALSE)
+		{
+			$error = str_replace('p>','li>',$this->validation->error_string); 
+			if($this->input->post('edited'))
+			{
+				$data['error'] = '<span class="alert"><b>Error(s):</b><br /><ul>'.$error.'</ul></span>';
+			}
+			else
+			{
+				$data['error'] = '';
+			}
+		}
+		else
+		{
+			$this->users_db->addUser($_POST);
+			$this->session->set_flashdata('msg', 'User Added!');
+			redirect('/admin/user/view');
+			return true;
+		}
+		
+		$data['groups'] = $this->db->get('groups');
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Add User'));
+		$this->load->view($this->startup->skin.'/admin/users/add', $data);
+		$this->load->view($this->startup->skin.'/footer');
+	}
+	
 	public function delete($id)
 	{
 		$this->users_db->deleteUser($id);

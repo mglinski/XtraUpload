@@ -163,7 +163,8 @@ function addFileQueue(file)
     
     filePropsObj[file.id] = new Array();
     filePropsObj[file.id]['feat'] = ''; 
-    filePropsObj[file.id]['desc'] = ''; 
+    filePropsObj[file.id]['desc'] = '';
+    filePropsObj[file.id]['tags'] = ''; 
     filePropsObj[file.id]['pass'] = '';
 	
 	fileObj[file.id] = file.name;
@@ -184,15 +185,19 @@ function addFileQueue(file)
 		"<tr id='"+file.id+"-details' class='details' style='display:none'>"+
 			"<td id='"+file.id+"-details-inner' colspan='3'>"+
 				'<span class="float-right"><label for="'+file.id+'_desc">'+___upLang('desc')+'</label>'+
-				'<textarea name="'+file.id+'_desc" id="'+file.id+'_desc" cols="30" style="height:100px" rows="4"></textarea></span>'+
+				'<textarea name="'+file.id+'_desc" id="'+file.id+'_desc" cols="30" style="height:180px" rows="4"></textarea></span>'+
                 
 				'<label for="'+file.id+'_pass">'+___upLang('fp')+'</label>'+
 				'<input name="'+file.id+'_pass" id="'+file.id+'_pass" size="35" maxlength="32" type="text" /><br />'+
+				
+				'<label for="'+file.id+'_tags">'+___upLang('ft')+'</label>'+
+				'<input name="'+file.id+'_tags" id="'+file.id+'_tags" size="35" maxlength="200" type="text" /><br />'+
                 
                 '<label for="'+file.id+'_feat">'+___upLang('ff1')+'</label>'+
 				'<input name="'+file.id+'_feat" id="'+file.id+'_feat" type="checkbox" /> '+___upLang('ff2')+'<br /><br />'+
-                
-				'<input value="'+___upLang('sc')+'" type="button" onclick=\'saveFilePropChanges("'+file.id+'");$("#'+file.id+'-details").hide();$("#'+file.id+'-edit_img").fadeIn("fast");\' /><br /><br />'+
+				
+				___filePropSaveButtons(file.id)+
+				
 			"</td>"+
 		"</tr>"
 	);

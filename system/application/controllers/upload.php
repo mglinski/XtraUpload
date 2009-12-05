@@ -116,13 +116,14 @@ class Upload extends Controller
 
 	public function process($secid='', $user=0)
 	{
-
-		if(intval($user) != 0)
+		// Flash is really stupid in that it doesn't use the browser's cookies, but IE's cookies!! BAD FLASH, BAD!!!
+		if(intval($user) != 0 && $this->session->userdata('login') != true)
 		{
 			$userobj = $this->users->getUserById(intval($user));
 			$this->startup->getGroup($userobj->group);
 			unset($userobj);
 		}
+		
 		
 		$config['upload_path'] = './temp/';
 		$config['allowed_types'] = $this->startup->group_config->files_types;
@@ -135,12 +136,27 @@ class Upload extends Controller
 			$file = $data['full_path'];
 						
 			$this->files_db->newFile($file, $secid, $user, (bool)$data['is_image'], base_url(), false);
-			echo "WIN";
+			if ($this->input->post('no_flash')) 
+			{
+				redirect('upload/complete/'.$secid);
+			} 
+			else 
+			{
+				echo "WIN";
+			}
 		}
 		else
 		{
-		    $this->files_db->setUploadFailed($secid, str_replace('upload_fail_', '', $this->upload->error_num[0]));
-			echo "FAIL";	
+		    $this->files_db->setUploadFailed($secid, str_replace('upload_', '', $this->upload->error_num[0]));
+			if ($this->input->post('no_flash')) 
+			{
+				redirect('upload/failed/'.$secid);
+				print_r($_FILES);
+			} 
+			else 
+			{
+				echo "FAIL";
+			}	
 		}
 	}
 	
@@ -152,11 +168,33 @@ class Upload extends Controller
 		$this->load->view($this->startup->skin.'/upload/links', $data);
 	}
 	
+	// ------------------------------------------------------------------------
+
+	public function failed($secid)
+	{
+		$data['link'] = $this->files_db->getLinks($secid);
+		$this->load->view($this->startup->skin.'/header');
+		$this->load->view($this->startup->skin.'/upload/failed', $data);
+		$this->load->view($this->startup->skin.'/footer');
+	}
+	
+	// ------------------------------------------------------------------------
+
+	public function complete($secid)
+	{
+		$data['link'] = $this->files_db->getLinks($secid);
+		
+		$this->load->view($this->startup->skin.'/header');
+		$this->load->view($this->startup->skin.'/upload/complete', $data);
+		$this->load->view($this->startup->skin.'/footer');
+	}
+	
 	public function fileUploadProps()
 	{
 		$data = array(
 			'descr' => $this->input->post('desc', true),
 			'pass' => $this->input->post('password', true),
+			'tags' => $this->input->post('tags', true),
 			'feature' => intval($this->input->post('featured'))
 		);
 		

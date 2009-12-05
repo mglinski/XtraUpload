@@ -101,6 +101,15 @@ class Users_db extends Model
 		$this->db->update('users', $data);
 	}
 	
+	public function addUser($data)
+	{
+		$this->load->model('users');
+		
+		// create new user and set their status to active
+		$id = $this->users->newUser($data, false);
+		$this->setUserStatus(1, $id);
+	}
+	
 	public function editUser($id, $user, $pass, $email, $group)
 	{
 		$data = array();

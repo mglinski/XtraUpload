@@ -1,5 +1,5 @@
 <h2><img src="<?php echo base_url().'img/other/admin_32.png'?>" class="nb" alt="" /><?php echo $this->lang->line('admin_home'); ?></h2>
-<h3><?php echo $this->lang->line('admin_important_server_settings'); ?></h3>
+<h3 id="php_ini_header" ><?php echo $this->lang->line('admin_important_server_settings'); ?></h3>
 <?php
 
 $ini_list = array(
@@ -44,7 +44,7 @@ function renameINIResult($r, $n)
 }
 
 ?>
-<ul style="font-size:1.2em;">
+<ul id="php_ini_list" style="font-size:1.2em;">
 	<?
 	$is_not_good = false;
 	foreach($ini_list as $k => $v)
@@ -95,6 +95,7 @@ function renameINIResult($r, $n)
 			}
 			else
 			{
+				
 				echo '<img src="'.$base_url.'img/icons/ok_16.png" alt="Ok!" title="Ok!" class="nb" />';
 			}
 			?>
@@ -110,6 +111,17 @@ function renameINIResult($r, $n)
 if($is_not_good)
 {
 	?><span class="alert"><?php echo $this->lang->line('admin_settings_alert'); ?></span><?
+}
+else
+{
+	?>
+		<script>
+		$(document).ready(function()
+		{
+			$('#php_ini_list, #php_ini_header').hide();
+		});
+		</script>
+	<?
 }
 ?>
 
@@ -157,45 +169,33 @@ if($this->startup->site_config['allow_version_check'])
 </table>
 
 <h3><?php echo $this->lang->line('admin_server_stats'); ?></h3>
-<? 
-$load = $this->functions->getServerLoad(0);
-if($load > 100)
-{
-    $load = 100;
-}
-
-$free_space = disk_free_space(dirname('filestore/'));
-$total_space = disk_total_space(dirname('filestore/'));
-$used_space = $total_space - $free_space;
-$used_space_percent = (($used_space / $total_space) * 100);
-$free_space_percent = ($used_space_percent - 100) * (-1);
-$free_space = $this->functions->getFilesizePrefix($free_space);
-$total_space = $this->functions->getFilesizePrefix($total_space);
-$used_space = $this->functions->getFilesizePrefix($used_space);
-?>
 <table border="0" style="width:98%">
 	<? 
-	// I hate the COM, so if on a windows box dont show the CPU load
-	if(!isset($_SERVER['WINDIR'])){?>
-    <tr>
-        <td>
-            <h4 style="padding:4px;margin-top:4px;"><?php echo $this->lang->line('admin_server_load'); ?>: <?=$load?>%</h4>
-            <div class="progress_border" style="margin-left:2px; width:99%;">
-                <div class="progress_img_sliver" style="width:<?=round($load)?>%"></div>
-            </div><br />
-        </td>
-    </tr>
-    <? }?>
-    <tr>
-        <td>
-            <h4 style="padding:4px;margin-top:4px;"><?php echo $this->lang->line('admin_total_disk_space'); ?>: <?=$total_space?></h4>
-            <div class="progress_border" style="margin-left:2px; width:99%;">
-                <div class="progress_img_sliver" style="width:<?=round($used_space_percent)?>%;"><?=$used_space?> <?php echo $this->lang->line('admin_used'); ?></div>
-				<div class="progress_img_blank" style="width:<?=round($free_space_percent)?>%;"><?=$free_space?> <?php echo $this->lang->line('admin_free'); ?></div>
-            </div>
-            <br />
-        </td>
-    </tr>
+	$servers = $this->db->get('servers');
+	foreach($servers->result() as $serv)
+	{
+		$used_space_percent = (($serv->used_space / $serv->total_space) * 100);
+		$free_space_percent = ($used_space_percent - 100) * (-1);
+		$free_space = $this->functions->getFilesizePrefix($serv->free_space);
+		$total_space = $this->functions->getFilesizePrefix($serv->total_space);
+		$used_space = $this->functions->getFilesizePrefix($serv->used_space);
+		?>
+    	<tr>
+	        <td>
+				<h3 style="font-size:16px; padding:2px; margin:0"><img class="nb" src="<?=$base_url?>img/other/server_16.png" alt="" /> <a href="<?=site_url('admin/server/edit/'.$serv->id)?>"><?=ucfirst($serv->name)?></a> (<?=$serv->url?>)</h3>
+	            <div class="progress_border" style="margin-left:2px; width:99%;">
+	                <div class="progress_img_sliver" style="width:<?=round($used_space_percent)?>%;"><?=$used_space?> <?php echo $this->lang->line('admin_used'); ?></div>
+					<div class="progress_img_blank" style="width:<?=round($free_space_percent)?>%;"><?=$free_space?> <?php echo $this->lang->line('admin_free'); ?></div>
+	            </div>
+				<h4 style="padding:4px;margin-top:4px;">
+					<?php echo $this->lang->line('admin_total_disk_space'); ?>: <?=$total_space?><br />
+					Files on Server: <?=$serv->num_files?><br />
+				</h4>
+	        </td>
+	    </tr>
+    	<? 
+	}
+	?>
 </table>
 
 <h3><?php echo $this->lang->line('admin_useful_information'); ?></h3>
@@ -203,3 +203,48 @@ $used_space = $this->functions->getFilesizePrefix($used_space);
 	<?php echo $this->lang->line('admin_you_are_using_the'); ?> <a href="<?php echo site_url('admin/skin/view')?>"><strong><?php echo ucwords(str_replace('_', ' ', $this->startup->skin))?></strong> <?php echo $this->lang->line('admin_skin'); ?></a> <?php echo $this->lang->line('admin_with'); ?> <a href="<?php echo site_url('admin/extend/view')?>"><?php echo $this->db->get_where('extend', array('active' => 1))->num_rows()?> <?php echo $this->lang->line('admin_plugins'); ?></a>.<br />
 	<?php echo $this->lang->line('admin_this_is_xu_version'); ?> <strong><?php echo XU_VERSION_READ?></strong>. 
 </p>
+
+<h3><?php echo $this->lang->line('admin_login_logger'); ?></h3>
+<table border="0" style="width:98%">
+<tr>
+	<th><?php echo $this->lang->line('admin_user'); ?></th>
+	<th><?php echo $this->lang->line('admin_ip'); ?></th>
+	<th><?php echo $this->lang->line('admin_date'); ?></th>
+	<th><?php echo $this->lang->line('admin_valid'); ?></th>
+</tr>
+	<? 
+	$logins = $this->admin_logger->getLogs(5);
+	foreach($logins->result() as $log)
+	{
+		?>
+    	<tr>
+	        <td>
+				<a href="<?=site_url('/admin/user/edit/'.$log->user)?>"><?=ucfirst($log->user_name)?></a>
+	        </td>
+	        
+	        <td>
+				<?=$log->ip?>
+	        </td>
+	        
+	        <td>
+				<?=unix_to_human($log->date)?>
+	        </td>
+	
+			<td>
+				<?php
+				
+				if ($log->valid == 1) 
+				{
+					?><img src="<?php echo base_url().'img/icons/ok_16.png'?>" class="nb" alt="" /><?
+				} 
+				else 
+				{
+					?><img src="<?php echo base_url().'img/icons/cancel_16.png'?>" class="nb" alt="" /><?
+				}
+				?>
+	        </td>
+	    </tr>
+    	<? 
+	}
+	?>
+</table>

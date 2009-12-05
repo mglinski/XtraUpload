@@ -91,7 +91,7 @@ class Startup
 		$this->setupMenu();
 		
 		// Load the Files Subsystem and the USers subsystem
-		$this->CI->load->model(array('users', 'files/files_db'));
+		$this->CI->load->model(array('users', 'files/files_db', 'admin_logger'));
 		
 		// Load the global language bits, header, footer, and menu
 		$this->CI->lang->load('global');
@@ -279,23 +279,58 @@ class Startup
 		// load either admin or user manu links
 		if(substr($this->CI->uri->uri_string(), 0, 7) == '/admin/')
 		{
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/config', 'Site Config', 'img/icons/options_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/files/view', 'Files', 'img/icons/hard_disk_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/email/view', 'Mass Emailer', 'img/icons/mail_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/extend/view', 'Plugins', 'img/icons/component_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/skin/view', 'Skins', 'img/icons/colors_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/gateways/view', 'Payment Gateways', 'img/icons/credit_card_16.png');
+			$id = $this->CI->xu_api->menus->addAdminMenu('Manage');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/files/view', 'Files', 'img/icons/hard_disk_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/transactions/view', 'Transactions', 'img/icons/transaction_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/user/view', 'Users', 'img/icons/user_16.png');
+		
+			$id = $this->CI->xu_api->menus->addAdminMenu('Configure');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/config', 'Site Config', 'img/icons/options_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/gateways/view', 'Payment Gateways', 'img/icons/credit_card_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/extend/view', 'Plugins', 'img/icons/component_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/skin/view', 'Skins', 'img/icons/colors_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/server/view', 'Servers', 'img/other/server_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/group/view', 'User Groups', 'img/icons/user_group_16.png');
 			
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/transactions/view', 'Transactions', 'img/icons/transaction_16.png');
+			$id = $this->CI->xu_api->menus->addAdminMenu('Misc');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/menu_shortcuts/view', 'Admin Menu Shortcuts', 'img/icons/sticky_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/email/view', 'Mass Emailer', 'img/icons/mail_16.png');
 			
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/server/view', 'Servers', 'img/other/server_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/stats/view', 'Site Stats', 'img/icons/chart_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/translator', 'Translation', 'img/icons/spelling_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/actions/view', 'Tools/Maintenance', 'img/icons/tools_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/user/view', 'Users', 'img/icons/user_16.png');
-			$this->CI->xu_api->menus->addAdminMenuLink('/admin/group/view', 'User Groups', 'img/icons/user_group_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/stats/view', 'Site Stats', 'img/icons/chart_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/translator', 'Translation', 'img/icons/spelling_16.png');
+			$this->CI->xu_api->menus->addAdminMenuLink($id, '/admin/actions/view', 'Tools/Maintenance', 'img/icons/tools_16.png');
 			
 			$this->CI->xu_api->menus->addPluginMenuLink('/admin/config/plugin', 'Plugin Config', 'img/icons/options_16.png');
+			
+			
+			// Admin Menu Shortcuts Code
+			$this->CI->load->model('admin/menu_shortcuts/admin_menu_shortcuts_db');
+			
+			$menu_id = $this->CI->xu_api->menus->addAdminMenu('Shortcuts');
+			$this->CI->xu_api->menus->addAdminMenuLink($menu_id, '/admin/menu_shortcuts/add/'.base64_encode($this->CI->uri->uri_string()), 'Add This Page', 'img/icons/add_16.png');
+			
+			$links = $this->CI->admin_menu_shortcuts_db->getShortcuts();
+			foreach($links->result() as $link)
+			{
+				$this->CI->xu_api->menus->addAdminMenuLink($menu_id, $link->link, $link->title, 'img/icons/link_16.png');
+			}
+			
+			$new_order = array();
+			$i=1;
+			$order = $this->CI->xu_api->menus->getAdminMenuOrder();
+			foreach ($order as $place => $id)
+			{
+				if($id != $menu_id)
+				{
+					$new_order[$i] = $id;
+					$i++;
+				}
+				else
+				{
+					$new_order[0] = $id;
+				}
+			}
+			$this->CI->xu_api->menus->putAdminMenuOrder($new_order);
 		}
 		else
 		{

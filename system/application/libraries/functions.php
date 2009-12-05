@@ -32,7 +32,7 @@ class Functions
 	function getRandId($length=10)
 	{
 		$password = "";
-		$vals = 'abcdefghijklmnopqrstuvwxyz'.strtoupper('abcdefghijklmnopqrstuvwxyz').'0123456789_-'; 
+		$vals = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'; 
 		
 		while (strlen($password) < $length) 
 		{
@@ -48,13 +48,19 @@ class Functions
 		return $password;
 	}
 	
+	// alias of above function
+	function genRandId($length=10)
+	{
+		return $this->getRandId($length);
+	}
+	
 	function getServerLoad($movingAverage=0) 
     { 
         $stats = explode(' ', substr(exec('uptime'), -14));
         return str_replace(',', '', $stats[$movingAverage]);
     }
 	
-	public function genPass($length, $caps=true)
+	function genPass($length, $caps=true)
 	{
 		$password = "";
 		if(!$caps)

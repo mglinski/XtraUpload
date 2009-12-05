@@ -25,3 +25,42 @@ CREATE TABLE `xu2`.`transactions` (
 `amount` VARCHAR( 10 ) NOT NULL ,
 `user` INT NOT NULL
 );
+
+ALTER TABLE `xu2_servers` ADD `num_files` INT NOT NULL ,
+ADD `free_space` VARCHAR( 50 ) NOT NULL ,
+ADD `total_space` VARCHAR( 50 ) NOT NULL,
+ADD `used_space` VARCHAR( 50 ) NOT NULL,
+ADD INDEX ( `url` ) ;
+
+ALTER TABLE `xu2_files` CHANGE `server` `server` VARCHAR( 250 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;
+
+ALTER TABLE `xu2_files` ADD INDEX ( `server` ) ;
+
+CREATE TABLE IF NOT EXISTS `xu2_sessions` (
+session_id varchar( 40 ) DEFAULT '0' NOT NULL ,
+ip_address INT UNSIGNED NOT NULL DEFAULT '0',
+user_agent varchar( 50 ) NOT NULL ,
+last_activity int( 10 ) unsigned DEFAULT 0 NOT NULL ,
+user_data text NOT NULL ,
+PRIMARY KEY ( session_id )
+);
+
+
+CREATE TABLE `admin_menu_shortcuts` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`title` VARCHAR( 255 ) NOT NULL ,
+`link` TEXT NOT NULL ,
+`order` VARCHAR( 4 ) NOT NULL ,
+`status` TINYINT( 1 ) NOT NULL
+);
+
+ALTER TABLE `refrence` ADD `tags` VARCHAR( 200 ) NOT NULL;
+
+CREATE TABLE `login_refrence` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`date` INT NOT NULL ,
+`ip` VARCHAR( 15 ) NOT NULL ,
+`user` INT( 11 ) UNSIGNED NOT NULL,
+`valid` TINYINT( 1 ) NOT NULL DEFAULT '0',
+`user_name` VARCHAR( 200 ) NOT NULL
+);

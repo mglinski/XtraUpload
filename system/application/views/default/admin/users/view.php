@@ -8,6 +8,7 @@
 			</div>
 			<div class="float-right">
 				<?=generateLinkButton('Search', site_url('admin/user/search'), base_url().'img/icons/search_16.png', NULL)?>
+				<?=generateLinkButton('Add', site_url('admin/user/add'), base_url().'img/icons/add_16.png', 'green')?>
 			</div>
 		</div>
 		<p style=" clear:both;"></p>
