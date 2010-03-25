@@ -23,7 +23,7 @@ $config["base_url"]	= "http://localhost/xu/";
 | variable so that it is blank.
 |
 */
-$config["index_page"] = "";
+$config["index_page"] = "index.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -217,7 +217,7 @@ $config["cache_path"] = "";
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config["encryption_key"] = "2fa40ef5e26f06eb0fcbd6e5efbeb20e4acd1ebfe4070";
+$config["encryption_key"] = "3826a5f02ddb45b5c72d671663b7b41e4b95612a0e974";
 
 /*
 |--------------------------------------------------------------------------
@@ -237,7 +237,7 @@ $config["sess_encrypt_cookie"]	= TRUE;
 $config["sess_use_database"]	= TRUE;
 $config["sess_table_name"]		= "sessions";
 $config["sess_match_ip"]		= FALSE;
-$config["sess_match_useragent"]	= FALSE;
+$config["sess_match_useragent"]	= TRUE;
 $config["sess_time_to_update"] 	= 300;
 
 /*
@@ -250,7 +250,7 @@ $config["sess_time_to_update"] 	= 300;
 | "cookie_path"   =  Typically will be a forward slash
 |
 */
-$config["cookie_prefix"]	= "09c2d28975dd87ff651968ebc3993";
+$config["cookie_prefix"]	= "7733ac3c3fa3065e144fcad32dae3";
 $config["cookie_domain"]	= "";
 $config["cookie_path"]		= "/";
 

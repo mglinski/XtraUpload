@@ -43,7 +43,7 @@ $this->load->helper('string');
 			</div>
 		</td>
 		<td>
-			<a href='<?=site_url('/files/get/'.$file->file_id.'/'.$file->link_name)?>' target="_blank">
+			<a href='<?=$link['down']?>' rel="external">
 				<img src="<?php echo base_url().'img/files/'.$this->functions->getFileTypeIcon($file->type);?>" class="nb" alt="" />
 				<?=$file->o_filename?>
 			</a>

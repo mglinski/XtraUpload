@@ -142,6 +142,7 @@ $this->dbforge->add_column('servers', $fields);
 // tags support
 $fields = array(
 	'tags' => array(
+		'name' => 'tags',
 		'type' => 'VARCHAR',
 		'constraint' => 200
 	)

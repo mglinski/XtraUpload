@@ -48,7 +48,7 @@
 					</div>
 				</td>
 				<td>
-					<a href='<?=site_url('/files/get/'.$file->file_id.'/'.$file->link_name)?>' target="_blank">
+					<a href='<?=$links['down']?>' rel="external">
 						<img src="<?php echo base_url().'img/files/'.$this->functions->getFileTypeIcon($file->type);?>" class="nb" alt="" />
 						<?=$this->functions->elipsis($file->o_filename, 10);?>
 					</a>

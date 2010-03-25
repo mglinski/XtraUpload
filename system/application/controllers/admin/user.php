@@ -231,7 +231,7 @@ class User extends Controller
 			
 		if ($this->validation->run() == FALSE)
 		{
-			$error = str_replace('p>','li>',$this->validation->error_string); 
+			$error = str_replace('p>','li>', $this->validation->error_string); 
 			if($this->input->post('edited'))
 			{
 				$data['error'] = '<span class="alert"><b>Error(s):</b><br /><ul>'.$error.'</ul></span>';
@@ -243,13 +243,15 @@ class User extends Controller
 		}
 		else
 		{
+			// hash the password before it goes in the database
+			$_POST['password'] = md5($this->config->config['encryption_key'].$this->input->post('password'));
+			
 			$this->users_db->addUser($_POST);
-			$this->session->set_flashdata('msg', 'User Added!');
+			$this->session->set_flashdata('msg', 'New User Added!');
 			redirect('/admin/user/view');
-			return true;
 		}
 		
-		$data['groups'] = $this->db->get('groups');
+		$data['groups'] = $this->db->select('id, name')->get('groups');
 		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Add User'));
 		$this->load->view($this->startup->skin.'/admin/users/add', $data);
 		$this->load->view($this->startup->skin.'/footer');
