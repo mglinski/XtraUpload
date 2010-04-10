@@ -49,7 +49,7 @@ $servername = str_replace('\\', '/', 'http://'.$_SERVER['SERVER_NAME'].$dir.'/')
 					<td class='pformleftw'>
 						<b>Cookie Prefix</b>
 						<div class='description'>
-							This prevents session collisions with other XU installs arround the internet
+							This prevents session collisions with other XU installs around the internet
 						</div>
 					</td>
 					<td class='pformright'><input type='text' size="45" name='cookie_prefix' /></td>
@@ -58,7 +58,7 @@ $servername = str_replace('\\', '/', 'http://'.$_SERVER['SERVER_NAME'].$dir.'/')
 					<td class='pformleftw'>
 						<b>Encryption Key</b>
 						<div class='description'>
-							This is the key that will be used to encrpt sensitive data in XU
+							This is the key that will be used to encrypt sensitive data in XU
 						</div>
 					</td>
 					<td class='pformright'><input type='text' size="45" name='encryption_key'/></td>
@@ -80,7 +80,7 @@ $servername = str_replace('\\', '/', 'http://'.$_SERVER['SERVER_NAME'].$dir.'/')
 		
 		<div class='tableborder'>
 			<div class='maintitle'>SQL Data </div>
-			<div class='pformstrip'>Please enter the correct mysql info below for the tables to install correctly. </div>
+			<div class='pformstrip'>Please enter the correct MySQL info below for the tables to install correctly. </div>
 			<table width='100%' cellspacing='1'>
 			<tr>
 			  <td class='pformleftw'><b>SQL Host </b>
@@ -111,7 +111,7 @@ $servername = str_replace('\\', '/', 'http://'.$_SERVER['SERVER_NAME'].$dir.'/')
 			
 			<tr>
 			  <td class='pformleftw'><b>SQL Engine</b>
-				<div class='description'>You can choose from 7 different SQL database engines. MySQL is the most pouplar.</div></td>
+				<div class='description'>You can choose from 7 different SQL database engines. MySQL is the most popular.</div></td>
 			  <td class='pformright'>
 				  <select name="sql_engine">
 					<option selected="selected" value="mysql">MySQL</option>
