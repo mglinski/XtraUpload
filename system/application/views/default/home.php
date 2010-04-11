@@ -1,52 +1,38 @@
-<?
-if(!$this->startup->group_config->can_flash_upload)
-{
-	?>
+<?php if(!$this->startup->group_config->can_flash_upload): ?>
+
 	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title')?></h2>
-	<span class="alert">You are currently not allowed to upload local files. Please <a href="<?=site_url('user/login')?>">login</a> to gain access.</span>
-	<?
-}
-else
-{
-?>
+	<span class="alert"><?php echo $this->lang->line('home_not_logged_in', '<a href="'.site_url('user/login').'">'.$this->lang->line('home_login_text').'</a>'); ?></span>
+
+<?php else; ?>
+
 	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title')?></h2>
 	<?php if(!empty($flashMessage)){ echo '<p>'.$flashMessage.'</p>';}?>
 	<?php if(!empty($this->startup->site_config['home_info_msg'])){ echo '<span class="note">'.$this->startup->site_config['home_info_msg'].'</span>';}?>
 	<div id="info_div" style="display:none">
 		<h3>
 			<a href="javascript:void(0);" onclick="$('#upload_limits').slideDown();$(this).parent().remove();">
-				<img src="<?php echo $base_url?>img/icons/about_24.png" class="nb" alt="" /><?php echo $this->lang->line('home_upload_res')?>
+				<img src="<?php echo $base_url?>img/icons/about_24.png" class="nb" alt="" /><?php echo $this->lang->line('home_upload_res'); ?>
 			</a>
 		</h3>
 		<p>
 			<span style="display:none" id="upload_limits" rel="no_close" class="info">
-				<?php echo $this->lang->line('home_upload_limit_1')?>
-				<strong><?php echo intval($upload_num_limit)?></strong> 
-				<?php echo $this->lang->line('home_upload_limit_2')?> 
-				<strong><?php echo intval($upload_limit)?></strong><?php echo $this->lang->line('home_upload_limit_3')?>
-				<?php if(trim($files_types) != '' and $files_types != '*')
-				{
-					?>
-					<br />
-					<?php echo $this->lang->line('home_upload_limit_4')?> 
-					<strong><?php if($file_types_allow_deny){echo $this->lang->line('home_upload_limit_5'); }else{echo $this->lang->line('home_upload_limit_6');}?></strong>
-					 <?php echo $this->lang->line('home_upload_limit_7')?> .<?php echo str_replace('|', ', .', $files_types)?>
-					<?php
-				}
+				<?php echo $this->lang->line('home_upload_limit', '<strong>'.intval($upload_num_limit).'</strong>', '<strong>'.intval($upload_limit).'</strong>'); ?>
 				
-				if(trim($storage_limit) != '' and $storage_limit != '0')
-				{
-					?>
+				<?php if(trim($files_types) != '' and $files_types != '*'): ?>
+				
+					<br />
+					<?php echo $this->lang->line('home_upload_filetypes', '<strong>'.(($file_types_allow_deny) ? $this->lang->line('home_upload_filetypes_allow') : $this->lang->line('home_upload_filetypes_deny')).'</strong>'), '.', str_replace('|', ', .', $files_types); ?>
+					
+				<?php endif; ?>
+				
+				<?php if(trim($storage_limit) != '' and $storage_limit != '0'): ?>
+				
 					<br /><br />
-					<strong>Your account is limited by storage space:</strong><br />
-					You have 
-					<strong><?php echo $storage_used?></strong>
-					of
-					<strong><?php echo $storage_limit;?> MB</strong>
-					 remaining 
-					<?php
-				}
-				?>
+					<strong><?php echo $this->lang->line('home_limited_account_msg'); ?></strong>
+					<br />
+					<?php echo $this->lang->line('home_limited_remaining', '<strong>'.$storage_used.'</strong>', '<strong>'.$storage_limit.'</strong>'); ?>
+					 
+				<?php endif; ?>
 			</span>
 		</p>
 	</div>
@@ -55,23 +41,23 @@ else
 		
 		<span class="alert">
 			<strong><?php echo $this->lang->line('home_error')?></strong><br />
-			<?php echo $this->lang->line('home_no_flash_1')?> <br><a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"><?php echo $this->lang->line('home_no_flash_2')?></a>
+			<?php echo $this->lang->line('home_no_flash_required')?><br /><a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"><?php echo $this->lang->line('home_no_flash_install')?></a>
 		</span>
 		
 		
-		<form enctype="multipart/form-data" action="<?=site_url('/upload/process/'.md5($this->functions->getRandId(32)).'/'.($this->session->userdata('id') ? $this->session->userdata('id') : 0 ))?>" method="POST">
-			<h3>Upload a File</h3>
+		<form enctype="multipart/form-data" action="<?=site_url('/upload/process/'.md5($this->functions->getRandId(32)).'/'.($this->session->userdata('id') ? $this->session->userdata('id') : 0 ))?>" method="post">
+			<h3><?php echo $this->lang->line('home_upload_file_text'); ?></h3>
 			<p>
-				<span>This is a backup upload form for our users who do not have Flash installed, to access our advanced uploading features please install the Flash Plugin and enable Javascript.</span>
+				<span><?php echo $this->lang->line('home_no_flash_text'); ?></span>
 				<input type="hidden" name="no_flash" value="1">
 		
-				<label for="file">File</label>
+				<label for="file"><?php echo $this->lang->line('home_file_text'); ?></label>
 				<input type="file" name="Filedata">
 			
-				<label for="password">Password</label>
+				<label for="password"><?php echo $this->lang->line('home_password_text'); ?></label>
 				<input type="text" name="password" value="">
 			
-				<label for="description">Description</label>
+				<label for="description"><?php echo $this->lang->line('home_description_text'); ?></label>
 				<textarea name="description" rows="8" cols="40"></textarea>
 		
 				<br style="clear:both" />
@@ -82,7 +68,7 @@ else
 		
 	</div>
 	
-	<div id="uploader" style="display:none">
+	<div id="uploader" style="display:none;">
 		<h3 style="padding-top:8px;"><?php echo $this->lang->line('home_select_files')?></h3><br />
 		<div style=" padding-left:12px;">
 			<div style="display: block; width:90px; height:22px; border: solid 1px #7FAAFF; background-color: #C5D9FF; padding: 2px; padding-top:6px; padding-left:6px;"><span id="spanButtonPlaceholder"></span></div>
@@ -128,7 +114,7 @@ else
 				</tr>
 			</table>
 			<div class="float-right">
-				<?php echo generateLinkButton($this->lang->line('home_upload'), 'javascript:void(0);', $base_url.'img/icons/up_16.png', 'green', array('onclick'=>'swfu.startUpload();'))?>
+				<?php echo generateLinkButton($this->lang->line('home_upload'), 'javascript:void(0);', $base_url.'img/icons/up_16.png', 'green', array('onclick'=>'swfu.startUpload();')); ?>
 			</div>
 		</div>
 	</div>
@@ -147,21 +133,21 @@ else
 		var curFileId = '';
 		var pbUpd = 0;
 		var flashUploadStartTime = '';
-		var fileIcons = new Array(<?php echo $file_icons?>);
+		var fileIcons = new Array(<?php echo $file_icons; ?>);
 		
 		function ___getMaxUploadSize()
 		{
-			return '<?php echo intval($upload_limit)?>';
+			return '<?php echo intval($upload_limit); ?>';
 		}
 		
 		function ___serverUrl()
 		{
-			return '<?php echo $server?>';
+			return '<?php echo $server; ?>';
 		}
 		
 		function ___getFilePipeString()
 		{
-			return '<?php echo $files_types?>';
+			return '<?php echo $files_types; ?>';
 		}
 		
 		function ___getFileIcon(icon)
@@ -178,7 +164,7 @@ else
 		
 		function ___getFileTypesAllowOrDeny()
 		{
-			return <?php echo intval($file_types_allow_deny)?>;
+			return <?php echo intval($file_types_allow_deny); ?>;
 		}
 		
 		function ___toManyFilesError()
@@ -353,7 +339,7 @@ else
 		function uploadDone(file)
 		{
 			syncFileProps(file);
-			$('#'+file.id+"-del").empty().html("<strong>Done!</strong>");
+			$('#'+file.id+"-del").empty().html("<strong><?php echo $this->lang->line('home_upload_complete'); ?></strong>");
 			$("#"+file.id+"-details").css('borderTop', 'none').show();
 			var stats = swfu.getStats();
 		
@@ -367,5 +353,5 @@ else
 			}
 		}
 	</script>
-<?
-}
+	
+<?php endif; ?>
