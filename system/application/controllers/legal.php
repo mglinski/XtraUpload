@@ -47,7 +47,7 @@ class Legal extends Controller
 	{
 		$data=array();
 		$data['site_name'] = $this->startup->site_config['sitename'];
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Terms Of Service'));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('legal_tos_headertitle')));
 		$this->load->view($this->startup->skin.'/legal/tos', $data);
 		$this->load->view($this->startup->skin.'/footer');
 		return;	
@@ -55,7 +55,7 @@ class Legal extends Controller
 	
 	function privacy()
 	{
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Privacy Policy'));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('legal_privacy_headertitle')));
 		$this->load->view($this->startup->skin.'/legal/privacy');
 		$this->load->view($this->startup->skin.'/footer');
 		return;	
