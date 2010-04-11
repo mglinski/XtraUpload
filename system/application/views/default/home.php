@@ -1,11 +1,17 @@
-<?php if(!$this->startup->group_config->can_flash_upload): ?>
+<?php if(!$this->startup->group_config->can_flash_upload)
+{
+	?>
 
-	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title', 'HIPPIES!!!')?></h2>
+	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title')?></h2>
 	<span class="alert"><?php echo $this->lang->line('home_not_logged_in', '<a href="'.site_url('user/login').'">'.$this->lang->line('home_login_text').'</a>'); ?></span>
 
-<?php else; ?>
+	<?php 
+{
+else
+}
+	?>
 
-	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title', 'HIPPIES!!!')?></h2>
+	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title')?></h2>
 	<?php if(!empty($flashMessage)){ echo '<p>'.$flashMessage.'</p>';}?>
 	<?php if(!empty($this->startup->site_config['home_info_msg'])){ echo '<span class="note">'.$this->startup->site_config['home_info_msg'].'</span>';}?>
 	<div id="info_div" style="display:none">
@@ -353,5 +359,5 @@
 			}
 		}
 	</script>
-	
-<?php endif; ?>
+	<?php 
+}
