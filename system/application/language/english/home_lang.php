@@ -27,7 +27,7 @@
 
 // ------------------------------------------------------------------------
 
-$lang['home_title'] = "Home";
+$lang['home_title'] = "Home - %s";
 $lang['home_error'] = "Error";
 
 $lang['home_not_logged_in'] = "You are currently not allowed to upload local files. Please %s to gain access.";

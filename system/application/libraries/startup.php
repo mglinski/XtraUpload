@@ -99,6 +99,11 @@ class Startup
 		// load all custom startup files
 		$this->runStartup();
     }
+    
+	function __destruct() 
+	{
+		$this->CI->db->close();
+	}
 	
 	// ------------------------------------------------------------------------
 
