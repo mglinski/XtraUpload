@@ -52,3 +52,6 @@ $lang['upload_links_4'] = "Error: Upload Failed!!";
 $lang['upload_controller_1'] = "URL Upload";
 $lang['upload_controller_2'] = "Upload Complete!";
 $lang['upload_controller_3'] = "Upload Failed!";
+
+$lang['upload_complete_header'] = "Upload Complete";
+$lang['upload_complete_message'] = "Your file links are below, make sure to save this URL if you ever need to get these links again.";

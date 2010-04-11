@@ -171,3 +171,6 @@ $lang['user_controller_35'] = "Here is your new password:";
 $lang['user_controller_36'] = "Thank You,";
 $lang['user_controller_37'] = "Administration";
 $lang['user_controller_38'] = "New Password Sent!";
+$lang['user_controller_paypal_submitpayment'] = "If you are not automatically redirected to payment website within 5 seconds,<br /> click 'Make Payment' below to begin the payment procedure.";
+$lang['user_controller_email_reset_subject'] = "Password Reset Request";
+$lang['user_controller_email_support_text'] = " Support";

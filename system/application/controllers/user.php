@@ -132,7 +132,7 @@ class User extends Controller
 				{
 					$error .= $this->lang->line('user_controller_8').'<br />';
 				}
-				$data['errorMessage'] = '<p><span class="alert"><b>Error(s):'.$this->lang->line('user_controller_9').'</b><br />'.$error.'</p>';
+				$data['errorMessage'] = '<p><span class="alert"><b>'.$this->lang->line('user_controller_9').'</b><br />'.$error.'</p>';
 				
 				$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_controller_10')));
 				$this->load->view($this->startup->skin.'/user/register/begin', $data);
@@ -272,7 +272,7 @@ class User extends Controller
 			}
 			
 			// Let's start the train!
-			$data['form'] = $myPaypal->submitPayment('If you are not automatically redirected to payment website within 5 seconds,<br /> click \'Make Payment\' below to begin the payment procedure.');
+			$data['form'] = $myPaypal->submitPayment($this->lang->line('user_controller_paypal_submitpayment'));
 		}
 		else if($gate->name == 'authorize')
 		{
@@ -304,7 +304,7 @@ class User extends Controller
 			}
 			
 			// Let's start the train!
-			$data['form'] = $myAuthorize->submitPayment('If you are not automatically redirected to payment website within 5 seconds,<br /> click \'Make Payment\' below to begin the payment procedure.');
+			$data['form'] = $myAuthorize->submitPayment($this->lang->line('user_controller_paypal_submitpayment'));
 		}
 		else if($gate->name = '2co')
 		{
@@ -333,7 +333,7 @@ class User extends Controller
 			}
 			
 			// Let's start the train!
-			$data['form'] = $my2CO->submitPayment('If you are not automatically redirected to payment website within 5 seconds,<br /> click \'Make Payment\' below to begin the payment procedure.');
+			$data['form'] = $my2CO->submitPayment($this->lang->line('user_controller_paypal_submitpayment'));
 		}
 		
 		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('user_controller_15')));
@@ -817,10 +817,10 @@ class User extends Controller
 
 		$result = $this->users->userUpdateForgot($newPassMD5, $username);
 				
-		$this->email->from($this->startup->site_config['site_email'], $this->startup->site_config['sitename'].' Support');
+		$this->email->from($this->startup->site_config['site_email'], $this->startup->site_config['sitename'].$this->lang->line('user_controller_email_support_text'));
 		$this->email->to( $this->input->post('email'));
 		
-		$this->email->subject('Password Reset Request');
+		$this->email->subject($this->lang->line('user_controller_email_reset_subject'));
 		$this->email->message($this->lang->line('user_controller_32').' '.$username.',
 
 '.$this->lang->line('user_controller_33').' '.$this->startup->site_config['sitename'].' '.$this->lang->line('user_controller_34').'

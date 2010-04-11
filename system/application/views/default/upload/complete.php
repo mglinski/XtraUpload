@@ -1,7 +1,6 @@
-<h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/icons/backup_32.png'?>" class="nb" alt="" /> Upload Complete</h2>
-<p>
-	Your file links are below, make sure to save this URL if you ever need to get these links again.
-</p>
+<h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/icons/backup_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('upload_complete_header'); ?></h2>
+
+<p><?php echo $this->lang->line('upload_complete_message'); ?></p>
 
 	<label><?php echo $this->lang->line('upload_links_1')?></label>
 	<input readonly="readonly" type="text" id="dl_<?php echo rand()?>" size="50" value="<?php echo $link['down']?>" onfocus="this.select()" onclick="this.select()" />
