@@ -50,6 +50,7 @@ $lang['files_manage_table_9'] = "Image Links";
 $lang['files_manage_10'] = "Your changes have been saved.";
 $lang['files_manage_11'] = "Description";
 $lang['files_manage_12'] = "Password";
+$lang['files_manage_tags'] = "Tags (seperated by commas)";
 $lang['files_manage_13'] = "Feature This File?";
 $lang['files_manage_14'] = "Yes";
 $lang['files_manage_15'] = "Save Changes";
@@ -84,7 +85,8 @@ $lang['files_get_17'] = "Please Wait ";
 $lang['files_get_18'] = " more second(s) to download.";
 $lang['files_get_19'] = "Captcha Test - Type the three(3) letters you see below:";
 $lang['files_get_20'] = "Get New Captcha";
-$lang['files_get_21'] = "Download"; 
+$lang['files_get_21'] = "Download";
+$lang['files_get_wait'] = "You need to wait %d more seconds before you can download this file.";
 
 $lang['files_search_new_search_heading'] = 'Search Files';
 $lang['files_search_new_search_1'] = 'You are currently not allowed to search files. Please ';
