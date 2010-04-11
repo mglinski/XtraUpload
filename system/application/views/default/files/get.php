@@ -126,18 +126,18 @@
 	?>
 	<h3 id="dlhere"><img src="<?php echo $base_url?>img/icons/music_16.png" class="nb" alt="" /> <?php echo $this->lang->line('files_get_13')?></h3>
 	<p>
-		<iframe src="<?=site_url('files/embed/'.$file->type.'/'.$file->file_id)?>" width="<?=$embed['width']?>" height="<?=$embed['height']?>" scrolling="no" frameborder="0"></iframe><br />
+		<iframe src="<?php echo site_url('files/embed/'.$file->type.'/'.$file->file_id)?>" width="<?php echo $embed['width']?>" height="<?php echo $embed['height']?>" scrolling="no" frameborder="0"></iframe><br />
 		<a href="javascript:;" onclick="$('#mp3_embed_code').slideToggle('normal')">
 			<img src="<?php echo $base_url?>img/icons/add_16.png" class="nb" alt="" /> <?php echo $this->lang->line('files_get_15')?>
 		</a><br />
-			<input style="display:none" id="<?=$file->type?>_embed_code" type="text" size="60" onclick="this.select();" onfocus="this.select()" value='<iframe src="<?=site_url('files/embed/'.$file->type.'/'.$file->file_id)?>" width="<?=$embed['width']?>" height="<?=$embed['height']?>" scrolling="no" frameborder="0"></iframe>' />
+			<input style="display:none" id="<?php echo $file->type?>_embed_code" type="text" size="60" onclick="this.select();" onfocus="this.select()" value='<iframe src="<?php echo site_url('files/embed/'.$file->type.'/'.$file->file_id)?>" width="<?php echo $embed['width']?>" height="<?php echo $embed['height']?>" scrolling="no" frameborder="0"></iframe>' />
 	</p>
 	 
 	<?
 }
 ?>
 
-<? /*File Page Hooks*/ $this->xu_api->hooks->runHooks('files::get::add_section::before_download', null); ?>
+<?php /*File Page Hooks*/ $this->xu_api->hooks->runHooks('files::get::add_section::before_download', null); ?>
 
 <h3 id="dlhere"><img src="<?php echo $base_url?>img/other/download_16.png" class="nb" alt="" /> <?php echo $this->lang->line('files_get_16')?></h3>
 <form action="<?php echo site_url('files/gen/'.$file->file_id.'/'.$file->link_name)?>" method="post" onsubmit="return checkTimer()">
@@ -171,15 +171,15 @@
 </div>
 </form>
 
-<? /*File Page Hooks*/ $this->xu_api->hooks->runHooks('files::get::add_section::after_download', null); ?>
+<?php /*File Page Hooks*/ $this->xu_api->hooks->runHooks('files::get::add_section::after_download', null); ?>
 
 <script type="text/javascript">
-<? 
+<?php 
 $rand = 'x'.str_replace('-', '', $this->functions->getRandId());
 $rand1 = 'y'.str_replace('-', '', $this->functions->getRandId(32));
 ?>
 var <?php echo $rand?> = <?php echo $sec?>;
-//var <?php echo $rand?> = <? // $group->waittimme?>;
+//var <?php echo $rand?> = <?php // $group->waittimme?>;
 var <?php echo $rand1?> = false;
 function startCountdown()
 {
@@ -204,7 +204,7 @@ function checkTimer()
 {
 	if(!(<?php echo $rand1?>))
 	{
-		alert('You need to wait '+<?php echo $rand?>+' more seconds before you can download this file.');
+		alert('<?php echo $this->lang->line('files_get_wait', $rand); ?>');
 		return false;
 	}
 }

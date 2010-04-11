@@ -1,12 +1,12 @@
-<h2 style="vertical-align:middle"><img src="<?=base_url().'img/other/manage-files_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('files_manage_title') ?></h2>
+<h2 style="vertical-align:middle"><img src="<?php echo base_url().'img/other/manage-files_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('files_manage_title') ?></h2>
 <div id="massActions" style="clear:both; padding-top:4px;">
 	<div class="float-left">
-		<?=generateLinkButton('Delete', 'javascript:;', base_url().'img/icons/close_16.png', 'red', array('onclick' => 'deleteSubmit()'))?>
+		<?php echo generateLinkButton('Delete', 'javascript:;', base_url().'img/icons/close_16.png', 'red', array('onclick' => 'deleteSubmit()')); ?>
 	</div>
 </div>
 <p style=" clear:both;"></p>
 <span style="display:none" class="info" id="edit_alert"><?php echo $this->lang->line('files_manage_10') ?></span>
-<?=$flashMessage?>
+<?php echo $flashMessage; ?>
 <?php 
 if($this->startup->group_config->storage_limit > '0')
 {
@@ -20,7 +20,7 @@ if($this->startup->group_config->storage_limit > '0')
 $this->load->helper('string');
 ?>
 
-<form action="<?=site_url('files/manage')?>" id="userAdmin" method="post" style="padding:0; margin:0; border:0;">
+<form action="<?php echo site_url('files/manage')?>" id="userAdmin" method="post" style="padding:0; margin:0; border:0;">
 <table border="0" style="width:95%" id="file_list_table">
 	<tr>
 		<th style="width:20px"><div style="text-align:center"><input type="checkbox" id="switch_box" onchange="switchCheckboxes(this.checked)" /></div></th>
@@ -36,62 +36,62 @@ $this->load->helper('string');
 		$id = $file->id;
 		$link = $this->files_db->getLinks($file->secid);
 	?>
-	<tr id="<?=$file->file_id?>" <?=alternator('class="odd"', 'class="even"')?>>
+	<tr id="<?php echo $file->file_id?>" <?php echo alternator('class="odd"', 'class="even"')?>>
 		<td>
 			<div align="center">
-				<input type="checkbox" id="check-<?php echo $file->id?>" onchange="manageCheckboxes()" name="files[]" value="<?=$file->file_id?>" />
+				<input type="checkbox" id="check-<?php echo $file->id?>" onchange="manageCheckboxes()" name="files[]" value="<?php echo $file->file_id?>" />
 			</div>
 		</td>
 		<td>
-			<a href='<?=$link['down']?>' rel="external">
+			<a href='<?php echo $link['down']?>' rel="external">
 				<img src="<?php echo base_url().'img/files/'.$this->functions->getFileTypeIcon($file->type);?>" class="nb" alt="" />
-				<?=$file->o_filename?>
+				<?php echo $file->o_filename?>
 			</a>
 		</td>
 		<td>
-			<?=$this->functions->getFilesizePrefix($file->size)?>
+			<?php echo $this->functions->getFilesizePrefix($file->size)?>
 		</td>
 		<td>
-			<?=intval($file->downloads)?>
+			<?php echo intval($file->downloads)?>
 		</td>
 		<td>
-			<a href='javascript:;' onclick='$("#<?=$file->file_id?>-details").toggle()'><img src="<?=$base_url.'/img/icons/link_16.png'?>"  title="<?php echo $this->lang->line('files_manage_table_4') ?>" class="nb" /></a>
-			<a href='javascript:;' onclick='$("#<?=$file->id?>-edit").toggle()'><img src="<?=$base_url.'/img/icons/edit_16.png'?>"  title="<?php echo $this->lang->line('files_manage_17') ?>" class="nb" /></a>
-			<a href="<?=$link['del']?>" onclick="return confirm('<?php echo $this->lang->line('files_manage_table_5') ?>');"><img src="<?=$base_url.'/img/icons/close_16.png'?>" title="<?php echo $this->lang->line('files_manage_table_6') ?>" class="nb" /></a>
+			<a href='javascript:;' onclick='$("#<?php echo $file->file_id?>-details").toggle()'><img src="<?php echo $base_url.'/img/icons/link_16.png'?>"  title="<?php echo $this->lang->line('files_manage_table_4') ?>" class="nb" /></a>
+			<a href='javascript:;' onclick='$("#<?php echo $file->id?>-edit").toggle()'><img src="<?php echo $base_url.'/img/icons/edit_16.png'?>"  title="<?php echo $this->lang->line('files_manage_17') ?>" class="nb" /></a>
+			<a href="<?php echo $link['del']?>" onclick="return confirm('<?php echo $this->lang->line('files_manage_table_5') ?>');"><img src="<?php echo $base_url.'/img/icons/close_16.png'?>" title="<?php echo $this->lang->line('files_manage_table_6') ?>" class="nb" /></a>
 		</td>
 	</tr>
-	<tr class="details" style="display:none; border-top:none;" id="<?=$file->file_id?>-details">
-		<td colspan="5" id="<?=$file->file_id?>-details-inner">
-		<?php echo $this->lang->line('files_manage_table_7') ?>: <input class="down_link" readonly="readonly" type="text" size="65" value="<?=$link['down']?>" onfocus="this.select()" onclick="this.select()" ondblclick="this.select()" /><br />
-		<?php echo $this->lang->line('files_manage_table_8')?>: <a href="<?=$link['del']?>"><?=$link['del']?></a>
+	<tr class="details" style="display:none; border-top:none;" id="<?php echo $file->file_id?>-details">
+		<td colspan="5" id="<?php echo $file->file_id?>-details-inner">
+		<?php echo $this->lang->line('files_manage_table_7') ?>: <input class="down_link" readonly="readonly" type="text" size="65" value="<?php echo $link['down']?>" onfocus="this.select()" onclick="this.select()" ondblclick="this.select()" /><br />
+		<?php echo $this->lang->line('files_manage_table_8')?>: <a href="<?php echo $link['del']?>"><?php echo $link['del']?></a>
 		<?
 		if(isset($link['img']))
 		{
-			?><br /><?php echo $this->lang->line('files_manage_table_9') ?><a href="<?=$link['img']?>"><?=$link['img']?></a><?
+			?><br /><?php echo $this->lang->line('files_manage_table_9') ?><a href="<?php echo $link['img']?>"><?php echo $link['img']?></a><?
 		}
 		?>
 		</td>
 	</tr>
-	<tr class="details" style="display:none; border-top:none;" id="<?=$file->id?>-edit">
-		<td colspan="5" id="<?=$file->file_id?>-edit-inner">
-			<input name="<?=$file->id?>_fid" id="<?=$file->id?>_fid" value="<?=$file->secid?>" type="hidden" />
+	<tr class="details" style="display:none; border-top:none;" id="<?php echo $file->id?>-edit">
+		<td colspan="5" id="<?php echo $file->file_id?>-edit-inner">
+			<input name="<?php echo $file->id?>_fid" id="<?php echo $file->id?>_fid" value="<?php echo $file->secid?>" type="hidden" />
 		
 			<span class="float-right">
-				<label for="<?=$file->id?>_desc"><?php echo $this->lang->line('files_manage_11') ?></label>
-				<textarea name="<?=$file->id?>_desc" id="<?=$file->id?>_desc" cols="30" style="height:180px" rows="2"><?=$file->descr?></textarea>
+				<label for="<?php echo $file->id?>_desc"><?php echo $this->lang->line('files_manage_11') ?></label>
+				<textarea name="<?php echo $file->id?>_desc" id="<?php echo $file->id?>_desc" cols="30" style="height:180px" rows="2"><?php echo $file->descr?></textarea>
 			</span>
             
-			<label for="<?=$file->id?>_pass"><?php echo $this->lang->line('files_manage_12') ?></label>
-			<input name="<?=$file->id?>_pass" id="<?=$file->id?>_pass" value="<?=$file->password?>" size="35" maxlength="32" type="text" /><br />
+			<label for="<?php echo $file->id?>_pass"><?php echo $this->lang->line('files_manage_12') ?></label>
+			<input name="<?php echo $file->id?>_pass" id="<?php echo $file->id?>_pass" value="<?php echo $file->password?>" size="35" maxlength="32" type="text" /><br />
 			
-			<label for="<?=$file->id?>_tags">Tags (seperated by commas)</label>
-			<input name="<?=$file->id?>_tags" id="<?=$file->id?>_tags" value="<?=$file->tags?>" size="35" maxlength="200" type="text" /><br />
+			<label for="<?php echo $file->id?>_tags"><?php echo $this->lang->line('files_manage_tags'); ?></label>
+			<input name="<?php echo $file->id?>_tags" id="<?php echo $file->id?>_tags" value="<?php echo $file->tags?>" size="35" maxlength="200" type="text" /><br />
             
-            <label for="<?=$file->id?>_feat"><?php echo $this->lang->line('files_manage_13') ?></label>
-			<input name="<?=$file->id?>_feat" id="<?=$file->id?>_feat" <?php if($file->feature){?> checked="checked"<? }?> type="checkbox" value="1" /> <?php echo $this->lang->line('files_manage_14') ?><br /><br />
+            <label for="<?php echo $file->id?>_feat"><?php echo $this->lang->line('files_manage_13') ?></label>
+			<input name="<?php echo $file->id?>_feat" id="<?php echo $file->id?>_feat" <?php if($file->feature){?> checked="checked"<? }?> type="checkbox" value="1" /> <?php echo $this->lang->line('files_manage_14') ?><br /><br />
             
-			<?=generateLinkButton($this->lang->line('files_manage_15'), 'javascript:;', base_url().'img/icons/ok_16.png', 'green', array('onclick' => 'editFileProps(\''.$file->id.'\');'))?>
-			<?=generateLinkButton('Cancel Edit', 'javascript:;', base_url().'img/icons/close_16.png', 'red', array('onclick' => '$(\'#'.$file->id.'-edit\').hide();'))?><br /><br />
+			<?php echo generateLinkButton($this->lang->line('files_manage_15'), 'javascript:;', base_url().'img/icons/ok_16.png', 'green', array('onclick' => 'editFileProps(\''.$file->id.'\');'))?>
+			<?php echo generateLinkButton('Cancel Edit', 'javascript:;', base_url().'img/icons/close_16.png', 'red', array('onclick' => '$(\'#'.$file->id.'-edit\').hide();'))?><br /><br />
 		</td>
 	</tr>
 	
@@ -102,7 +102,7 @@ $this->load->helper('string');
 </table>
 </form>
 
-<?=$pagination?>
+<?php echo $pagination; ?>
 
 <script type="text/javascript">
 	function editFileProps(id)
@@ -120,7 +120,7 @@ $this->load->helper('string');
 		var fTags = $('#'+id+'_tags').val();
 		var curFileId = $('#'+id+'_fid').val();
 		$.post(
-			'<?=site_url('upload/fileUploadProps')?>', 
+			'<?php echo site_url('upload/fileUploadProps')?>', 
 			{
 				fid: curFileId, 
 				password: fPass, 
@@ -138,7 +138,7 @@ $this->load->helper('string');
 	{
 		if(confirm('<?php echo $this->lang->line('files_manage_16') ?>'))
 		{
-			$('#userAdmin').attr('action', "<?=site_url('files/massDelete')?>");
+			$('#userAdmin').attr('action', "<?php echo site_url('files/massDelete')?>");
 			$('#userAdmin').submit();
 		}
 	}
