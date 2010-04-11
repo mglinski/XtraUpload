@@ -83,21 +83,14 @@ class Image extends Controller
 		$file = $this->files_db->getFileObject($id);
 		$type = strtolower($file->type);
 		
-		if($type == "gif")
+		if(! (bool)$file->is_image)
 		{
-			$type == 'gif';
+			show_404();
 		}
-		else if($type == "bmp")
-		{
-			$type == 'bmp';
-		}
-		else if($type == "jpg")
+		
+		if($type == "jpg")
 		{
 			$type == 'jpeg';
-		}
-		else if($type == "png")
-		{
-			$type == 'png';
 		}
 	
 		header("Content-type: image/".$type);
@@ -110,25 +103,18 @@ class Image extends Controller
 		$this->files_db->addToDownloads($id);
 		$type = strtolower($file->type);
 		
-		if($type == "gif")
+		if(! (bool)$file->is_image)
 		{
-			$type == 'gif';
+			show_404();
 		}
-		else if($type == "bmp")
-		{
-			$type == 'bmp';
-		}
-		else if($type == "jpg")
+		
+		if($type == "jpg")
 		{
 			$type == 'jpeg';
 		}
-		else if($type == "png")
-		{
-			$type == 'png';
-		}
 	
 		header("Content-type: image/".$type);
-		echo file_get_contents($file->filename);
+		echo file_get_contents($file->thumb);
 	}
 	
 	public function gallery($id)
