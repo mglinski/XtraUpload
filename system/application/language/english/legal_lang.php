@@ -27,6 +27,7 @@
 
 // ------------------------------------------------------------------------
 
+$lang['legal_tos_headertitle'] = 'Terms of Service';
 $lang['legal_tos_header'] = 'Web Site Terms and Conditions of Use';
 $lang['legal_tos_terms_header'] = '1. Terms';
 $lang['legal_tos_terms_1'] = 'By accessing this web site, you are agreeing to be bound by these 
@@ -74,6 +75,7 @@ $lang['legal_tos_governing_header'] = '8. Governing Law';
 $lang['legal_tos_governing_p1'] = 'Any claim relating to ';
 $lang['legal_tos_governing_p1_1'] = '\'s web site shall be governed by the laws of the United States of America without regard to its conflict of law provisions.';
 
+$lang['legal_privacy_headertitle'] = 'Privacy Policy';
 $lang['legal_privacy_header'] = 'Privacy Policy';
 $lang['legal_privacy_1'] = 'Your privacy is very important to us. Accordingly, we have developed this Policy in order for you to understand how we collect, use, communicate and disclose and make use of personal information. The following outlines our privacy policy.';
 $lang['legal_privacy_2'] = 'Before or at the time of collecting personal information, we will identify the purposes for which information is being collected.';
