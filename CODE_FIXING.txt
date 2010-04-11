@@ -1,0 +1,31 @@
+Why is this needed in /system/application/controllers/image.php?
+
+	public function thumb($id, $name)
+	{
+		$file = $this->files_db->getFileObject($id);
+		$type = strtolower($file->type);
+		
+		if($type == "gif")
+		{
+			$type == 'gif';
+		}
+		else if($type == "bmp")
+		{
+			$type == 'bmp';
+		}
+		else if($type == "jpg")
+		{
+			$type == 'jpeg';
+		}
+		else if($type == "png")
+		{
+			$type == 'png';
+		}
+	
+		header("Content-type: image/".$type);
+		echo file_get_contents($file->thumb);
+	}
+
+It doesn't do anything.. haha. If nothing matches, it still makes the content type "strtolower($file->type);"
+
+This also applies to direct() in the same page.
