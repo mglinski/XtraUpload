@@ -27,12 +27,13 @@
 
 // ------------------------------------------------------------------------
 
-class Files extends Controller 
+class Files extends Controller
 {
 	public function Files()
 	{
 		parent::Controller();	
 		$this->load->model('admin_access');
+		$this->load->lang('admin/files')
 	}
 	
 	public function index()
@@ -89,7 +90,7 @@ class Files extends Controller
 		$data['files'] = $this->files_db->getAdminFiles($sort, $direction, $perPage, $this->uri->segment(4));
 		$data['pagination'] = $this->pagination->create_links();
 		
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Files'));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('files_controller_view_headertitle')));
 		$this->load->view($this->startup->skin.'/admin/files/view',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
@@ -143,7 +144,7 @@ class Files extends Controller
 		$data['files'] = $this->files_db->getAdminFilesInFolder($folder_id, $sort, $direction, $perPage, $this->uri->segment(4));
 		$data['pagination'] = $this->pagination->create_links();
 		
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Files in Folder'));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('files_controller_folder_headertitle')));
 		$this->load->view($this->startup->skin.'/admin/files/folder',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
@@ -203,13 +204,13 @@ class Files extends Controller
 			$data['files'] = $this->files_db->getAdminFiles_search($query, $sort, $direction, $perPage, $this->uri->segment(5));
 			$data['pagination'] = $this->pagination->create_links();
 			
-			$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Manage Files'));
+			$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('files_controller_search_manage_headertitle') ));
 			$this->load->view($this->startup->skin.'/admin/files/search_result',$data);
 			$this->load->view($this->startup->skin.'/footer');
 		}
 		else
 		{
-			$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Search Files'));
+			$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('files_controller_search_search_headertitle')));
 			$this->load->view($this->startup->skin.'/admin/files/search');
 			$this->load->view($this->startup->skin.'/footer');
 		}
@@ -222,7 +223,7 @@ class Files extends Controller
 			$this->db->where('file_id', $id);
 			$this->db->update('refrence', $_POST);
 			
-			$this->session->set_flashdata('msg', 'File Edited');
+			$this->session->set_flashdata('msg', $this->lang->line('files_controller_flashdata_edited'));
 			redirect('admin/files/view');
 			return false;
 		}
@@ -230,7 +231,7 @@ class Files extends Controller
 		$data['id'] = $id;
 		$data['file'] = $this->files_db->getFileObject($id);
 		
-		$this->load->view($this->startup->skin.'/header', array('headerTitle' => 'Edit File'));
+		$this->load->view($this->startup->skin.'/header', array('headerTitle' => $this->lang->line('files_controller_edit_headertitle')));
 		$this->load->view($this->startup->skin.'/admin/files/edit',$data);
 		$this->load->view($this->startup->skin.'/footer');
 	}
@@ -238,14 +239,14 @@ class Files extends Controller
 	public function delete($id)
 	{
 		$this->files_db->deleteFileAdmin($id);
-		$this->session->set_flashdata('msg', 'File Deleted');
+		$this->session->set_flashdata('msg', $this->lang->line('files_controller_delete_headertitle'));
 		redirect('admin/files/view');
 	}
 	
 	public function ban($id)
 	{
 		$this->files_db->banFileAdmin($id);
-		$this->session->set_flashdata('msg', 'File Banned');
+		$this->session->set_flashdata('msg', $this->lang->line('files_controller_ban_headertitle'));
 		redirect('admin/files/view');
 	}
 	
@@ -297,7 +298,7 @@ class Files extends Controller
 				$this->files_db->banFileAdmin($id);
 			}
 			
-			$this->session->set_flashdata('msg', count($this->input->post('files')).' File(s) have been Banned');
+			$this->session->set_flashdata('msg', $this->lang->line('files_controller_massban_count', count($this->input->post('files'))));
 		}
 		
 		if(!empty($query))
@@ -319,7 +320,7 @@ class Files extends Controller
 				$this->files_db->deleteFileAdmin($id);
 			}
 			
-			$this->session->set_flashdata('msg', count($this->input->post('files')).' Files(s) have been deleted');
+			$this->session->set_flashdata('msg', $this->lang->line('files_controller_massdelete_count', count($this->input->post('files'))));
 		}
 		
 		if(!empty($query))

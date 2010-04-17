@@ -1,4 +1,4 @@
-<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/documents_32.png'?>" class="nb" alt="" /> File Manager - Search</h2>
+<h2 style="vertical-align:middle"><img src="<?=base_url().'img/icons/documents_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('files_result_headertitle'); ?></h2>
 <?=$flashMessage?>
 <form action="<?=site_url('admin/files/')?>" id="userAdmin" method="post" style="padding:0; margin:0; border:0;">
 	<div id="massActions" style="clear:both; padding-top:4px;">
