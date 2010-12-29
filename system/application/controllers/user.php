@@ -157,8 +157,8 @@ class User extends Controller
 	public function login()
 	{
 		//$this->output->cache(60);
-		$rules['username'] = "trim|required|min_length[5]|max_length[32]|xss_clean|strtolower";
-		$rules['password'] = "trim|required|min_length[4]";
+		$rules['username'] = "trim|required|min_length[4]|max_length[32]|xss_clean|strtolower";
+		$rules['password'] = "trim|required|min_length[6]";
 		
 		$this->validation->set_rules($rules);
 		

@@ -142,7 +142,7 @@ class Upload extends Controller
 			} 
 			else 
 			{
-				echo "WIN";
+				echo "true|Upload Completed!";
 			}
 		}
 		else
@@ -155,7 +155,7 @@ class Upload extends Controller
 			} 
 			else 
 			{
-				echo "FAIL";
+				echo "false|Upload Failed!";
 			}	
 		}
 	}

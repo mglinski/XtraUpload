@@ -244,10 +244,11 @@ else
 				file_size_limit : (<?php echo intval($upload_limit)?> * 1024),
 				file_queue_limit : <?php echo intval($upload_num_limit)?>, 
 				flash_url : ___baseUrl()+"flash/upload.swf", 
+				flash9_url: ___baseUrl()+"flash/upload9.swf", 
 				flash_width : "1px", 
 				flash_height : "1px", 
 				flash_color : "#CCCCCC", 
-				debug:false,
+				debug: false,
 				
 				// Button settings
 				button_image_url : "<?=$base_url.'img/flash_upload.png'?>",	// Relative to the SWF file

@@ -255,10 +255,8 @@ function clearUploadQueue()
 
 function flashUploadError(file, errorCode, message)
 {
-	if(errorCode != -280)
-	{
-		alert("Upload Failed("+errorCode+"): "+ message);
-	}
+	alert("Upload Failed("+errorCode+"): "+ message);
+	$('.debug').append(errorCode+": "+message+"\n");
 }
 
 function flashUploadQueueError(file,errorCode, message)
