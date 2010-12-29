@@ -1,7 +1,7 @@
 <?php 
 $dir = dirname(__FILE__);$dir = dirname($dir.'../');$dir = dirname($dir.'../');$dir = dirname($dir.'../');$dir = dirname($dir.'../');
 $dir = substr($dir, strlen($_SERVER['DOCUMENT_ROOT']));
-$servername = str_replace('\\', '/', 'http://'.$_SERVER['SERVER_NAME'].$dir.'/');
+$servername = str_replace('\\', '/', 'http://'.$_SERVER['SERVER_NAME'].'/'.$dir.'/');
 ?>
 <div style="margin:auto; text-align:center"><h1>Database and Config Details</h1></div>
 <div class="progressMenu">
