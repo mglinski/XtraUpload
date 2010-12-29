@@ -6,25 +6,13 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
 
-/**
- * @date		2009-03-22
- * @change 		Modified the class to make it more query efficient
- *
- * @date		2009-03-30
- * @change		Modified the session table structure to store IP addresses as unsigned integers
- * @sql			ALTER TABLE `ci_sessions` CHANGE `ip_address` `ip_address` INT UNSIGNED NOT NULL DEFAULT '0'	
- * 
- * @author		Matthieu Fauveau
- * @email		mfauveau@deckmatt.com
- */
- 
 // ------------------------------------------------------------------------
 
 /**
@@ -56,9 +44,6 @@ class CI_Session {
 	var $userdata					= array();
 	var $CI;
 	var $now;
-	
-	var $all_userdata 				= array();
-	var $do_sess_write				= FALSE;
 
 	/**
 	 * Session Constructor
@@ -72,13 +57,6 @@ class CI_Session {
 
 		// Set the super object to a local variable for use throughout the class
 		$this->CI =& get_instance();
-		
-		// if the user requesting is Flash...
-		if (trim(substr($this->CI->input->user_agent(), 0, 18)) == 'Adobe Flash Player')
-		{
-			//log_message('debug', 'A flash upload request was received, no session data needed here.');
-			//return FALSE;
-		}
 
 		// Set all the session preferences, which can either be set
 		// manually via the $params array above or via the config file
@@ -132,11 +110,6 @@ class CI_Session {
 
 		// Mark all new flashdata as old (data will be deleted before next request)
 	   	$this->_flashdata_mark();
-	   	
-	   	if($this->do_sess_write == TRUE)
-	   	{
-	   		$this->sess_write();
-	   	}
 
 		// Delete expired sessions if necessary
 		$this->_sess_gc();
@@ -202,7 +175,7 @@ class CI_Session {
 		}
 
 		// Does the IP Match?
-		if ($this->sess_match_ip == TRUE AND $session['ip_address'] != ip2long($this->CI->input->ip_address()))
+		if ($this->sess_match_ip == TRUE AND $session['ip_address'] != $this->CI->input->ip_address())
 		{
 			$this->sess_destroy();
 			return FALSE;
@@ -222,7 +195,7 @@ class CI_Session {
 
 			if ($this->sess_match_ip == TRUE)
 			{
-				$this->CI->db->where('ip_address', (int) $session['ip_address']);
+				$this->CI->db->where('ip_address', $session['ip_address']);
 			}
 
 			if ($this->sess_match_useragent == TRUE)
@@ -335,7 +308,7 @@ class CI_Session {
 
 		$this->userdata = array(
 							'session_id' 	=> md5(uniqid($sessid, TRUE)),
-							'ip_address' 	=> ip2long($this->CI->input->ip_address()),
+							'ip_address' 	=> $this->CI->input->ip_address(),
 							'user_agent' 	=> substr($this->CI->input->user_agent(), 0, 50),
 							'last_activity'	=> $this->now
 							);
@@ -472,7 +445,7 @@ class CI_Session {
 	 * @param	string
 	 * @return	void
 	 */
-	function set_userdata($newdata = array(), $newval = '', $sess_write = TRUE)
+	function set_userdata($newdata = array(), $newval = '')
 	{
 		if (is_string($newdata))
 		{
@@ -487,10 +460,7 @@ class CI_Session {
 			}
 		}
 
-		if ($sess_write == TRUE)
-		{
-			$this->sess_write();
-		}
+		$this->sess_write();
 	}
 
 	// --------------------------------------------------------------------
@@ -501,7 +471,7 @@ class CI_Session {
 	 * @access	array
 	 * @return	void
 	 */
-	function unset_userdata($newdata = array(), $sess_write = TRUE)
+	function unset_userdata($newdata = array())
 	{
 		if (is_string($newdata))
 		{
@@ -516,10 +486,7 @@ class CI_Session {
 			}
 		}
 
-		if ($sess_write == TRUE)
-		{
-			$this->sess_write();
-		}
+		$this->sess_write();
 	}
 
 	// ------------------------------------------------------------------------
@@ -598,16 +565,15 @@ class CI_Session {
 	 */
 	function _flashdata_mark()
 	{
-		$userdata = (empty($this->all_userdata)) ? $this->all_userdata() : $this->all_userdata;		
+		$userdata = $this->all_userdata();
 		foreach ($userdata as $name => $value)
 		{
 			$parts = explode(':new:', $name);
 			if (is_array($parts) && count($parts) === 2)
 			{
 				$new_name = $this->flashdata_key.':old:'.$parts[1];
-				$this->set_userdata($new_name, $value, FALSE);
-				$this->unset_userdata($name, FALSE);
-				$this->do_sess_write = TRUE;
+				$this->set_userdata($new_name, $value);
+				$this->unset_userdata($name);
 			}
 		}
 	}
@@ -623,13 +589,12 @@ class CI_Session {
 
 	function _flashdata_sweep()
 	{
-		$userdata = (empty($this->all_userdata)) ? $this->all_userdata() : $this->all_userdata;
+		$userdata = $this->all_userdata();
 		foreach ($userdata as $key => $value)
 		{
 			if (strpos($key, ':old:'))
 			{
-				$this->unset_userdata($key, FALSE);
-				$this->do_sess_write = TRUE;
+				$this->unset_userdata($key);
 			}
 		}
 

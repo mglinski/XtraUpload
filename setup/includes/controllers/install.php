@@ -1337,15 +1337,12 @@ $db["default"]["dbcollat"] = "utf8_general_ci";
 		// Sessions Table
 		$fields = array(
 			'session_id' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => true,
-				'auto_increment' => true
+				'type' => 'VARCHAR',
+				'constraint' => 40
 			),
 			'ip_address' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => true,
+				'type' => 'VARCHAR',
+				'constraint' => 16,
 				'default' => 0,
 				'null' => false
 			),
