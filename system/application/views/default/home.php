@@ -248,7 +248,7 @@ else
 				flash_width : "1px", 
 				flash_height : "1px", 
 				flash_color : "#CCCCCC", 
-				debug: true,
+				debug: false,
 				
 				// Button settings
 				button_image_url : "<?=$base_url.'img/flash_upload.png'?>",	// Relative to the SWF file
