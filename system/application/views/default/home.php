@@ -126,7 +126,7 @@ else
 	</div>
 	
 	<input id="fid" type="hidden" />
-	<input id="uid" type="hidden" value="<?php echo ($this->session->userdata('id') ? $this->session->userdata('id') : 0 )?>" />
+	<input id="uid" type="hidden" value="<?php echo (intval($this->session->userdata('id')) != 0 ? intval($this->session->userdata('id')) : 0 )?>" />
 	<div id="filesHidden" style="display:none"></div>
 	
 	<script type="text/javascript">
@@ -248,7 +248,7 @@ else
 				flash_width : "1px", 
 				flash_height : "1px", 
 				flash_color : "#CCCCCC", 
-				debug: false,
+				debug: true,
 				
 				// Button settings
 				button_image_url : "<?=$base_url.'img/flash_upload.png'?>",	// Relative to the SWF file
@@ -311,7 +311,7 @@ else
 			
 			$("#"+file.id+"-details").css('borderTop', 'none').show();
 			$("#"+file.id).addClass('details').css('borderBottom', 'none');
-			$.scrollTo( $("#"+file.id), 300);
+			//$.scrollTo( $("#"+file.id), 300);
 			return true;
 		}
 		
@@ -356,7 +356,7 @@ else
 			}
 			else
 			{
-				$.scrollTo( $("#uploader"), 800);
+				$.scrollTo( $("#uploader"), 400);
 			}
 		}
 	</script>

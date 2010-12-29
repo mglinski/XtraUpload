@@ -188,8 +188,7 @@ class Startup
 	{
 		if($gid != '')
 		{
-			$group = $gid;
-			$this->group_config = $this->CI->db->get_where('groups', array('id' => $group))->row();
+			$this->group_config = $this->CI->db->get_where('groups', array('id' => intval($gid)))->row();
 			return;
 		}
 		else

@@ -119,8 +119,9 @@ class Upload extends Controller
 		// Flash is really stupid in that it doesn't use the browser's cookies, but IE's cookies!! BAD FLASH, BAD!!!
 		if(intval($user) != 0 && $this->session->userdata('login') != true)
 		{
+			echo intval($user)."\n\n";
 			$userobj = $this->users->getUserById(intval($user));
-			$this->startup->getGroup($userobj->group);
+			$this->startup->getGroup(intval($userobj->group));
 			unset($userobj);
 		}
 		

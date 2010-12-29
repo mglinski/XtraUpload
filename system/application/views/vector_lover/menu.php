@@ -16,7 +16,7 @@ if($this->session->userdata('id'))
 		</li>
 		<li>
 			<a href="<?=site_url('user/logout')?>">
-				<img src="<?=$base_url?>img/icons/log_in_16.png" class="nb" alt="" /> <?php echo $this->lang->line('global_logout')?>
+				<img src="<?=$base_url?>img/icons/log_out_16.png" class="nb" alt="" /> <?php echo $this->lang->line('global_logout')?>
 			</a>
 		</li>
 	</ul>
