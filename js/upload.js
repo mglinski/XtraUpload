@@ -1,6 +1,6 @@
 function flashUpdate(total,remain,speed,per)
 {
-	$("#progress_img").stop(true, true);
+	$("#progress_img").stop(true);
 	if(total != '')
 		$('#total').html(total);
 	
