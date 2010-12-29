@@ -66,10 +66,17 @@ function rm_file(id)
 {
 	$('#'+id).remove();
 	$('#'+id+"-details").remove();
-	var filesN = $('#summary').html().split(' Files')[0];
-	$('#summary').html((filesN - 1) + ' Files');
 	swfu.cancelUpload(id);
 	delete fileObj[id];
+	
+	// remove from count
+	updatePendingFileCount();
+}
+
+function updatePendingFileCount()
+{
+	var queue = swfu.getStats();
+	$('#summary').html(parseInt(queue.files_queued));
 }
 
 function convert_bits(bytes) 
@@ -225,8 +232,7 @@ function fileDialogComplete(num)
 		setTimeout('$(".alert").hide("normal");', 2500);
 		fileNotAllowed = false;
 	}
-	num -= subtractFilesFromTotal;
-	$('#summary').html(num);
+	updatePendingFileCount();
 	
 	var files = $('#filesHidden').html();
 	$('#file_list_table').append(files);

@@ -174,6 +174,10 @@ if($this->startup->site_config['allow_version_check'])
 	$servers = $this->db->get('servers');
 	foreach($servers->result() as $serv)
 	{
+		if($serv->total_space == 0)
+		{
+			continue;
+		}
 		$used_space_percent = (($serv->used_space / $serv->total_space) * 100);
 		$free_space_percent = ($used_space_percent - 100) * (-1);
 		$free_space = $this->functions->getFilesizePrefix($serv->free_space);
