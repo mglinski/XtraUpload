@@ -27,6 +27,7 @@ else
 ?> 
 	<h3><?php echo $this->lang->line('global_member_login')?> </h3>
 	<form action="<?=site_url('user/login')?>" method="post" class="loginform">
+	<input type="hidden" name="submit" value="1">
 	<p>
 		<label for="username"><b><?php echo $this->lang->line('global_username')?> </b></label>
 		<input style="background:2px center url(<?=$base_url?>img/icons/user_16.png) no-repeat transparent; padding-left:22px" type="text" id="username" name="username" />

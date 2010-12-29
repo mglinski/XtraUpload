@@ -50,7 +50,7 @@ class Files_db extends Model
 		$query = $this->db->join('files', 'refrence.link_id = files.id')->get_where('refrence', array('user' => $this->session->userdata('id')), $limit, $offset);
 		return $query;	
 	}
-	
+		
 	public function getFilesByUser($user, $public=false, $limit=100, $offset=0, $select='')
 	{
 		$posts = array();

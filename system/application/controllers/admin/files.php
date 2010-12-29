@@ -33,7 +33,7 @@ class Files extends Controller
 	{
 		parent::Controller();	
 		$this->load->model('admin_access');
-		$this->load->lang('admin/files')
+		$this->lang->load('admin/files');
 	}
 	
 	public function index()

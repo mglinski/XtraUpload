@@ -6,9 +6,9 @@
 	<span class="alert"><?php echo $this->lang->line('home_not_logged_in', '<a href="'.site_url('user/login').'">'.$this->lang->line('home_login_text').'</a>'); ?></span>
 
 	<?php 
-{
-else
 }
+else
+{
 	?>
 
 	<h2 style="vertical-align:middle"><img src="<?php echo $base_url.'img/other/home2_32.png'?>" class="nb" alt="" /> <?php echo $this->lang->line('home_title')?></h2>

@@ -117,8 +117,9 @@ else
 			$('#descr').val($('#'+file.id+'_desc').val());
 			$('#link').val(file.link);
 			
-			var strName = ("uploader" + (new Date()).getTime());
-			var jFrame = $("<iframe name=\"" + strName + "\" src=\"about:blank\" />");
+			var strName = "uploader_" + (new Date()).getTime();
+			alert(strName);
+			var jFrame = $("<iframe name=\"" + strName + "\" src=\"<?=$base_url?>blank.html\" />");
 			jForm.attr("target", strName);
 			jFrame.css("display", "none");
 			jFrame.load( function(objEvent)
