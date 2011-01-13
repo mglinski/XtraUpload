@@ -6,7 +6,12 @@
 		<?php 
 		foreach($group as $name => $value)
 		{
-			if($name == 'id' or $name == 'status') {continue;}
+			if($name == 'id' or $name == 'status')
+			{
+				continue;
+			}
+			
+			// ------------------------------
 			?>
 				<label style="font-weight:bold" for="<?=$name?>">
 					<?=$real_name[$name]?> 
@@ -36,7 +41,7 @@
 					foreach($real_type[$name] as $a_key => $a_val)
 					{
 						?>
-						<option <?php if($value == $a_val){?> selected="selected" <? }?>value="<?=$a_key?>"><?=$a_val?></option>
+						<option <?php if($value == $a_key){?> selected="selected" <? }?>value="<?=$a_key?>"><?=$a_val?></option>
 						<?
 					}
 					?>

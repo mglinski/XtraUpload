@@ -45,7 +45,7 @@ $this->load->helper('string');
 		<td>
 			<a href='<?php echo $link['down']?>' rel="external">
 				<img src="<?php echo base_url().'img/files/'.$this->functions->getFileTypeIcon($file->type);?>" class="nb" alt="" />
-				<?php echo $file->o_filename?>
+				<?php echo $this->functions->elipsis($file->o_filename, 10)?>
 			</a>
 		</td>
 		<td>
