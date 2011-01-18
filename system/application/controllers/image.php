@@ -114,7 +114,7 @@ class Image extends Controller
 		}
 	
 		header("Content-type: image/".$type);
-		echo file_get_contents($file->thumb);
+		echo file_get_contents($file->filename);
 	}
 	
 	public function gallery($id)
