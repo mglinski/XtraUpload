@@ -5,7 +5,8 @@ _XtraUpload_ is a file hosting application written in PHP. It supports a vary la
 
 Minimum System Requirements
 --------
-PHP 5.2+ (With built-in support for the following:)
+PHP 5.2+
+
 *   MySql > v4.1
 *   GD v2
 *   FreeType v2
